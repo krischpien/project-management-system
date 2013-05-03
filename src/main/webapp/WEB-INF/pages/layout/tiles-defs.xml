@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<!--
+layout dir:
+/WEB-INF/pages/layout/*.jsp
+page dir:
+/WEB-INF/pages/*.jsp
+-->
+
+<tiles-definitions>
+
+    <!--zakladni layout-->    
+    <definition name="pms.base" template="/WEB-INF/pages/layout/_default.jsp">
+        <put-attribute name="title" value="Tiles Title"/>
+        <put-attribute name="author" value="Jan Krist"/>
+        <put-attribute name="header" value="/WEB-INF/pages/layout/header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/pages/layout/footer.jsp"/>
+    </definition>
+    
+</tiles-definitions>

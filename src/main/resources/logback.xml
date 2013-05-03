@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>d:/pms-cz.log</file>
+    <encoder>
+      <pattern>%d{HH:mm:ss} %level %r [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+  <appender name="HTML" class="ch.qos.logback.core.FileAppender">
+    <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+      <layout class="ch.qos.logback.classic.html.HTMLLayout">
+        <pattern>%d{HH:mm:ss}%thread%r%-5level%logger{36}%msg</pattern>
+      </layout>
+    </encoder>
+    <file>d:/log.html</file>
+  </appender>
+  
+
+<!--  <logger name="cz.vsmie.krist.pms.controllers" level="DEBUG" additivity="false">
+      <appender-ref ref="FILE" />
+  </logger>-->
+  
+  <logger name="org.hibernate" level="info">
+      <appender-ref ref="STDOUT"/>
+  </logger>
+  
+  <logger name="cz.vsmie.krist.pms" level="debug">
+      <appender-ref ref="FILE"/>
+  </logger>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT" />
+  </root>
+  
+</configuration>
