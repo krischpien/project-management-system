@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -17,19 +18,19 @@ import javax.persistence.Table;
 @Table(name="user_role")
 public class UserRole implements Serializable {
     
-    @Id
-    private long id;
+    @Id @GeneratedValue
+    private Long id;
     @Column(name="role_name")
     private String name;
     private String description;
     @ManyToMany(mappedBy="roles")
-    private Collection<UserDetails> users = new ArrayList<UserDetails>();
+    private Collection<User> users = new ArrayList<User>();
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -49,13 +50,36 @@ public class UserRole implements Serializable {
         this.description = description;
     }
 
-    public Collection<UserDetails> getUsers() {
+    public Collection<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<UserDetails> users) {
+    public void setUsers(Collection<User> users) {
         this.users = users;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+         if (obj == this) {
+            return true;
+        }
+        UserRole checkedRole = (UserRole) obj;
+        return this.getName().equals(checkedRole.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.name == null)? 0 : this.name.hashCode());
+        return result;
+
+    }
+    
+    
     
 
 }

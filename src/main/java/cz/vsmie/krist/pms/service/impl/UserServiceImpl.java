@@ -1,19 +1,18 @@
 package cz.vsmie.krist.pms.service.impl;
 
+import cz.vsmie.krist.pms.dao.RoleDao;
 import cz.vsmie.krist.pms.dao.UserDao;
-import cz.vsmie.krist.pms.dto.UserDetails;
+import cz.vsmie.krist.pms.dto.User;
+import cz.vsmie.krist.pms.dto.UserRole;
+import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
 import cz.vsmie.krist.pms.service.UserService;
 import java.util.ArrayList;
 import java.util.Collection;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -24,38 +23,72 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService{
     
     @Autowired
-    UserDao userDao;    
+    UserDao userDao;
+    @Autowired
+    RoleDao roleDao;
     
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     
-//    public UserService(SessionFactory sessionFactory){
-//        this.sessionFactory = sessionFactory;
-//    }
-    
-    public Collection<UserDetails> getAllUsers(){
-        Collection<UserDetails> users = new ArrayList<UserDetails>();
-        return users;
+   
+    public Collection<User> getAllUsers(){
+        return userDao.getAll();
     }
     
-    
-//    @Transactional(propagation= Propagation.REQUIRES_NEW)
-    public void saveUser(UserDetails user) throws UserNameNotAvailable{
+    public void saveUser(User user) throws UserNameNotAvailable, UserEmailNotAvailable{
         logger.info("Lookin' for " + user.getName());
-        if(userDao.getUserByName(user.getName())== null){
-            userDao.saveUser(user);
-        }
-        else{
-            logger.info("Found: " + user.getName() + ", " + user.getEmail()+ ", throwing an Exception");
+        if(userDao.getByName(user.getName())!= null){
+            logger.info("Uživatel " + user.getName() + "je již v databázi");
             throw new UserNameNotAvailable(user.getName());
         }
+        if(userDao.getByEmail(user.getEmail()) != null){
+            logger.info("Emailova adresa " + user.getEmail() + "je již v databázi");
+            throw new UserEmailNotAvailable(user.getEmail());
+        }
+        else{
+            userDao.save(user);
+        }
     }
 
-    public UserDetails getUserById(long id) {
-        return userDao.getUserById(id);
+    public User getUserById(Long id) {
+        return userDao.getById(id);
     }
 
-    public UserDetails getUserByName(String name) {
-        return userDao.getUserByName(name);
+    public User getUserByName(String name) {
+        return userDao.getByName(name);
     }
+
+    public Collection<UserRole> getAllRoles(boolean assignable) {
+        if(assignable){
+            return roleDao.getAssignableRoles();
+        }
+        return roleDao.getMainRoles();
+    }
+
+    public UserRole getRoleById(Long id) {
+        return roleDao.getById(id);
+    }
+
+    public void deleteUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void updateUser(User updatedUser) throws UserNameNotAvailable, UserEmailNotAvailable {
+        User userByName = userDao.getByName(updatedUser.getName());
+        User userByEmail = userDao.getByEmail(updatedUser.getEmail());
+        if(userByName != null && !userByName.equals(updatedUser)){
+            throw new UserNameNotAvailable(updatedUser.getName());
+        }
+        if(userByEmail != null && !userByEmail.equals(updatedUser)){
+            throw new UserEmailNotAvailable(updatedUser.getEmail());
+        }
+        userDao.update(updatedUser);
+    }
+    
+    
+    
+
+ 
+    
+    
 
 }

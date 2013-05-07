@@ -1,19 +1,15 @@
 package cz.vsmie.krist.pms.dao;
 
-import cz.vsmie.krist.pms.dto.UserDetails;
-import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
-import java.util.Collection;
+import cz.vsmie.krist.pms.dto.User;
 
 /**
  *
  * @author Jan Krist
  */
 
-public interface UserDao {
+public interface UserDao extends GenericDao<User> {
     
-    public Collection<UserDetails> getAllUsers();
-    public void saveUser(UserDetails user);
-    public UserDetails getUserById(long id);
-    public UserDetails getUserByName(String name);
+    public User getByName(String name);
+    public User getByEmail(String email);
 
 }

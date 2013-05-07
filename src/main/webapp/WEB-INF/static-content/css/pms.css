@@ -1,0 +1,64 @@
+@import 'reset.css';
+@import url('http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700');
+
+body{
+    font-size: 14px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+#appInfo{
+    float:left;
+    margin:15px 0 10px 20px;
+}
+#appInfo p{
+    font-size: 20px;
+}
+#appInfo p span{
+    color:#fff;
+    
+}
+
+#principalInfo{
+    float:right;
+    margin:15px 20px 10px 0;
+}
+#header{
+    background: url("../img/header-back.png") repeat-x; 
+}
+#menu{
+    border-top:1px solid #fff;
+    padding:10px 0 0 10px;
+}
+
+#menu ul li{
+    display:inline;
+}
+#menu ul li a{
+    display: inline-block;
+    border-radius: 5px 5px 0 0;
+    padding:10px;
+    color:#fff;
+}
+
+#menu ul li a:hover, #menu ul li a.active{
+    background-color: #fff;
+    color:#000;
+}
+
+#content{
+    min-height: 400px;
+}
+
+/* universal */
+a{
+    color:#000;
+    text-decoration: underline;
+}
+br.clear{
+    clear: both;
+}
+
+b{
+    color:#2e6e9e;
+    font-weight: bold;
+}

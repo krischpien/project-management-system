@@ -1,0 +1,35 @@
+@import 'reset.css';
+@import url('http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700');
+
+body{
+    font-size: 14px;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+div#loginArea{
+    /*width: 800px;*/
+    margin:20px;
+}
+
+#loginArea h1{
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+#loginArea h1 span{
+    background-color: #1c94c4;
+    padding:5px;
+    border-radius: 5px;
+}
+
+
+#loginArea form{
+    
+}
+#loginArea label{
+    width: 100px;
+    padding:5px;
+    display: inline-block;
+}
+#loginArea input{
+    
+}

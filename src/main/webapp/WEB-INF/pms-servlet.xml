@@ -16,17 +16,29 @@
     
     <context:annotation-config />
     <!--Další funkce anotaci - validace, konverze zprav..--> 
-    <mvc:annotation-driven/>
+    <mvc:annotation-driven conversion-service="conversionService"/>
     
     <!--Mapování statického obsahu-->
-    <mvc:resources mapping="/resources/**" location="WEB-INF/static-content/"/>
-    
-    
-    
+    <mvc:resources mapping="/resources/**" location="/WEB-INF/static-content/"/>
     
     <!--Registrace balíčků komponent - kontrolerů (@Controller)-->
-    <context:component-scan base-package="cz.vsmie.krist.pms.controllers"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.controller"/>
     
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="cz.vsmie.krist.pms.converter.UserRoleConverter"/>
+            </list>
+        </property>
+    </bean>
+    
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user"/>
+            <mvc:mapping path="/admin"/>
+            <bean id="loginInterceptor" class="cz.vsmie.krist.pms.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
     
     
     <!--Definice view resolveru (default je internalResourceViewResolver)-->
@@ -34,7 +46,7 @@
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
         <property name="definitions">
             <list>
-                <value>/WEB-INF/pages/**/tiles-defs.xml</value>
+                <value>/WEB-INF/pages/**/__tiles-defs.xml</value>
             </list>
         </property>
     </bean>
