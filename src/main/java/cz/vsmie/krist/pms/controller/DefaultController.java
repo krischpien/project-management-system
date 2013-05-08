@@ -24,4 +24,9 @@ public class DefaultController {
         return "home";
     }
     
+    @RequestMapping("/info")
+    public String showInfo(){
+        return "info";
+    }
+    
 }

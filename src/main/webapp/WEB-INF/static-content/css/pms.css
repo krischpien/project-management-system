@@ -49,6 +49,13 @@ body{
     min-height: 400px;
 }
 
+/*FORMS*/
+
+form#comment {
+/*    width: 400px;
+    height: 100px;*/
+}
+
 /* universal */
 a{
     color:#000;

@@ -4,15 +4,13 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  *
  * @author Jan Krist
  */
 @Entity
-@Table(name="project_phase")
-public class ProjectPhase implements Serializable {
+public class Phase implements Serializable {
     
     public static final Long PHASE_NEW = 1L;
     public static final Long PHASE_CREATED = 2L;

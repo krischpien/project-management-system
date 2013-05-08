@@ -18,9 +18,6 @@ final class UserRoleConverter implements Converter<String,UserRole>{
     
     Logger logger = LoggerFactory.getLogger(UserRoleConverter.class);
     
-    public UserRoleConverter(){
-        logger.warn("Creating UserRoleConverter");
-    }
 
     public UserRole convert(String id) {
         return (UserRole) userService.getRoleById(Long.parseLong(id));

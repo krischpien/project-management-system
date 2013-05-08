@@ -34,8 +34,8 @@
             <li><a href="<s:url value="/"/>" ${activePage == "index"? "class='active'" :""}>Index</a></li>
             <li><a href="<s:url value="/roleList"/>">Výpis rolí</a></li>
             <li><a href="<s:url value="/admin/user/"/>">Uživatelé</a></li>
-            <li><a href="<s:url value="/projekt/list"/>">Projekty</a></li>
-            <li><a href="">Informace</a></li>
+            <li><a href="<s:url value="/project"/>" ${activePage == "projects"? "class='active'" :""}>Projekty</a></li>
+            <li><a href="<s:url value="/info"/>" ${activePage == "info"? "class='active'" :""}>Informace</a></li>
         </ul>
     </div>
 </div>

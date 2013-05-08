@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Jan Krist
  */
 @Repository
-public class RoleDaoImpl implements RoleDao{
+public class UserRoleDaoImpl implements RoleDao{
     
     @Autowired
     SessionFactory sessionFactory;

@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -15,9 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Size;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -29,33 +26,34 @@ import org.hibernate.annotations.CascadeType;
                                                @UniqueConstraint(columnNames="email")})
 public class User implements Serializable {
 
-    
+
     @Id @GeneratedValue
     private Long id;
     
-    @Column(name="user_name", unique=true)
-    @Size(min=3, max=50, message="Uživatelské jméno musí být v rozsahu 3-50 alfanumerických znaků") //spring validace
+    @Column(name="user_name")
+//    @Size(min=3, max=50, message="Uživatelské jméno musí být v rozsahu 3-50 alfanumerických znaků") //spring validace
     private String name;
-    @Column(unique=true)
     private String email;
 //    @Column(columnDefinition="BINARY(80)") // SHA-256 hash => 32B hash + 8B salt
-    @Size(min=5, max=80, message="Uživatelské heslo musí být v rozsahu 5-80 alfanumerických znaků") //spring validace
+//    @Size(min=5, max=80, message="Uživatelské heslo musí být v rozsahu 5-80 alfanumerických znaků") //spring validace
     private String password;
-    
+    @Column(name="last_login")
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    private Date lastLogin;
+    @Column(name="last_ip")
+    private String lastIp;
+//     .::RELACE::. 
     @ManyToMany
     @JoinTable(name="user_in_role",
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="role_id"))
-    @Cascade(CascadeType.DELETE)
+    @ForeignKey(name="fk_user_role", inverseName="fk_role_user")
     private Collection<UserRole> roles = new ArrayList<UserRole>();
     
-    @Column(name="last_login")
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date lastLogin;
+    @ManyToMany(mappedBy = "authorizedUsers")
+    private Collection<Project> projects = new ArrayList<Project>();
     
-    @Column(name="last_ip")
-    private String lastIp;
-
+    
     public Long getId() {
         return id;
     }
@@ -112,6 +110,15 @@ public class User implements Serializable {
         this.lastIp = lastIp;
     }
     
+    public Collection<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Collection<Project> projects) {
+        this.projects = projects;
+    }
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {
@@ -132,7 +139,8 @@ public class User implements Serializable {
         return result;
 
     }
-    
+
+ 
     
 
 }

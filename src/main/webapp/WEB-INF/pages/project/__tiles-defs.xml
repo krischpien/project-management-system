@@ -16,20 +16,21 @@ page dir:
     <definition name="projectIndex" extends="pms.base">
         <put-attribute name="title" value="Projekty"/>
         <put-attribute name="content" value="/WEB-INF/pages/project/projectIndex.jsp"/>
+        <put-attribute name="activePage" value="projects"/>
     </definition>
 
-    <definition name="projectDetails" extends="pms.base">
-        <put-attribute name="title" value="Detaily uživatele"/>
+    <definition name="projectDetails" extends="projectIndex">
+        <put-attribute name="title" value="Detaily projektu"/>
         <put-attribute name="content" value="/WEB-INF/pages/project/projectDetails.jsp"/>
     </definition>
         
-    <definition name="projectForm" extends="pms.base">
-        <put-attribute name="title" value="Editace uživatele"/>
+    <definition name="projectForm" extends="projectIndex">
+        <put-attribute name="title" value="Projekt"/>
         <put-attribute name="content" value="/WEB-INF/pages/project/projectForm.jsp"/>
     </definition>
     
-    <definition name="projectList" extends="pms.base">
-        <put-attribute name="title" value="Výpis uživatelů"/>
+    <definition name="projectList" extends="projectIndex">
+        <put-attribute name="title" value="Výpis projektů"/>
         <put-attribute name="content" value="/WEB-INF/pages/project/projectList.jsp"/>
     </definition>
     
