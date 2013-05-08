@@ -12,7 +12,7 @@
 
 <sf:form commandName="comment" method="POST" action="${addCommentUrl}" id="comment">
     <input type="hidden" name="projectId" value="${project.id}"/>
-    <label for="commentContent">Komentář: </label><br/>
+    <label for="commentContent">Předmět: </label><sf:input path="subject"/><br/>
     <sf:textarea id="commentContent" path="content" cols="80" rows="4"/><br/>
     <input type="submit" value="Komentuj"/>
 </sf:form>
@@ -20,6 +20,6 @@
 <ul>
 <c:forEach items="${project.comments}" var="comment">
     <fmt:formatDate value="${comment.date}" pattern="dd. MM. yyyy" var="formatedDate"/>
-    <li>${comment.content} (${formatedDate})</li>
+    <li>${comment.author.name}: ${comment.content} (${formatedDate})</li>
 </c:forEach>
 </ul>

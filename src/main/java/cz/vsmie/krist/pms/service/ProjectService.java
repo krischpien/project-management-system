@@ -1,6 +1,8 @@
 package cz.vsmie.krist.pms.service;
 
+import cz.vsmie.krist.pms.dto.Comment;
 import cz.vsmie.krist.pms.dto.Project;
+import java.security.Principal;
 import java.util.Collection;
 
 /**
@@ -15,5 +17,6 @@ public interface ProjectService {
     public void saveProject(Project project);
     public void updateProject(Project project);
     public void deleteProject(Project project);
+    public void saveComment(Comment comment, Project project, Principal author);
 
 }

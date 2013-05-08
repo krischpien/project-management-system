@@ -44,7 +44,7 @@ public class UserEditController {
             return "userForm";
         }
         try{
-            userService.updateUser(user);
+            userService.updateUser(user, true);
         }
         catch(UserException ex){
             model.addAttribute("message", ex.getMessage());

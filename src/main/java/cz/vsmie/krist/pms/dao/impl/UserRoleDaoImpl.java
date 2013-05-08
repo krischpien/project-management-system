@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.RoleDao;
 import cz.vsmie.krist.pms.dto.UserRole;
-import java.util.Collection;
+import java.util.Set;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,19 +20,19 @@ public class UserRoleDaoImpl implements RoleDao{
     @Autowired
     SessionFactory sessionFactory;
 
-    public Collection<UserRole> getAll() {
-        return (Collection<UserRole>) sessionFactory.getCurrentSession().createCriteria(UserRole.class).list();
+    public Set<UserRole> getAll() {
+        return (Set<UserRole>) sessionFactory.getCurrentSession().createCriteria(UserRole.class).list();
     }
     
-    public Collection<UserRole> getMainRoles() {
+    public Set<UserRole> getMainRoles() {
         Criteria criteria = this.getCurrentSession().createCriteria(UserRole.class).add(Restrictions.or(Restrictions.idEq(2L), Restrictions.idEq(3L)));
         sessionFactory.close();
-        return (Collection<UserRole>) criteria.list();
+        return (Set<UserRole>) criteria.list();
     }
 
-    public Collection<UserRole> getAssignableRoles() {
+    public Set<UserRole> getAssignableRoles() {
         Criteria criteria = this.getCurrentSession().createCriteria(UserRole.class).add(Restrictions.gt("id", 3L));
-        return (Collection<UserRole>) criteria.list();
+        return (Set<UserRole>) criteria.list();
     }
 
     public UserRole getById(long id) {

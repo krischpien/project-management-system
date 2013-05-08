@@ -4,6 +4,8 @@
 <sf:form commandName="project" method="POST">
     <sf:hidden path="id"/>
     Název: <sf:input path="name"/><br/>
-    Obsah: <sf:textarea path="content"/><br/>
+    Obsah: <br/>
+    <sf:textarea id="projectContent" path="content"/><br/>
     <input type="submit" value="potvrdit"/>
+    
 </sf:form>

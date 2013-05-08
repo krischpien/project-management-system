@@ -46,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor{
             // aktualizaca uzivatele s novymi udaji o aktualnim prihlaseni
             user.setLastLogin(new Date());
             user.setLastIp(remoteAddr);
-            userService.updateUser(user);
+            userService.updateUser(user, false);
             session.setAttribute("loginDateUpdated",true);
             logger.info("Přihlášen uživatel: " + principalName + ", z " + remoteAddr);
         }

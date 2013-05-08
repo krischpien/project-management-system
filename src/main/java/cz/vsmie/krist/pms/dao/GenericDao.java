@@ -2,6 +2,8 @@ package cz.vsmie.krist.pms.dao;
 
 import java.util.Collection;
 
+
+
 /**
  *
  * @author Jan Krist

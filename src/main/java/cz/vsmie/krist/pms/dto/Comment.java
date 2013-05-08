@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 
 /**
@@ -25,6 +27,11 @@ public class Comment implements Serializable {
     @Column(name="date_comment") 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date date;
+    //     .::RELACE::. 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User author;
+
 
     
     public Long getId() {
@@ -59,6 +66,15 @@ public class Comment implements Serializable {
         this.date = date;
     }
     
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {
@@ -78,6 +94,7 @@ public class Comment implements Serializable {
         result = prime * result + ((this.id == null)? 0 : this.id.hashCode());
         return result;
     }
-    
+
+   
 
 }

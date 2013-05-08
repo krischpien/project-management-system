@@ -5,6 +5,7 @@ import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.service.ProjectService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,8 @@ public class ProjectEditController {
     
     @RequestMapping(value="/edit/edit.do", method= RequestMethod.POST)
     public String updateProject(@ModelAttribute Project project, Model model){
+        Project persistedProject = projectService.getProjectById(project.getId());
+        project.setComments(persistedProject.getComments());
         projectService.updateProject(project);
         return "redirect:/project/details/"+project.getId()+"-"+project.getName();
     }
@@ -76,11 +79,12 @@ public class ProjectEditController {
     }
     
     @RequestMapping(value="/edit/addComment.do", method= RequestMethod.POST)
-    public String saveComment(@ModelAttribute Comment comment, @RequestParam("projectId") Project project){
+    public String saveComment(@ModelAttribute Comment comment, @RequestParam("projectId") Project project, HttpServletRequest request){
         logger.info("adding comments");
-        comment.setDate(new Date());
-        project.getComments().add(comment);
-        projectService.updateProject(project);
+//        comment.setDate(new Date());
+//        project.getComments().add(comment);
+//        projectService.updateProject(project);
+        projectService.saveComment(comment, project, request.getUserPrincipal());
         return "redirect:/project/details/"+project.getId()+"-"+project.getName();
     }
     

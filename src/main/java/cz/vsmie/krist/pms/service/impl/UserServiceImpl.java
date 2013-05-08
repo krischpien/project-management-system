@@ -7,11 +7,11 @@ import cz.vsmie.krist.pms.dto.UserRole;
 import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
 import cz.vsmie.krist.pms.service.UserService;
-import java.util.ArrayList;
 import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +26,8 @@ public class UserServiceImpl implements UserService{
     UserDao userDao;
     @Autowired
     RoleDao roleDao;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     
@@ -45,6 +47,7 @@ public class UserServiceImpl implements UserService{
             throw new UserEmailNotAvailable(user.getEmail());
         }
         else{
+            encodePassword(user);
             userDao.save(user);
         }
     }
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void updateUser(User updatedUser) throws UserNameNotAvailable, UserEmailNotAvailable {
+    public void updateUser(User updatedUser, boolean encodePassword) throws UserNameNotAvailable, UserEmailNotAvailable {
         User userByName = userDao.getByName(updatedUser.getName());
         User userByEmail = userDao.getByEmail(updatedUser.getEmail());
         if(userByName != null && !userByName.equals(updatedUser)){
@@ -81,7 +84,16 @@ public class UserServiceImpl implements UserService{
         if(userByEmail != null && !userByEmail.equals(updatedUser)){
             throw new UserEmailNotAvailable(updatedUser.getEmail());
         }
+        if(encodePassword){
+            encodePassword(updatedUser);
+        }
         userDao.update(updatedUser);
+    }
+    
+    private void encodePassword(User user){
+        String plainPassword = user.getPassword();
+        String cryptedPassword = passwordEncoder.encode(plainPassword);
+        user.setPassword(cryptedPassword);
     }
     
     

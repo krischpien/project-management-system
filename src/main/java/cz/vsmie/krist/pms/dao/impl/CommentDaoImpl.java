@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.CommentDao;
 import cz.vsmie.krist.pms.dto.Comment;
-import java.util.Collection;
+import java.util.Set;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class CommentDaoImpl implements CommentDao{
         return (Comment) getCurrentSession().get(Comment.class, id);
     }
 
-    public Collection<Comment> getAll() {
-        return (Collection<Comment>) getCurrentSession().createCriteria(Comment.class).list();
+    public Set<Comment> getAll() {
+        return (Set<Comment>) getCurrentSession().createCriteria(Comment.class).list();
     }
 
     public void save(Comment comment) {

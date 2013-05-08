@@ -1,8 +1,8 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +34,7 @@ public class Requirement implements Serializable {
             joinColumns=@JoinColumn(name="requirement_id"),
             inverseJoinColumns=@JoinColumn(name="comment_id"))
     @ForeignKey(name="fk_requirement_comment", inverseName="fk_comment_requirement")
-    private Collection<Comment> comments = new ArrayList<Comment>();
+    private Collection<Comment> comments = new HashSet<Comment>();
     
     @ManyToOne
     @JoinColumn(name="phase_id")

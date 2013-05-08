@@ -1,12 +1,11 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -55,14 +54,14 @@ public class Project implements Serializable {
             joinColumns=@JoinColumn(name="project_id"), 
             inverseJoinColumns=@JoinColumn(name="user_id"))
     @ForeignKey(name="fk_project_user", inverseName="fk_user_project")
-    private Collection<User> authorizedUsers = new ArrayList<User>();
+    private Collection<User> authorizedUsers = new HashSet<User>();
 
-    @OneToMany(orphanRemoval=true, fetch= FetchType.EAGER)
+    @OneToMany(orphanRemoval=true)
     @JoinTable(name="project_comments", joinColumns=@JoinColumn(name="project_id"),inverseJoinColumns=@JoinColumn(name="comment_id"))
     @ForeignKey(name="fk_project_comment", inverseName="fk_comment_project")
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
     @OrderBy("date desc")
-    private Collection<Comment> comments = new ArrayList<Comment>();
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    private Collection<Comment> comments = new HashSet<Comment>();
     
     @ManyToOne
     @JoinColumn(name="phase_id")

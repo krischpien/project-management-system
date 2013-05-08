@@ -1,8 +1,8 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +23,9 @@ public class UserRole implements Serializable {
     @Column(name="role_name")
     private String name;
     private String description;
+    //     .::RELACE::. 
     @ManyToMany(mappedBy="roles")
-    private Collection<User> users = new ArrayList<User>();
+    private Collection<User> users = new HashSet<User>();
 
     public long getId() {
         return id;
