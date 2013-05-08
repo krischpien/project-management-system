@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.RequirementDao;
 import cz.vsmie.krist.pms.dto.Requirement;
-import java.util.Set;
+import java.util.Collection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class RequirementDaoImpl implements RequirementDao{
         return (Requirement) getCurrentSession().get(Requirement.class, id);
     }
 
-    public Set<Requirement> getAll() {
-        return (Set<Requirement>) getCurrentSession().createCriteria(Requirement.class).list();
+    public Collection<Requirement> getAll() {
+        return (Collection<Requirement>) getCurrentSession().createCriteria(Requirement.class).list();
     }
 
     public void save(Requirement requirement) {

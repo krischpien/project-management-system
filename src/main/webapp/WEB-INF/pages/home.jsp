@@ -11,7 +11,7 @@
     
     <a href="${adminUrl}">admin</a>
     <a href="${adminTestUrl}">admin test</a>
-    <fmt:formatDate value="${sessionScope.lastDate}" pattern="dd. MM., yyyy" var="formatedLastDate"/>
+    <fmt:formatDate value="${sessionScope.lastLogin}" pattern="dd. MM., yyyy" var="formatedLastDate"/>
     <p>Last login date: ${formatedLastDate}</p>
     <p>Last ip: ${sessionScope.lastIp}</p>
 </div>

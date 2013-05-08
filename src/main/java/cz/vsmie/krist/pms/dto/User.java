@@ -1,7 +1,7 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
 import javax.persistence.Column;
@@ -48,10 +48,10 @@ public class User implements Serializable {
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="role_id"))
     @ForeignKey(name="fk_user_role", inverseName="fk_role_user")
-    private Collection<UserRole> roles = new HashSet<UserRole>();
+    private Set<UserRole> roles = new HashSet<UserRole>();
     
     @ManyToMany(mappedBy = "authorizedUsers")
-    private Collection<Project> projects = new HashSet<Project>();
+    private Set<Project> projects = new HashSet<Project>();
     
     
     public Long getId() {
@@ -86,11 +86,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Collection<UserRole> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<UserRole> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
     }
 
@@ -110,11 +110,11 @@ public class User implements Serializable {
         this.lastIp = lastIp;
     }
     
-    public Collection<Project> getProjects() {
+    public Set<Project> getProjects() {
         return projects;
     }
 
-    public void setProjects(Collection<Project> projects) {
+    public void setProjects(Set<Project> projects) {
         this.projects = projects;
     }
     

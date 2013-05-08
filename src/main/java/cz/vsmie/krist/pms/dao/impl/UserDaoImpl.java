@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.UserDao;
 import cz.vsmie.krist.pms.dto.User;
-import java.util.Set;
+import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
@@ -43,8 +43,8 @@ public class UserDaoImpl implements UserDao{
         return (User) criteria.add(Restrictions.eq("email", email)).uniqueResult();
     }
     
-    public Set<User> getAll() {
-        Set<User> users = (Set<User>) this.getCurrentSession().createCriteria(User.class).list();
+    public Collection<User> getAll() {
+        Collection<User> users = (Collection<User>) this.getCurrentSession().createCriteria(User.class).list();
         for(User u : users){
             logger.info("Getting user: " + u.getName());
         }

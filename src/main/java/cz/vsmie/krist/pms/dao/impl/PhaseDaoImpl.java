@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.PhaseDao;
 import cz.vsmie.krist.pms.dto.Phase;
-import java.util.Set;
+import java.util.Collection;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class PhaseDaoImpl implements PhaseDao{
         return (Phase) getCurrentSession().get(Phase.class, id);
     }
 
-    public Set<Phase> getAll() {
-        return (Set<Phase>) getCurrentSession().createCriteria(Phase.class).list();
+    public Collection<Phase> getAll() {
+        return (Collection<Phase>) getCurrentSession().createCriteria(Phase.class).list();
     }
 
     public void save(Phase phase) {

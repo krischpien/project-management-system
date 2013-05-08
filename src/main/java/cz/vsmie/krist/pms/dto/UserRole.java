@@ -1,7 +1,7 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ public class UserRole implements Serializable {
     private String description;
     //     .::RELACE::. 
     @ManyToMany(mappedBy="roles")
-    private Collection<User> users = new HashSet<User>();
+    private Set<User> users = new HashSet<User>();
 
     public long getId() {
         return id;
@@ -51,11 +51,11 @@ public class UserRole implements Serializable {
         this.description = description;
     }
 
-    public Collection<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Collection<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
     }
 

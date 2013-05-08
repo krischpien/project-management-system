@@ -4,6 +4,7 @@
 
 <sf:form commandName="requirement" method="POST">
     <sf:hidden path="id"/>
+    <input type="hidden" name="projectId" value="${projectId}"/>
     Název: <sf:input path="name"/><br/>
     Obsah: <sf:textarea path="content" id="requirementContent"/><br/>
     <input type="submit" value="Uložit"/>

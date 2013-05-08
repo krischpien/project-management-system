@@ -33,14 +33,14 @@
             </list>
         </property>
     </bean>
-    
+<!--    
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/user"/>
             <mvc:mapping path="/admin"/>
             <bean id="loginInterceptor" class="cz.vsmie.krist.pms.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
     
     
     <!--Definice view resolveru (default je internalResourceViewResolver)-->

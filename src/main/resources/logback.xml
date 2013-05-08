@@ -32,8 +32,8 @@
       <appender-ref ref="STDOUT"/>
   </logger>-->
   
-  <logger name="cz.vsmie.krist.pms" level="debug">
-      <appender-ref ref="FILE"/>
+  <logger name="cz.vsmie.krist.pms" level="debug" additivity="false">
+      <appender-ref ref="STDOUT"/>
   </logger>
 
   <root level="INFO">

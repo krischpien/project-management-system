@@ -3,13 +3,6 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
-<!--
-layout dir:
-/WEB-INF/pages/layout/*.jsp
-page dir:
-/WEB-INF/pages/*.jsp
--->
-
 <tiles-definitions>
     
     <!--jednotlive stranky rozsirene z _layout/__tiles-defs.xml-->
@@ -32,6 +25,16 @@ page dir:
     <definition name="projectList" extends="projectIndex">
         <put-attribute name="title" value="Výpis projektů"/>
         <put-attribute name="content" value="/WEB-INF/pages/project/projectList.jsp"/>
+    </definition>
+    
+    <definition name="requirementForm" extends="projectIndex">
+        <put-attribute name="title" value="Nový požadavek"/>
+        <put-attribute name="content" value="/WEB-INF/pages/project/requirementForm.jsp"/>
+    </definition>
+    
+    <definition name="requirementDetails" extends="projectIndex">
+        <put-attribute name="title" value="Detaily požadavku"/>
+        <put-attribute name="content" value="/WEB-INF/pages/project/requirementDetails.jsp"/>
     </definition>
     
 </tiles-definitions>

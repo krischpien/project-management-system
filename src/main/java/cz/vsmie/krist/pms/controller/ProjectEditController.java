@@ -79,13 +79,13 @@ public class ProjectEditController {
     }
     
     @RequestMapping(value="/edit/addComment.do", method= RequestMethod.POST)
-    public String saveComment(@ModelAttribute Comment comment, @RequestParam("projectId") Project project, HttpServletRequest request){
+    public String saveComment(@ModelAttribute Comment comment, @RequestParam("projectId") Long projectId, HttpServletRequest request){
         logger.info("adding comments");
 //        comment.setDate(new Date());
 //        project.getComments().add(comment);
 //        projectService.updateProject(project);
-        projectService.saveComment(comment, project, request.getUserPrincipal());
-        return "redirect:/project/details/"+project.getId()+"-"+project.getName();
+        projectService.saveComment(comment, projectId, request.getUserPrincipal().getName());
+        return "redirect:/project/details/"+projectId+"-project";
     }
     
     @RequestMapping("/list")

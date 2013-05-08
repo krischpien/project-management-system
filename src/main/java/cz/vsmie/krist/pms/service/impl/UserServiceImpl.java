@@ -8,6 +8,7 @@ import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
 import cz.vsmie.krist.pms.service.UserService;
 import java.util.Collection;
+import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,12 @@ public class UserServiceImpl implements UserService{
             encodePassword(updatedUser);
         }
         userDao.update(updatedUser);
+    }
+    
+    public void updateLastLogin(String username, String hostIp){
+        User loggedUser = userDao.getByName(username);
+        loggedUser.setLastIp(hostIp);
+        loggedUser.setLastLogin(new Date());
     }
     
     private void encodePassword(User user){

@@ -1,9 +1,9 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +18,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -54,14 +56,21 @@ public class Project implements Serializable {
             joinColumns=@JoinColumn(name="project_id"), 
             inverseJoinColumns=@JoinColumn(name="user_id"))
     @ForeignKey(name="fk_project_user", inverseName="fk_user_project")
-    private Collection<User> authorizedUsers = new HashSet<User>();
+    private Set<User> authorizedUsers = new HashSet<User>();
 
     @OneToMany(orphanRemoval=true)
     @JoinTable(name="project_comments", joinColumns=@JoinColumn(name="project_id"),inverseJoinColumns=@JoinColumn(name="comment_id"))
     @ForeignKey(name="fk_project_comment", inverseName="fk_comment_project")
-    @OrderBy("date desc")
     @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
-    private Collection<Comment> comments = new HashSet<Comment>();
+    @OrderBy("createDate desc")
+    private Set<Comment> comments = new HashSet<Comment>();
+    
+    @OneToMany
+    @JoinTable(name="project_requirements", joinColumns=@JoinColumn(name="project_id"), inverseJoinColumns=@JoinColumn(name="requirement_id"))
+    @ForeignKey(name="fk_project_requirement", inverseName="fk_requirement_project")
+    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
+    @OrderBy("createDate desc")
+    private Set<Requirement> requirements = new HashSet<Requirement>();
     
     @ManyToOne
     @JoinColumn(name="phase_id")
@@ -156,20 +165,28 @@ public class Project implements Serializable {
         this.deliveryDate = deliveryDate;
     }
 
-    public Collection<User> getAuthorizedUsers() {
+    public Set<User> getAuthorizedUsers() {
         return authorizedUsers;
     }
 
-    public void setAuthorizedUsers(Collection<User> authorizedUsers) {
+    public void setAuthorizedUsers(Set<User> authorizedUsers) {
         this.authorizedUsers = authorizedUsers;
     }
 
-    public Collection<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(Collection<Comment> comments) {
+    public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+    
+    public Set<Requirement> getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(Set<Requirement> requirements) {
+        this.requirements = requirements;
     }
 
     public Phase getPhase() {
@@ -199,5 +216,7 @@ public class Project implements Serializable {
         result = prime * result + ((this.id == null)? 0 : this.id.hashCode());
         return result;
     }
+
+   
     
 }

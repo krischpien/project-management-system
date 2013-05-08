@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -24,13 +25,17 @@ public class Comment implements Serializable {
     private String subject;
     @Column(columnDefinition="TEXT")
     private String content;
-    @Column(name="date_comment") 
+    
+    @Column(name="date_created") 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date date;
+    private Date createDate;
     //     .::RELACE::. 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User author;
+    
+
+    private Project project;
 
 
     
@@ -58,12 +63,12 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreateDate(Date date) {
+        this.createDate = date;
     }
     
     public User getAuthor() {

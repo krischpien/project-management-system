@@ -23,7 +23,8 @@ public class ProjectDaoImpl implements ProjectDao{
     SessionFactory sessionFactory;
 
     public Project getById(Long id) {
-        Criteria criteria = getCurrentSession().createCriteria(Project.class).add(Restrictions.idEq(id)).setFetchMode("comments", FetchMode.JOIN);
+        Criteria criteria = getCurrentSession().createCriteria(Project.class).add(Restrictions.idEq(id));
+//                .setFetchMode("comments", FetchMode.JOIN);
         return (Project) criteria.uniqueResult();
     }
 
