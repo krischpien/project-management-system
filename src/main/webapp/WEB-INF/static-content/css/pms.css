@@ -33,7 +33,13 @@ h1{
     border-radius: 0 0 20px;
 }
 
+h2{
+    margin-bottom: 5px;
+}
 
+h3{
+    margin:7px 0;
+}
 
 #appInfo{
     float:left;
@@ -136,7 +142,7 @@ form input[type=text], form input[type=password]{
    margin-right:2px;
    height: 34px;
    overflow: hidden;
-   background: url("../img/option_select.jpg") no-repeat left #eee;
+   background: url("../img/option_select.jpg") no-repeat left #6ea7d2;
    margin-bottom: 10px;
 }
 #userForm #custom-select select{                                                                                                                                                                                                                    
@@ -145,7 +151,7 @@ form input[type=text], form input[type=password]{
    padding: 5px;
    padding-left: 35px;
    font-size: 16px;
-   border: 1px solid #ccc;
+   border: 1px solid #fff;
    height: 34px;
 }                                                                                                           
 #custom-select:focus{
@@ -200,3 +206,26 @@ form input[type=text], form input[type=password]{
     float: right;
 }
 
+a.actionButton{
+    display: inline-block;
+    width:150px;
+    padding:0 10px;
+    line-height: 100px;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+    text-decoration: none;
+    background: url('../img/bg_glass.png');
+}
+
+a.actionButton:hover{
+    background: url('../img/bg_blue_1x100.png');
+    color:#fff;
+}
+
+span.on{
+    color: #4bbd28;
+}
+span.off{
+    color: #d52205;
+}

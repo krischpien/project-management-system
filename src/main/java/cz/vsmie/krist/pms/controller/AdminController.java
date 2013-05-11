@@ -1,15 +1,13 @@
 package cz.vsmie.krist.pms.controller;
 
-import cz.vsmie.krist.pms.dto.User;
-import cz.vsmie.krist.pms.exception.UserException;
 import cz.vsmie.krist.pms.service.PmsActiveService;
+import cz.vsmie.krist.pms.service.PmsCronScheduler;
+import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.UserService;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,8 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+    
     @Autowired
-    PmsActiveService pmsCronScheduler;
+    @Qualifier("pmsMailService")
+    PmsMailService pmsMailService;
+    
+    @Autowired
+    @Qualifier("pmsCronSchedulerService")
+    PmsCronScheduler pmsCronScheduler;
     
     @Autowired
     UserService userService;
@@ -39,17 +43,32 @@ public class AdminController {
     @RequestMapping("/index")
     public String showAdminConsole(Model model){
         model.addAttribute("cronActive", pmsCronScheduler.isActive());
+        model.addAttribute("mailActive", pmsMailService.isActive());
         return "adminIndex";
     }
-    @RequestMapping("/cron/{turn}")
-    public String modifyCron(@PathVariable String turn){
+    @RequestMapping("/service/{serviceName}/{turn}")
+    public String modifyService(@PathVariable String serviceName, @PathVariable String turn){
+        PmsActiveService service = null;
+        if("cron".equals(serviceName)){
+            service = pmsCronScheduler;
+        }
+        else if("mail".equals(serviceName)){
+            service = (PmsActiveService) pmsMailService;
+        }
+        
+        if(service == null){
+            return "redirect:/admin/index?serviceNotFound";
+        }
         if("off".equals(turn)){
-            pmsCronScheduler.setActive(false);
+            service.setActive(false);
+            return "redirect:/admin/index";
         }
         else{
-            pmsCronScheduler.setActive(true);
+            service.setActive(true);
+            return "redirect:/admin/index";
         }
-        return "redirect:/admin/index";
+        
+        
     }
     
     

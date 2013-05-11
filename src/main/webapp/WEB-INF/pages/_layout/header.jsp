@@ -14,10 +14,12 @@
     <div id="principalInfo">
     <sec:authorize access="isAuthenticated()">
         
-            <span class="ui-icon ui-icon-person" style="display: inline-block"></span>
+            <span class="inline-icon ui-icon ui-icon-person white"></span>
             <b>${username}</b> 
             (<a href="<s:url value="/logout"/>" title="odhlásit uživatele">odhlásit</a>) 
-
+            <br/>
+            <span class="inline-icon ui-icon ui-icon-calculator white"></span>
+            ${sessionScope.lastIp}
            <sec:authorize access="hasRole('ROLE_ADMIN')">
                <div id="adminPanel" style="display:none">
                 <a href="<s:url value="/admin/uzivatel/list"/>">Uživatelé</a>            
@@ -36,17 +38,20 @@
             <sec:authorize access="isAnonymous()"><p><a href="<s:url value="/loginout"/>">Přihlásit se</a></p></sec:authorize>
         </div>
     
+        <s:url value="/admin" var="adminUrl"/>
+    <s:url value="/admin/test" var="adminTestUrl"/>
     
         
     <br class="clear"/>
     
     <div id="menu">
         <ul>
-            <li><a href="<s:url value="/"/>" ${activePage == "index"? "class='active'" :""}>Index</a></li>
+            <li><a href="<s:url value="/admin/index"/>" ${activePage == "admin" ? "class='active'" :""} style="color:red;">ADMIN</a></li>
+            <li><a href="<s:url value="/"/>" ${activePage == "index" ? "class='active'" :""}>Index</a></li>
             <li><a href="<s:url value="/roleList"/>">Výpis rolí</a></li>
             <li><a href="<s:url value="/admin/user/"/>">Uživatelé</a></li>
-            <li><a href="<s:url value="/project"/>" ${activePage == "projects"? "class='active'" :""}>Projekty</a></li>
-            <li><a href="<s:url value="/info"/>" ${activePage == "info"? "class='active'" :""}>Informace</a></li>
+            <li><a href="<s:url value="/project"/>" ${activePage == "projects" ? "class='active'" :""}>Projekty</a></li>
+            <li><a href="<s:url value="/info"/>" ${activePage == "info" ? "class='active'" :""}>Informace</a></li>
         </ul>
         
     </div>

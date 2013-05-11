@@ -16,6 +16,7 @@ page dir:
     <definition name="adminIndex" extends="pms.base">
         <put-attribute name="title" value="Administrátorská konzole"/>
         <put-attribute name="content" value="/WEB-INF/pages/admin/adminIndex.jsp"/>
+        <put-attribute name="activePage" value="admin"/>
     </definition>
 
     

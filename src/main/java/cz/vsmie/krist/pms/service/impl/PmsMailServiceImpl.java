@@ -24,13 +24,15 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * @author Jan Krist
  */
 
-@Service
-public class PmsMailServiceImpl extends PmsActiveService implements PmsMailService{
+@Service("pmsMailService")
+public class PmsMailServiceImpl implements PmsMailService{
     
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
     private VelocityEngine velocityEngine;
+    
+    private boolean active = true;
     
     private Logger logger = LoggerFactory.getLogger(PmsMailServiceImpl.class);
     
@@ -69,6 +71,14 @@ public class PmsMailServiceImpl extends PmsActiveService implements PmsMailServi
             }
 
             logger.debug("Odesílám na: " + to);
+    }
+    
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
 }

@@ -12,7 +12,7 @@
     <label for="budget">Rozpočet:</label><sf:input path="budget" id="budget"/><br/>
     </div>
     
-    <label for="dateDeadline">Termín:</label><sf:input path="dateDeadline" id="date"/><br/>
+    <label for="dateDeadline">Termín:</label><sf:input path="dateDeadline" id="date" readonly="true"/><br/>
     <label for="note">Poznámka:</label><sf:textarea path="note"/><br/>
     <h2>Oprávnění k projektu:</h2>
     <div id="authorizedUsers">

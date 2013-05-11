@@ -2,6 +2,7 @@ package cz.vsmie.krist.pms.service;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.dto.UserRole;
 import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
+import cz.vsmie.krist.pms.exception.UserException;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
 import java.util.Collection;
 
@@ -30,6 +31,14 @@ public interface UserService {
      */
     public User getUserByName(String name);
     
+    
+    /**
+     * Vyhledá uživatele podle emailu
+     * @param email email uživatele
+     * @return uživatel
+     */
+    public User getUserByEmail(String email);
+    
     /**
      * Vyhledá všechny role v databázi
      * @param assignable <li><code>true</code>: vrátí základní role (Zákazník, Dodavatel)</li><li><code>false</code>: vrátí ostatní</li>
@@ -50,10 +59,9 @@ public interface UserService {
      * zašifruje uživatelské heslo.
      * @param user uživatel
      * @param encodePassword <code>true</code>: zašifrovat heslo
-     * @throws UserNameNotAvailable uživatelské jméno je již v databázi
-     * @throws UserEmailNotAvailable uživatelská adresa je již v databázi
+     * @throws UserException v prípadě duplicitního uživatelského jména, nebo e-mailové adresy
      */
-    public void updateUser(User user, boolean encodePassword) throws UserNameNotAvailable, UserEmailNotAvailable;
+    public void updateUser(User user, boolean encodePassword) throws UserException;
     
     /**
      * Aktualizuje uživatelské údaje o posledním připojení.

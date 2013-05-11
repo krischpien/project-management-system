@@ -5,7 +5,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <s:url value="/project/edit/addComment.do" var="addCommentUrl"/>
 
-<h1>Projekt '${project.name}'</h1>
+<h1>Projekty &raquo; Projekt <b>'${project.name}'</b></h1>
 <h2>Založen: </h2>
 <p>${project.dateCreate}</p>
 <h2>Popis projektu (obsah):</h2>

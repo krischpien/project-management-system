@@ -3,16 +3,10 @@ package cz.vsmie.krist.pms.service;
  *
  * @author Jan Krist
  */
-public abstract class PmsActiveService{
+public interface PmsActiveService{
     
-    private boolean active = true;
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    public boolean isActive();
+    public void setActive(boolean active);
+    
 
 }

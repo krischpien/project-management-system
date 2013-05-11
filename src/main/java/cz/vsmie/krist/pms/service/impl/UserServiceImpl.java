@@ -5,6 +5,7 @@ import cz.vsmie.krist.pms.dao.UserDao;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.dto.UserRole;
 import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
+import cz.vsmie.krist.pms.exception.UserException;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.UserService;
@@ -64,6 +65,10 @@ public class UserServiceImpl implements UserService{
     public User getUserByName(String name) {
         return userDao.getByName(name);
     }
+    
+    public User getUserByEmail(String email){
+        return userDao.getByEmail(email);
+    }
 
     public Collection<UserRole> getAllRoles(boolean assignable) {
         if(assignable){
@@ -80,7 +85,7 @@ public class UserServiceImpl implements UserService{
         userDao.delete(user);
     }
 
-    public void updateUser(User updatedUser, boolean encodePassword) throws UserNameNotAvailable, UserEmailNotAvailable {
+    public void updateUser(User updatedUser, boolean encodePassword) throws UserException {
         User userByName = userDao.getByName(updatedUser.getName());
         User userByEmail = userDao.getByEmail(updatedUser.getEmail());
         if(userByName != null && !userByName.equals(updatedUser)){

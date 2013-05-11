@@ -6,7 +6,7 @@ import cz.vsmie.krist.pms.dto.User;
  *
  * @author Jan Krist
  */
-public interface PmsMailService {
+public interface PmsMailService extends PmsActiveService{
     
     public void sendCreateUserNotice(User user);
 

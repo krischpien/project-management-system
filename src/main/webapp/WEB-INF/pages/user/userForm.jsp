@@ -19,66 +19,58 @@
         </div>
         <br class="clear"/>
         <sf:hidden path="id"/>
-        <label for="name">Jméno:</label><sf:input path="name"/><br/>
-        <label for="email">Email: </label><sf:input path="email"/><br/>
-        <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="password info"></span><br/>
-        <label for="passwordAgain">Heslo znovu: </label><input id="passwordAgain" name="passwordAgain" type="password"/><span class="passwordAgain info"></span><br/>
+        <label for="name">Jméno:</label><sf:input path="name" onchange="checkUserName()" /><span id="nameInfo"><sf:errors path="name"/></span><br/>
+        <label for="email">Email: </label><sf:input path="email" onchange="checkUserEmail()"/><span id="emailInfo"><sf:errors path="email"/></span><br/>
+        <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="passwordInfo"><sf:errors path="password"/></span><br/>
+        <label for="passwordAgain">Heslo znovu: </label><input id="passwordAgain" name="passwordAgain" type="password"/><span class="passwordAgainInfo"></span><br/>
         
-        <label for="roles">Role: </label><br/>
+        <label for="roles"><h2>Role: </h2></label><br/>
         <div id="assignableRoles">
         <sf:checkboxes path="roles" items="${assignableRoles}" itemValue="id" itemLabel="description"/>
         </div>
         <br/>
 
         <input type="submit" value="uložit"/><br/>
-        <sf:errors path="*" cssClass="errorsBox" /><br/>
     </sf:form>
+        <p>Odpověď:</p>
         <p id="info"></p>
 </div>
     
     <script>
         $("#assignableRoles").buttonset();
         
-        
-        var formSubmit = $("form#userForm input[type=submit]");
-//        disableForm();
-        
-        function disableForm(){
-            formSubmit.attr("disabled", true);
-            formSubmit.attr("title", "Nemáte správně vyplněna všechna potřebná pole")
+        function checkUserName(){
+            var username = $("#name").val();
+            $.ajax({
+            type: "GET",
+            url: "<s:url value="/ajax/checkUserName/"/>"+username,
+            success: function(response){
+            // vse ok:
+                $('#nameInfo').html(response);
+                
+            },
+            error: function(e){
+                $('#info').html(e);
+            }
+        });
         }
         
-        function enableForm(){
-            formSubmit.attr("disabled", false);
-            formSubmit.attr("title", "")
+        function checkUserEmail(){
+            var email = $("#email").val();
+            $.ajax({
+            type: "GET",
+            url: "<s:url value="/ajax/checkUserEmail/"/>",
+            data:"email="+email,
+            success: function(response){
+            // vse ok:
+                $('#emailInfo').html(response);
+                
+            },
+            error: function(e){
+                $('#info').html(e);
+            }
+        });
         }
-        
-        
-        $("input#password").change(function(){
-            var pass = $(this).val();
-            var errElement = $("span.password");
-            if(pass.length <5){
-                errElement.text("Příliš krátké heslo");
-                disableForm();
-            } 
-            else{
-                errElement.text("");
-                enableForm();
-            }
-        })
-        $("input#passwordAgain").change(function(){
-            var errElement = $("span.passwordAgain");
-            var pass = $("input#password").val();
-            var passCheck = $(this).val();
-            if(pass != passCheck){
-                errElement.text("Hesla se neshodují");
-                disableForm();
-            }
-            else{
-                errElement.text("");
-                enableForm();
-            }
-        })
         
     </script>    
     
