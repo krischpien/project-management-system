@@ -3,6 +3,7 @@ package cz.vsmie.krist.pms.controller;
 import cz.vsmie.krist.pms.dto.Comment;
 import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.service.ProjectService;
+import cz.vsmie.krist.pms.service.UserService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +31,13 @@ public class ProjectEditController {
     
     @Autowired
     ProjectService projectService;
+    @Autowired
+    UserService userService;
     
     Logger logger = LoggerFactory.getLogger(ProjectEditController.class);
     
     @InitBinder
     public void dateBinder(WebDataBinder binder) {
-        
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
         binder.registerCustomEditor(Date.class, editor);
@@ -48,19 +50,20 @@ public class ProjectEditController {
     
     @RequestMapping("/edit/newProject.do")
     public String showProjectForm(@ModelAttribute Project project,Model model){
+        populateUsers(model);
         return "projectForm";
     }
     
     @RequestMapping("/edit/edit.do")
-    public String editProject(@ModelAttribute Project project, Model model, @RequestParam("pid") Long pid){
+    public String editProject(Model model, @RequestParam("pid") Long pid){
+        populateUsers(model);
         model.addAttribute("project", projectService.getProjectById(pid));
         return "projectForm";
     }
     
     @RequestMapping(value="/edit/edit.do", method= RequestMethod.POST)
     public String updateProject(@ModelAttribute Project project, Model model){
-        Project persistedProject = projectService.getProjectById(project.getId());
-        project.setComments(persistedProject.getComments());
+        logger.debug(" __::__ Assigned users: " + project.getAuthorizedUsers());
         projectService.updateProject(project);
         return "redirect:/project/details/"+project.getId()+"-"+project.getName();
     }
@@ -92,6 +95,11 @@ public class ProjectEditController {
     public String showProjectList(Model model){
         model.addAttribute("projectList", projectService.getAllProjects());
         return "projectList";
+    }
+    
+    
+    private void populateUsers(Model model){
+        model.addAttribute("allUsers", userService.getAllUsers());
     }
 
 }

@@ -1,29 +1,39 @@
 @import 'reset.css';
-@import url('http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700');
 
 body{
-    font-size: 14px;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: "Century Gothic", sans-serif;
+    background-color: #d0e5f5;
 }
 
 div#loginArea{
-    /*width: 800px;*/
-    margin:20px;
+    width: 600px;
+    padding:50px;
+    background-color: #f4f4f4;
+    /*border:1px solid #aaaaaa;*/
+    box-shadow: 2px 2px 5px #000;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -350px;
 }
 
 #loginArea h1{
     font-size: 20px;
     margin-bottom: 30px;
+    text-align: center;
 }
 #loginArea h1 span{
-    background-color: #1c94c4;
+    background-color: #d0e5f5;
     padding:5px;
     border-radius: 5px;
 }
 
 
 #loginArea form{
-    
+    width:300px;
+    margin:auto;
 }
 #loginArea label{
     width: 100px;
@@ -31,5 +41,23 @@ div#loginArea{
     display: inline-block;
 }
 #loginArea input{
-    
+    border-radius: 5px;
+    border:1px solid #d0e5f5;
+    padding:5px;
 }
+input[type=submit]{
+    display: block;
+    width:100px;
+    /*margin:10px auto 0;*/
+}
+
+input[type=submit]:hover{
+    cursor:pointer;
+    border:none;
+    color:#1c94c4;
+}
+
+#loginArea form br{
+    margin-bottom: 15px;
+}
+

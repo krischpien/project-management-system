@@ -1,8 +1,6 @@
 package cz.vsmie.krist.pms.util;
 
-import java.security.Principal;
 import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

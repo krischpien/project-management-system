@@ -77,6 +77,17 @@ public class UserEditController {
             return "redirect:/admin/user/details/"+user.getName();
     }
     
+    @RequestMapping(value="/edit/deleteUser.do", method= RequestMethod.POST)
+    public String deleteUser(@RequestParam("deletedUserId") Long uid, Model model){
+        User user = userService.getUserById(uid);
+        if(user == null){
+            model.addAttribute("message", "Uživatel s id " + uid +" nebyl nalezen");
+            return "userList";
+        }
+        userService.deleteUser(user);
+        return "redirect:/admin/user/list?deleted=ok&name="+user.getName();
+    }
+    
     @RequestMapping("/details/{name}")
     public String showUserDetails(@PathVariable String name, Model model){
             User user = userService.getUserByName(name);

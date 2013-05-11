@@ -7,6 +7,7 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:task="http://www.springframework.org/schema/task"
 
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -15,6 +16,8 @@
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+
 ">
     
 
@@ -23,10 +26,21 @@
     <context:component-scan base-package="cz.vsmie.krist.pms.dao"/>
     <!--Registrace balíčků služeb (@Service) -->
     <context:component-scan base-package="cz.vsmie.krist.pms.service"/>
+    <!--Registrace balíčků - komponent (@Component)-->
+    <context:component-scan base-package="cz.vsmie.krist.pms.component"/>
+    
+        
+    <!--@Async, @Scheduled-->
+    <task:annotation-driven executor="myExecutor" scheduler="myScheduler"/>
+    <task:executor id="myExecutor" pool-size="5"/>
+    <task:scheduler id="myScheduler" pool-size="10"/>
+
+
+
     
     <context:property-placeholder location="classpath:/application.properties"/>
     
-    <!--org.springframework.jdbc.datasource.DriverManagerDataSource-->
+    <!-- alternativni DataSource: org.springframework.jdbc.datasource.DriverManagerDataSource-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
               p:driverClassName="${jdbc.driverClassName}"
               p:url="${jdbc.url}"
@@ -47,26 +61,34 @@
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
                 <prop key="hibernate.connection.pool_size">1</prop>
+                <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
             </props>
         </property>
     </bean>
     
-    <!--
-    
-    
-<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	<property name="host" value="${mailSender.host}" />
 	<property name="port" value="${mailSender.port}" />
+        <property name="defaultEncoding" value="${mailSender.defaultEncoding}"/> 
 	<property name="username" value="${mailSender.username}" />
 	<property name="password" value="${mailSender.password}" />
- 
-	<property name="javaMailProperties">
+ 	<property name="javaMailProperties">
 	   <props>
        	      <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
        	      <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+              <prop key="mail.mime.charset">${mail.mime.charset}</prop>
        	   </props>
 	</property>
-</bean>-->
+    </bean>
+        
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="velocityProperties">
+         <value>
+          resource.loader=class
+          class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+         </value>
+      </property>
+   </bean>
 
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">

@@ -21,6 +21,8 @@ import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -42,34 +44,34 @@ public class Project implements Serializable {
     private double fee;
     private boolean deleted;
     
-    @Column(name="date_start") @Temporal(TemporalType.DATE)
-    private Date startDate;
+    @Column(name="date_create") @Temporal(TemporalType.DATE)
+    private Date dateCreate;
     @Column(name="date_deadline") @Temporal(TemporalType.DATE)
     private Date dateDeadline;
     @Column(name="date_production") @Temporal(TemporalType.DATE)
-    private Date productionDate;
+    private Date dateProduction;
     @Column(name="date_delivery") @Temporal(TemporalType.DATE)
-    private Date deliveryDate;
+    private Date dateDelivery;
     //     .::RELACE::. 
     @ManyToMany
     @JoinTable(name="project_permissions", 
-            joinColumns=@JoinColumn(name="project_id"), 
-            inverseJoinColumns=@JoinColumn(name="user_id"))
-    @ForeignKey(name="fk_project_user", inverseName="fk_user_project")
+            joinColumns=@JoinColumn(name="user_id"), 
+            inverseJoinColumns=@JoinColumn(name="project_id"))
+    @ForeignKey(name="fk_user_project", inverseName="fk_project_user")
+    @Cascade({CascadeType.SAVE_UPDATE})
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<User> authorizedUsers = new HashSet<User>();
 
-    @OneToMany(orphanRemoval=true)
-    @JoinTable(name="project_comments", joinColumns=@JoinColumn(name="project_id"),inverseJoinColumns=@JoinColumn(name="comment_id"))
-    @ForeignKey(name="fk_project_comment", inverseName="fk_comment_project")
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
-    @OrderBy("createDate desc")
+    @OneToMany(mappedBy="project", orphanRemoval=true)
+    @OrderBy("dateCreate desc")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Cascade(CascadeType.ALL)
     private Set<Comment> comments = new HashSet<Comment>();
     
-    @OneToMany
-    @JoinTable(name="project_requirements", joinColumns=@JoinColumn(name="project_id"), inverseJoinColumns=@JoinColumn(name="requirement_id"))
-    @ForeignKey(name="fk_project_requirement", inverseName="fk_requirement_project")
-    @Cascade({CascadeType.SAVE_UPDATE, CascadeType.DELETE})
-    @OrderBy("createDate desc")
+    @OneToMany(mappedBy="project", orphanRemoval=true)
+    @OrderBy("dateCreate desc")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Cascade(CascadeType.ALL)
     private Set<Requirement> requirements = new HashSet<Requirement>();
     
     @ManyToOne
@@ -133,12 +135,12 @@ public class Project implements Serializable {
         this.deleted = deleted;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public Date getDateCreate() {
+        return dateCreate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDateCreate(Date startDate) {
+        this.dateCreate = startDate;
     }
 
     public Date getDateDeadline() {
@@ -149,20 +151,20 @@ public class Project implements Serializable {
         this.dateDeadline = dateDeadline;
     }
 
-    public Date getProductionDate() {
-        return productionDate;
+    public Date getDateProduction() {
+        return dateProduction;
     }
 
-    public void setProductionDate(Date productionDate) {
-        this.productionDate = productionDate;
+    public void setDateProduction(Date productionDate) {
+        this.dateProduction = productionDate;
     }
 
-    public Date getDeliveryDate() {
-        return deliveryDate;
+    public Date getDateDelivery() {
+        return dateDelivery;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    public void setDateDelivery(Date deliveryDate) {
+        this.dateDelivery = deliveryDate;
     }
 
     public Set<User> getAuthorizedUsers() {
@@ -215,6 +217,11 @@ public class Project implements Serializable {
         int result = 1;
         result = prime * result + ((this.id == null)? 0 : this.id.hashCode());
         return result;
+    }
+    
+    @Override
+    public String toString(){
+        return "Projekt#"+id+": "+name;
     }
 
    

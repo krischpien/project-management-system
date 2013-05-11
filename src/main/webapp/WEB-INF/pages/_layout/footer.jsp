@@ -2,8 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <div id="footer" class="pageEdge">
-    <p>&copy; Jan Krist 2012</p>
-    <p>@ <a href="http://www.vsmie.cz">www.vsmie.cz</a></p>
+    <p>&copy; Jan Krist 2012 @ <a href="http://www.vsmie.cz">www.vsmie.cz</a></p>
     <p>Vedoucí: Ing. Jiří Franc</p>
 </div>
 

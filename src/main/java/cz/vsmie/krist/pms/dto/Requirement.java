@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.ForeignKey;
 
@@ -29,14 +30,16 @@ public class Requirement implements Serializable {
     private String content;
     
     @Temporal(javax.persistence.TemporalType.DATE)
-    @Column(name="date_created")
-    private Date createDate;
+    @Column(name="date_create")
+    private Date dateCreate;
     
     //     .::RELACE::. 
-    @OneToMany
-    @JoinTable(name="requirement_comments", 
-            joinColumns=@JoinColumn(name="requirement_id"),
-            inverseJoinColumns=@JoinColumn(name="comment_id"))
+    
+    @ManyToOne
+    @JoinColumn(name="project_id")
+    private Project project;
+    
+    @OneToMany(mappedBy="requirement")
     @ForeignKey(name="fk_requirement_comment", inverseName="fk_comment_requirement")
     private Set<Comment> comments = new HashSet<Comment>();
     
@@ -45,7 +48,7 @@ public class Requirement implements Serializable {
     @ForeignKey(name="fk_requirement_phase")
     private Phase phase;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="user_id")
     @ForeignKey(name="fk_requirement_user")
     private User author;
@@ -74,12 +77,12 @@ public class Requirement implements Serializable {
         this.content = content;
     }
     
-    public Date getCreateDate() {
-        return createDate;
+    public Date getDateCreate() {
+        return dateCreate;
     }
 
-    public void setCreateDate(Date createdDate) {
-        this.createDate = createdDate;
+    public void setDateCreate(Date createdDate) {
+        this.dateCreate = createdDate;
     }
 
     public Set<Comment> getComments() {
@@ -105,6 +108,40 @@ public class Requirement implements Serializable {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+         if (obj == this) {
+            return true;
+        }
+        User checkedUser = (User) obj;
+        return this.getId().equals(checkedUser.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((this.id == null)? 0 : this.id.hashCode());
+        return result;
+    }
+    
+    @Override
+    public String toString(){
+        return "Požadavek#"+id;
+    }
+
 
   
 

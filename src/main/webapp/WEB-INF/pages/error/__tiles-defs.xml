@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <!--jednotlive stranky rozsirene z _layout/__tiles-defs.xml-->
+    <definition name="404" extends="pms.base">
+        <put-attribute name="title" value="Chyba"/>
+        <put-attribute name="content" value="/WEB-INF/pages/error/404.jsp"/>
+    </definition>
+    
+    <definition name="500" extends="pms.base">
+        <put-attribute name="title" value="Chyba"/>
+        <put-attribute name="content" value="/WEB-INF/pages/error/500.jsp"/>
+    </definition>
+
+</tiles-definitions>

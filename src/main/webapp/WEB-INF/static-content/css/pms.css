@@ -2,9 +2,38 @@
 @import url('http://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700');
 
 body{
+    font-family: "Century Gothic", sans-serif;
+    background-color: #d0e5f5;
     font-size: 14px;
-    font-family: 'Noto Sans', sans-serif;
 }
+
+/* universal */
+a{
+    color:#000;
+    text-decoration: underline;
+}
+br.clear{
+    clear: both;
+}
+
+b{
+    color: #333;
+    font-weight: bold;
+}
+
+h1{
+    font-size: 16px;
+    color:#fff;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: #2e6e9e;
+    width: 800px;
+    margin:-20px 0 10px -20px;
+    padding:10px;
+    border-radius: 0 0 20px;
+}
+
+
 
 #appInfo{
     float:left;
@@ -15,7 +44,6 @@ body{
 }
 #appInfo p span{
     color:#fff;
-    
 }
 
 #principalInfo{
@@ -23,11 +51,12 @@ body{
     margin:15px 20px 10px 0;
 }
 #header{
-    background: url("../img/header-back.png") repeat-x; 
+    background: url("../img/bg_glass.png") repeat-x; 
+    
 }
 #menu{
-    border-top:1px solid #fff;
     padding:10px 0 0 10px;
+    border-bottom:3px solid #2e6e9e;
 }
 
 #menu ul li{
@@ -41,31 +70,133 @@ body{
 }
 
 #menu ul li a:hover, #menu ul li a.active{
-    background-color: #fff;
-    color:#000;
+    background-color: #2e6e9e;
+    text-decoration: none;
 }
 
 #content{
+    padding: 20px;
     min-height: 400px;
+    margin-bottom: 80px;
+}
+
+ul.simpleList{
+    width:400px;
+}
+ul.simpleList li{
+    line-height: 28px;
+    padding:4px;
+    border-radius: 5px;
+}
+ul.simpleList li:hover{
+    background-color: #6ea7d2;
+}
+ul.simpleList li a{
+    display: inline-block;
+    min-width: 200px;
+}
+
+
+
+#footer{
+    position: fixed;
+    left:0;
+    bottom:0;
+    height: 20px;
+    width:100%;
+    padding:20px;
+    background-color: #6ea7d2;
+    border-top:3px solid #2e6e9e;
+    text-align: center;
 }
 
 /*FORMS*/
 
-form#comment {
-/*    width: 400px;
-    height: 100px;*/
+form {
+    
 }
 
-/* universal */
-a{
-    color:#000;
-    text-decoration: underline;
-}
-br.clear{
-    clear: both;
+form label{
+    width:100px;
+    display:inline-block;
 }
 
-b{
-    color:#2e6e9e;
-    font-weight: bold;
+form input[type=text], form input[type=password]{
+    display:inline-block;
+    width:200px;
+    padding:4px;
+    margin:2px;
 }
+
+/*user form*/
+
+#userForm #custom-select{
+   float:left;
+   width: 206px;
+   margin-right:2px;
+   height: 34px;
+   overflow: hidden;
+   background: url("../img/option_select.jpg") no-repeat left #eee;
+   margin-bottom: 10px;
+}
+#userForm #custom-select select{                                                                                                                                                                                                                    
+   background: transparent;
+   width: 230px;
+   padding: 5px;
+   padding-left: 35px;
+   font-size: 16px;
+   border: 1px solid #ccc;
+   height: 34px;
+}                                                                                                           
+#custom-select:focus{
+    outline:none;
+    border:none;
+}
+
+
+/* FORMULÁŘ PROJEKTU */
+#projectForm{
+    width:400px;
+    /*border: 1px solid black;*/
+}
+#projectForm *{
+    border-radius: 5px;
+}
+#projectForm label{
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+#projectForm input[type=text], select{
+    width:200px;
+    border:1px solid #6ea7d2;
+}
+#projectForm textarea{
+    padding:5px;
+    width:90%;
+    display:block;
+    border:1px solid #6ea7d2;
+}
+#projectForm .projectContent{
+    height: 300px;
+}
+
+#projectForm .phase{
+    background-color: #6ea7d2;
+    padding:5px;
+    margin-left: 5px;
+}
+#authorizedUsers select{
+    margin-top:10px;
+    width:200px;
+    display:block;
+    min-height: 200px;
+}
+
+
+
+.miniActionForm{
+    display: inline-block;
+    float: right;
+}
+

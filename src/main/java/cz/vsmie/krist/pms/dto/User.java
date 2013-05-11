@@ -6,14 +6,20 @@ import java.util.Date;
 import java.util.HashSet;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
 
 /**
@@ -50,8 +56,13 @@ public class User implements Serializable {
     @ForeignKey(name="fk_user_role", inverseName="fk_role_user")
     private Set<UserRole> roles = new HashSet<UserRole>();
     
-    @ManyToMany(mappedBy = "authorizedUsers")
+    @ManyToMany(mappedBy="authorizedUsers")
+    @Cascade(CascadeType.ALL)
     private Set<Project> projects = new HashSet<Project>();
+    
+    @OneToMany(mappedBy="author", orphanRemoval=true)
+    @Cascade({CascadeType.ALL})
+    private Set<Comment> comments = new HashSet<Comment>();
     
     
     public Long getId() {
@@ -118,6 +129,14 @@ public class User implements Serializable {
         this.projects = projects;
     }
     
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+    
     
     @Override
     public boolean equals(Object obj) {
@@ -137,8 +156,14 @@ public class User implements Serializable {
         int result = 1;
         result = prime * result + ((this.id == null)? 0 : this.id.hashCode());
         return result;
-
     }
+    
+    @Override
+    public String toString(){
+        return "Uživatel#"+id+": "+name+"+"+email;
+    }
+
+    
 
  
     

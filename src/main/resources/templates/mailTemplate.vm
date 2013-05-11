@@ -1,0 +1,21 @@
+﻿## aa
+<!DOCTYPE html>
+<html lang="cs" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Zpráva</title>
+</head>
+<body>
+<h3>Dobrý den.</h3>
+<div>
+   <p>Byl Vám vytvořen uživatelský účet <b>${user.name}</b></p>
+   <p>Byly Vám přiděleny následující role:</p>
+<ul>
+#foreach( $role in $user.roles )
+    <li>$role.description</li>
+#end
+</ul>
+</div>
+</body>
+
+</html>

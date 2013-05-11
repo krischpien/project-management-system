@@ -6,6 +6,7 @@ import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.dto.UserRole;
 import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
+import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.UserService;
 import java.util.Collection;
 import java.util.Date;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService{
     UserDao userDao;
     @Autowired
     RoleDao roleDao;
+    @Autowired
+    PmsMailService mailService;
     @Autowired
     PasswordEncoder passwordEncoder;
     
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService{
         else{
             encodePassword(user);
             userDao.save(user);
+            mailService.sendCreateUserNotice(user); //async
         }
     }
 
@@ -73,7 +77,7 @@ public class UserServiceImpl implements UserService{
     }
 
     public void deleteUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        userDao.delete(user);
     }
 
     public void updateUser(User updatedUser, boolean encodePassword) throws UserNameNotAvailable, UserEmailNotAvailable {

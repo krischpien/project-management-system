@@ -70,6 +70,13 @@
             </td>
         </tr>
 
-        
-        
     </table>
+<style>
+    table{
+        width:800px;
+    }
+    table td.th{
+        font-weight: bold;
+    }
+
+</style>

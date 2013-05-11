@@ -1,0 +1,30 @@
+/* ui-override */
+.ui-dialog{
+    width: 350px !important;
+}
+.ui-dialog-title{
+    font-size:14px !important;
+}
+
+.ui-dialog-content{
+    font-size: 12px !important;
+    height: 60px !important;
+}
+.ui-dialog-buttonpane{
+    font-size: 14px !important;
+}
+.ui-button, .ui-widget, .ui-button-text, .ui-button-text-only{
+    font-size: 14px !important;
+    font-weight: normal !important;
+    
+}
+
+.inline-icon.ui-icon {
+    display: inline-block !important;
+    margin-bottom:-3px;
+    color:red !important;
+}
+
+.ui-icon.red{ 
+    background-image: url('jquery-ui/redmond/images/ui-icons_cd0a0a_256x240.png'); 
+}

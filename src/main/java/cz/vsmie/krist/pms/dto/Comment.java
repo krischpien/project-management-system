@@ -4,12 +4,17 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -22,20 +27,28 @@ public class Comment implements Serializable {
     
     @Id @GeneratedValue
     private Long id;
+    @NotNull(message="Předmět komentáře nesmí být prázdný!")
     private String subject;
     @Column(columnDefinition="TEXT")
+    @NotNull(message="Nemáte vyplněný obsah komentáře!")
     private String content;
     
     @Column(name="date_created") 
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date createDate;
+    private Date dateCreate;
     //     .::RELACE::. 
+    
     @ManyToOne
     @JoinColumn(name="user_id")
     private User author;
     
-
+    @ManyToOne
+    @JoinColumn(name="project_id")
     private Project project;
+    
+    @ManyToOne
+    @JoinColumn(name="requirement_id")
+    private Requirement requirement;
 
 
     
@@ -63,12 +76,12 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getDateCreate() {
+        return dateCreate;
     }
 
-    public void setCreateDate(Date date) {
-        this.createDate = date;
+    public void setDateCreate(Date date) {
+        this.dateCreate = date;
     }
     
     public User getAuthor() {
@@ -77,6 +90,22 @@ public class Comment implements Serializable {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+    
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Requirement getRequirement() {
+        return requirement;
+    }
+
+    public void setRequirement(Requirement requirement) {
+        this.requirement = requirement;
     }
     
     
@@ -99,6 +128,13 @@ public class Comment implements Serializable {
         result = prime * result + ((this.id == null)? 0 : this.id.hashCode());
         return result;
     }
+    
+    @Override
+    public String toString(){
+        return "Komentář#"+id+": "+subject;
+    }
+
+    
 
    
 

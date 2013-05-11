@@ -11,6 +11,7 @@
         <script type="text/javascript" src="<s:url value='/resources/js/pms.js'/>"></script>
         <link rel="stylesheet" type="text/css" href="resources/css/loginForm.css"/>
         <link rel="stylesheet" type="text/css" href="<s:url value="/resources/css/jquery-ui/redmond/jquery-ui.css"/>"/>
+        <link rel="stylesheet" type="text/css" href="<s:url value="/resources/css/jqueryPms-override.css"/>"/>
         <title>ProjectMS :: Přihlášení</title>
     </head>
     <body>
