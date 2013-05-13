@@ -12,18 +12,18 @@
     <sf:form id="userForm" method="post" commandName="user" action="${actionUrl}">
         
         <div id="custom-select">
-        <sf:select path="roles" required="required" title="This field should not be left blank." multiple="false">
+        <sf:select path="roles" required="required" multiple="false">
             <sf:options items="${mainRoles}" itemValue="id" itemLabel="description"/>
             <!--<option value="2">Zákazník</option><option value="3">Dodavatel</option>-->
         </sf:select>
         </div>
         <br class="clear"/>
         <sf:hidden path="id"/>
-        <label for="name">Jméno:</label><sf:input path="name" onchange="checkUserName()" /><span id="nameInfo"><sf:errors path="name"/></span><br/>
-        <label for="email">Email: </label><sf:input path="email" onchange="checkUserEmail()"/><span id="emailInfo"><sf:errors path="email"/></span><br/>
-        <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="passwordInfo"><sf:errors path="password"/></span><br/>
-        <label for="passwordAgain">Heslo znovu: </label><input id="passwordAgain" name="passwordAgain" type="password"/><span class="passwordAgainInfo"></span><br/>
         
+        <label for="name">Jméno:</label><sf:input path="name" onchange="checkUserName()" /><span class="info" id="nameInfo"><sf:errors path="name"/></span><br/>
+        <label for="email">Email: </label><sf:input path="email" onchange="checkUserEmail()"/><span class="info" id="emailInfo"><sf:errors path="email"/></span><br/>
+        <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="info" class="passwordInfo"><sf:errors path="password"/></span><br/>
+        <!--<label for="passwordAgain">Heslo znovu: </label><input id="passwordAgain" name="passwordAgain" type="password"/><span class="passwordAgainInfo"></span><br/>-->
         <label for="roles"><h2>Role: </h2></label><br/>
         <div id="assignableRoles">
         <sf:checkboxes path="roles" items="${assignableRoles}" itemValue="id" itemLabel="description"/>
@@ -32,7 +32,6 @@
 
         <input type="submit" value="uložit"/><br/>
     </sf:form>
-        <p>Odpověď:</p>
         <p id="info"></p>
 </div>
     
@@ -72,7 +71,19 @@
         });
         }
         
+        
+        
+        
     </script>    
     
     
-    
+    <style>
+        label.error{
+        margin:0 10px;
+	width: auto;
+	display: inline;
+        }
+        span.info{
+            margin:0 10px;
+        }
+    </style>

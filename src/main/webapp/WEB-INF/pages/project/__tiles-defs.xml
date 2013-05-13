@@ -27,14 +27,11 @@
         <put-attribute name="content" value="/WEB-INF/pages/project/projectList.jsp"/>
     </definition>
     
-    <definition name="requirementForm" extends="projectIndex">
-        <put-attribute name="title" value="Nový požadavek"/>
-        <put-attribute name="content" value="/WEB-INF/pages/project/requirementForm.jsp"/>
+    <definition name="unauthorizedUser" extends="projectIndex">
+        <put-attribute name="title" value="Neoprávněný uživatel"/>
+        <put-attribute name="content" value="/WEB-INF/pages/project/unauthorizedUser.jsp"/>
     </definition>
-    
-    <definition name="requirementDetails" extends="projectIndex">
-        <put-attribute name="title" value="Detaily požadavku"/>
-        <put-attribute name="content" value="/WEB-INF/pages/project/requirementDetails.jsp"/>
-    </definition>
+
+
     
 </tiles-definitions>

@@ -11,8 +11,8 @@
     
     <http auto-config="true" use-expressions="true">
         <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN') and hasIpAddress('127.0.0.1')"/>
-        <intercept-url pattern="/customer_" access="hasRole('ROLE_CUSTOMER')"/>
-        <intercept-url pattern="/CHANGE_IT/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/customer" access="hasRole('ROLE_CUSTOMER')"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
         <form-login 
             login-page="/loginout"
             login-processing-url="/loginCheck"

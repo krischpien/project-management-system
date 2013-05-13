@@ -38,6 +38,9 @@
         <c:if test="${param.logout != null}">
             <p class="msg"><span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span> Byli jste úspěšně odhlášeni.</p>
         </c:if>
+        <c:if test="${param.notAuthorized != null}">
+            <p class="msg"><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 50px 0;"></span> K přístupu do této sekce nemáte patřičná oprávnění.</p>
+        </c:if>
 </div>
 <c:if test="${param.logerr != null || param.logout != null}">
 <script>

@@ -1,8 +1,12 @@
 package cz.vsmie.krist.pms.service.impl;
 
-import cz.vsmie.krist.pms.component.impl.ScheduledAsyncWorker;
-import cz.vsmie.krist.pms.service.PmsActiveService;
+import cz.vsmie.krist.pms.dto.Project;
+import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.PmsCronScheduler;
+import cz.vsmie.krist.pms.service.PmsMailService;
+import cz.vsmie.krist.pms.service.ProjectService;
+import cz.vsmie.krist.pms.service.UserService;
+import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +22,35 @@ import org.springframework.stereotype.Service;
 public class PmsCronSchedulerImpl implements PmsCronScheduler{
 
     @Autowired
-    ScheduledAsyncWorker asyncWorker;
+    ProjectService projectService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    PmsMailService mailService;
     
     private boolean active = true;
     
     Logger logger = LoggerFactory.getLogger(PmsCronSchedulerImpl.class);
     
-    @Scheduled(cron="0 5 * * * *")
-    public void doSomething() {
+//    @Scheduled(cron="0 * * * * *")
+    public void checkUnpaidAdvances() {
         if(isActive()){
             logger.info("Probíhá naplánovaná úloha");
-            asyncWorker.doSomethingAsynchronously();
+            Collection<Project> unpaidProjects = projectService.getProjectsWithUnpaidAdvances();
+            for(Project project : unpaidProjects){
+                Collection<User> participants = project.getAuthorizedUsers();
+                for(User user: participants){
+                    if(user.getRoles().contains(userService.getRoleById(5L))){ //ROLE_MANAGER
+//                        mailService.sendUnpaidAdvancesNotice(project, user);
+                        logger.debug("Posílám upozornění na: " + user.getEmail());
+                    }
+                }
+            }
         }
         else{
             logger.debug("Plánovač není aktivní");
         }
-        
+
     }
 
     public boolean isActive() {

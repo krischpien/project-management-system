@@ -4,4 +4,9 @@ $(document).ready(function(){
  
  $("input[type=submit]").button();
     
+ 
+$( document ).tooltip({
+track: true
+});
+    
 });

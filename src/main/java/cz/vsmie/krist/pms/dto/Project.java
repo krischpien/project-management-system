@@ -42,7 +42,8 @@ public class Project implements Serializable {
     private String note;
     private double budget;
     private double fee;
-    private boolean deleted;
+    private boolean deleted = false;
+    private boolean advancesPaid = false;
     
     @Column(name="date_create") @Temporal(TemporalType.DATE)
     private Date dateCreate;
@@ -58,14 +59,12 @@ public class Project implements Serializable {
             joinColumns=@JoinColumn(name="user_id"), 
             inverseJoinColumns=@JoinColumn(name="project_id"))
     @ForeignKey(name="fk_user_project", inverseName="fk_project_user")
-    @Cascade({CascadeType.SAVE_UPDATE})
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<User> authorizedUsers = new HashSet<User>();
 
     @OneToMany(mappedBy="project", orphanRemoval=true)
     @OrderBy("dateCreate desc")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @Cascade(CascadeType.ALL)
     private Set<Comment> comments = new HashSet<Comment>();
     
     @OneToMany(mappedBy="project", orphanRemoval=true)
@@ -77,6 +76,7 @@ public class Project implements Serializable {
     @ManyToOne
     @JoinColumn(name="phase_id")
     @ForeignKey(name="fk_project_phase")
+    @Fetch(FetchMode.JOIN)
     private Phase phase;
 
     public Long getId() {
@@ -198,6 +198,13 @@ public class Project implements Serializable {
     public void setPhase(Phase phase) {
         this.phase = phase;
     }
+    public boolean isAdvancesPaid() {
+        return advancesPaid;
+    }
+
+    public void setAdvancesPaid(boolean advancesPaid) {
+        this.advancesPaid = advancesPaid;
+    }
     
     @Override
     public boolean equals(Object obj) {
@@ -223,6 +230,8 @@ public class Project implements Serializable {
     public String toString(){
         return "Projekt#"+id+": "+name;
     }
+
+    
 
    
     

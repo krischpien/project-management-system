@@ -11,9 +11,11 @@
         <link rel="stylesheet" type="text/css" href="<s:url value="/resources/css/pms.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<s:url value="/resources/css/jquery-ui/redmond/jquery-ui.css"/>"/>
         <link rel="stylesheet" type="text/css" href="<s:url value="/resources/css/jqueryPms-override.css"/>"/>
-        <title>${initParam.appName} ${activePage}:: <tiles:insertAttribute name="title"/></title>
+        <title>${initParam.applicationName} :: <tiles:insertAttribute name="title"/></title>
         <script type="text/javascript" src="<s:url value='/resources/js/jquery-1.9.1.js'/>"></script>
         <script type="text/javascript" src="<s:url value='/resources/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/resources/js/jquery.validate.js'/>"></script>
+        <script type="text/javascript" src="<s:url value='/resources/js/jquery.validate.locale_cs.js'/>"></script>
         <script type="text/javascript" src="<s:url value='/resources/js/i18n/jquery.ui.datepicker-cs.js'/>"></script>
         <script type="text/javascript" src="<s:url value='/resources/js/pms.js'/>"></script>
         <link rel="icon" type="image/png" href="<s:url value='/resources/img/pms-ico.png'/>">

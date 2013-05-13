@@ -84,7 +84,7 @@ public class UserEditController {
             model.addAttribute("message", "Uživatel s id " + uid +" nebyl nalezen");
             return "userList";
         }
-        userService.deleteUser(user);
+        userService.deleteUserById(uid);
         return "redirect:/admin/user/list?deleted=ok&name="+user.getName();
     }
     

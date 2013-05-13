@@ -37,18 +37,18 @@
     </bean>
     
     
-<!--    
+    
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/user"/>
-            <mvc:mapping path="/admin"/>
-            <bean id="loginInterceptor" class="cz.vsmie.krist.pms.interceptor.LoginInterceptor"/>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/ajax/**"/>
+            <bean id="noticeInterceptor" class="cz.vsmie.krist.pms.interceptor.NoticeInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
--->
+
     
     
-    <!--Definice view resolveru (default je internalResourceViewResolver)-->
+    <!--Definice view resolveru (default internalResourceViewResolver)-->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.tiles2.TilesViewResolver"/>
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
         <property name="definitions">

@@ -12,8 +12,8 @@ import org.springframework.security.core.authority.AuthorityUtils;
  */
 public class RedirectUtil {
     
-    private static final String ADMIN_URL = "/admin";
-    private static final String CUSTOMER_URL = "/customer";
+    private static final String ADMIN_URL = "/admin/index";
+    private static final String CUSTOMER_URL = "/";
     private static final String NOT_AUTHORIZED_URL = "/loginout?notAuthorized";
     
     private static Logger logger = LoggerFactory.getLogger(RedirectUtil.class);
@@ -35,7 +35,7 @@ public class RedirectUtil {
             logger.debug("admin role");
             redirectUrl = ADMIN_URL;
         }
-        else if(authorities.contains("ROLE_CUSTOMER")){
+        else if(authorities.contains("ROLE_CUSTOMER") || authorities.contains("ROLE_PROVIDER")){
             logger.debug("customer role");
             redirectUrl = CUSTOMER_URL;
         }

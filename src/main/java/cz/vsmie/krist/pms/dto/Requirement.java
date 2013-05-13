@@ -48,11 +48,7 @@ public class Requirement implements Serializable {
     @ForeignKey(name="fk_requirement_phase")
     private Phase phase;
     
-    @OneToOne
-    @JoinColumn(name="user_id")
-    @ForeignKey(name="fk_requirement_user")
-    private User author;
-
+ 
     public Long getId() {
         return id;
     }
@@ -99,14 +95,6 @@ public class Requirement implements Serializable {
 
     public void setPhase(Phase phase) {
         this.phase = phase;
-    }
-
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
     }
 
     public Project getProject() {

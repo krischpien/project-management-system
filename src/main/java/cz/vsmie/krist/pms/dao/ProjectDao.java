@@ -1,6 +1,7 @@
 package cz.vsmie.krist.pms.dao;
 
 import cz.vsmie.krist.pms.dto.Project;
+import java.util.Collection;
 
 /**
  *
@@ -9,5 +10,6 @@ import cz.vsmie.krist.pms.dto.Project;
 
 public interface ProjectDao extends GenericDao<Project> {
     
+    public Collection<Project> getProjectWithUnpaidAdvances();
 
 }

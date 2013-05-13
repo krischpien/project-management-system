@@ -1,4 +1,5 @@
 package cz.vsmie.krist.pms.service;
+import cz.vsmie.krist.pms.dto.Event;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.dto.UserRole;
 import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
@@ -75,7 +76,10 @@ public interface UserService {
      * @param user
      */
     public void deleteUser(User user);
+    public void deleteUserById(Long uid);
     public UserRole getRoleById(Long id);
+    
+    
     
 
 }

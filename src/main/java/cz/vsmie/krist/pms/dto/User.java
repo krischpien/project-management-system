@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +21,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -30,8 +35,8 @@ import org.hibernate.annotations.ForeignKey;
 @Entity
 @Table(name="user_details", uniqueConstraints={@UniqueConstraint(columnNames="user_name"),
                                                @UniqueConstraint(columnNames="email")})
+@org.hibernate.annotations.Entity(selectBeforeUpdate=true)
 public class User implements Serializable {
-
 
     @Id @GeneratedValue
     private Long id;
@@ -39,7 +44,7 @@ public class User implements Serializable {
     @Column(name="user_name")
     @Size(min=3, max=50, message="Uživatelské jméno musí být v rozsahu 3-50 alfanumerických znaků") //spring validace
     private String name;
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Chybná emailová adresa. Vzor: jmeno@email.cz")
+//    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Chybná emailová adresa. Vzor: jmeno@email.cz")
     private String email;
     @Column(columnDefinition="BINARY(80)") // SHA-256 hash => 32B hash + 8B salt
 //    @Size(min=5, max=80, message="Uživatelské heslo musí být v rozsahu 5-80 alfanumerických znaků") //spring validace
@@ -55,15 +60,20 @@ public class User implements Serializable {
             joinColumns=@JoinColumn(name="user_id"),
             inverseJoinColumns=@JoinColumn(name="role_id"))
     @ForeignKey(name="fk_user_role", inverseName="fk_role_user")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private Set<UserRole> roles = new HashSet<UserRole>();
     
     @ManyToMany(mappedBy="authorizedUsers")
-    @Cascade(CascadeType.ALL)
     private Set<Project> projects = new HashSet<Project>();
     
     @OneToMany(mappedBy="author", orphanRemoval=true)
-    @Cascade({CascadeType.ALL})
     private Set<Comment> comments = new HashSet<Comment>();
+    
+    
+    @ManyToMany()
+    @JoinTable(name="event_listener", joinColumns=@JoinColumn(name="user_id"), inverseJoinColumns=@JoinColumn(name="event_id"))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<Event> events = new HashSet<Event>();
     
     
     public Long getId() {
@@ -162,6 +172,14 @@ public class User implements Serializable {
     @Override
     public String toString(){
         return "Uživatel#"+id+": "+name+"+"+email;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
     }
 
     

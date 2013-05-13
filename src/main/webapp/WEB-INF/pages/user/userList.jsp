@@ -8,7 +8,8 @@
 
 <h1>Výpis uživatelů</h1>
 <ul class="simpleList">
-    <c:forEach items="${userList}" var="user">
+    <li><span class="inline-icon ui-icon ui-icon-person red"></span> <a title="Administrátorský účet (needitovatelný)">admin</a></li>
+    <c:forEach items="${userList}" var="user" begin="1">
         <li><span class="inline-icon ui-icon ui-icon-person"></span>
             <a href="${userDetailsUrl}/${user.name}">
                 ${user.name}
@@ -20,7 +21,7 @@
                 
                 <form method="GET" action="<s:url value='/admin/user/edit/edit.do'/>" class="miniActionForm" title="Editovat uživatele ${user.name}">
                     <input type="hidden" name="uid" value="${user.id}"/>
-                    <button type="submit" class="QQQQQ"><span class="ui-icon ui-icon-pencil"></span></button>
+                    <button type="submit"><span class="ui-icon ui-icon-pencil"></span></button>
                 </form>
         </li>
     </c:forEach>

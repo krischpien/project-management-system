@@ -2,11 +2,14 @@ package cz.vsmie.krist.pms.service.impl;
 
 import cz.vsmie.krist.pms.dao.RoleDao;
 import cz.vsmie.krist.pms.dao.UserDao;
+import cz.vsmie.krist.pms.dto.Event;
+import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.dto.UserRole;
 import cz.vsmie.krist.pms.exception.UserEmailNotAvailable;
 import cz.vsmie.krist.pms.exception.UserException;
 import cz.vsmie.krist.pms.exception.UserNameNotAvailable;
+import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.UserService;
 import java.util.Collection;
@@ -31,6 +34,8 @@ public class UserServiceImpl implements UserService{
     RoleDao roleDao;
     @Autowired
     PmsMailService mailService;
+    @Autowired
+    EventService eventService;
     @Autowired
     PasswordEncoder passwordEncoder;
     
@@ -80,8 +85,22 @@ public class UserServiceImpl implements UserService{
     public UserRole getRoleById(Long id) {
         return roleDao.getById(id);
     }
+    
+    public void deleteUser(User user){
+        logger.debug("metoda deleteUser(User user) neimplementována");
+    }
 
-    public void deleteUser(User user) {
+    public void deleteUserById(Long uid) {
+        User user = userDao.getById(uid);
+        for(Event event : user.getEvents()){
+            event.getListeners().remove(user);
+        }
+        for(UserRole role : user.getRoles()){
+            role.getUsers().remove(user);
+        }
+        for(Project project :user.getProjects()){
+            project.getAuthorizedUsers().remove(user);
+        }
         userDao.delete(user);
     }
 
@@ -111,6 +130,10 @@ public class UserServiceImpl implements UserService{
         String cryptedPassword = passwordEncoder.encode(plainPassword);
         user.setPassword(cryptedPassword);
     }
+
+    
+
+   
     
     
     

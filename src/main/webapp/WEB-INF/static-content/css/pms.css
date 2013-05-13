@@ -3,7 +3,7 @@
 
 body{
     font-family: "Century Gothic", sans-serif;
-    background-color: #d0e5f5;
+    background-color: #fff;
     font-size: 14px;
 }
 
@@ -11,6 +11,9 @@ body{
 a{
     color:#000;
     text-decoration: underline;
+}
+a:hover{
+    color:#fff ;
 }
 br.clear{
     clear: both;
@@ -20,7 +23,16 @@ b{
     color: #333;
     font-weight: bold;
 }
+p{
+    line-height: 20px;
+}
+em{
+    font-style: italic;
+}
 
+#content a:hover{
+    color: #2e6e9e;
+}
 h1{
     font-size: 16px;
     color:#fff;
@@ -34,11 +46,15 @@ h1{
 }
 
 h2{
-    margin-bottom: 5px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 2px solid #2e6e9e;
 }
 
 h3{
-    margin:7px 0;
+    
+    margin:2px 0;
 }
 
 #appInfo{
@@ -58,26 +74,42 @@ h3{
 }
 #header{
     background: url("../img/bg_glass.png") repeat-x; 
+    border-bottom:3px solid #2e6e9e;
     
 }
-#menu{
+#header #menu{
+    float:left;
     padding:10px 0 0 10px;
-    border-bottom:3px solid #2e6e9e;
+/*    border-bottom:3px solid #2e6e9e;*/
 }
 
-#menu ul li{
+#header #menu ul li{
     display:inline;
 }
-#menu ul li a{
+#header #menu ul li a{
     display: inline-block;
     border-radius: 5px 5px 0 0;
     padding:10px;
     color:#fff;
 }
 
-#menu ul li a:hover, #menu ul li a.active{
+#header #menu ul li a:hover, #menu ul li a.active{
     background-color: #2e6e9e;
     text-decoration: none;
+}
+
+#header #infoZone{
+    /*float: right;*/
+    position: absolute;
+    top:65px;
+    right:10px;
+}
+
+#infoZone a.notice{
+    display: inline-block;
+    padding:10px 15px;
+    border-radius: 5px 5px 0 0;
+    background-color: #2e6e9e;
 }
 
 #content{
@@ -85,12 +117,15 @@ h3{
     min-height: 400px;
     margin-bottom: 80px;
 }
+#content{
+    font-size: 12px;
+}
 
 ul.simpleList{
     width:400px;
 }
 ul.simpleList li{
-    line-height: 28px;
+    line-height: 34px;
     padding:4px;
     border-radius: 5px;
 }
@@ -99,10 +134,25 @@ ul.simpleList li:hover{
 }
 ul.simpleList li a{
     display: inline-block;
-    min-width: 200px;
+    
+}
+ul.simpleList li a:hover{
+    color:#fff !important;
 }
 
-
+#services{
+    width: 800px;
+}
+.service{
+    border:1px solid #2e6e9e;
+    width:380px;
+    padding:5px;
+    margin:0 5px 5px 0;
+    display:inline-block;
+}
+.service:hover{
+    background-color: #dfeffc;
+}
 
 #footer{
     position: fixed;
@@ -133,8 +183,84 @@ form input[type=text], form input[type=password]{
     padding:4px;
     margin:2px;
 }
+/* FORMULAR KOMENTARU */
+form#comment{
+    background-color: #fff;
+    width:780px;
+    padding:10px;
+    border:1px solid #2e6e9e;
+    
+    /*margin-bottom: 10px;*/
+}
+#comment input[type=submit]{
+    float: right;
+}
+#commentContent{
+    width:770px;
+    margin-bottom: 10px;
+}
 
-/*user form*/
+/* vypis komentaru */
+div.comment{
+    width:780px;
+    padding:10px;
+    /*background-color: #dfeffc;*/
+    border: 1px solid #2e6e9e;
+    border-top: none;
+}
+.comment:hover{
+    background-color: #d0e5f5;
+}
+.comment p{
+    margin-top: 5px;
+    font-style: italic;
+}
+.comment h3{
+    color: #000;
+    padding:2px;
+    border-radius: 0 0 5px 0;
+    width:300px;
+    margin:-10px 0 0 -10px;
+    background-color: #d0e5f5;
+}
+
+.comment h4.bottomLine{
+    font-size: 10px;
+    float:right;
+    margin-bottom: -5px;
+}
+div#requirementList{
+    width: 400px;
+    margin-bottom: 10px;
+    
+}
+
+div.requirement{
+    background-color: #dfeffc;
+    padding:5px;
+    margin-bottom: 5px;
+}
+
+.requirement h3.headline{
+    background-color: #d0e5f5   ;
+    padding:5px;
+    margin:-5px -5px 0 -5px;
+}
+
+.requirement .counter{
+    float: left;
+    background-color: #dfeffc;
+    border-radius: 5px 5px 0 0;
+    padding:5px;
+    /*margin:-5px -5px 0 0;*/
+    margin:-5px 5px 0 -5px;
+}
+
+/* UZIVATELSKY FORMULAR */
+
+form#userForm{
+    
+}
 
 #userForm #custom-select{
    float:left;
@@ -165,7 +291,7 @@ form input[type=text], form input[type=password]{
     width:400px;
     /*border: 1px solid black;*/
 }
-#projectForm *{
+#projectForm input, #projectForm textarea{
     border-radius: 5px;
 }
 #projectForm label{
@@ -220,7 +346,7 @@ a.actionButton{
 
 a.actionButton:hover{
     background: url('../img/bg_blue_1x100.png');
-    color:#fff;
+    color:#fff !important;
 }
 
 span.on{
@@ -228,4 +354,72 @@ span.on{
 }
 span.off{
     color: #d52205;
+}
+
+#eventsArea{
+    width: 800px;
+}
+
+table#events{
+    width:800px;
+    border-collapse: collapse;
+    border:2px solid #2e6e9e;
+}
+
+table#events tr{
+   
+}
+table#events tr:nth-child(even) {
+    background:#d0e5f5 ;
+}
+table#events tr:nth-child(odd) {
+    background: #FFF
+}
+
+table#events th{
+    font-weight: bold;
+    background-color: #2e6e9e;
+    padding:5px;
+}
+table#events thead tr{
+    
+    color:#fff;
+}
+table#events td{
+    padding:3px;
+    
+}
+table#events tr.row:hover td{
+    background-color: #6ea7d2;
+}
+
+/* DETAILY PROJEKTU */
+#leftBlock{
+    float: left;
+}
+#rightBlock{
+    float: left;
+    margin-left: 20px;
+}
+
+table#projectDetails{
+    width:800px;
+}
+th#column2{
+    text-align: right;
+}
+
+
+#projectDetails tr td{
+    border-bottom: 1px solid #2e6e9e;
+    padding:5px;
+}
+
+#projectDetails tr td:first-child{
+    width:200px;
+    font-weight: bold;
+}
+
+#projectDetails ul li{
+    display: inline;
 }

@@ -16,19 +16,20 @@ page dir:
     <definition name="userIndex" extends="pms.base">
         <put-attribute name="title" value="Detaily uživatele"/>
         <put-attribute name="content" value="/WEB-INF/pages/user/userIndex.jsp"/>
+        <put-attribute name="activePage" value="users"/>
     </definition>
 
-    <definition name="userDetails" extends="pms.base">
+    <definition name="userDetails" extends="userIndex">
         <put-attribute name="title" value="Detaily uživatele"/>
         <put-attribute name="content" value="/WEB-INF/pages/user/userDetails.jsp"/>
     </definition>
         
-    <definition name="userForm" extends="pms.base">
+    <definition name="userForm" extends="userIndex">
         <put-attribute name="title" value="Editace uživatele"/>
         <put-attribute name="content" value="/WEB-INF/pages/user/userForm.jsp"/>
     </definition>
     
-    <definition name="userList" extends="pms.base">
+    <definition name="userList" extends="userIndex">
         <put-attribute name="title" value="Výpis uživatelů"/>
         <put-attribute name="content" value="/WEB-INF/pages/user/userList.jsp"/>
     </definition>

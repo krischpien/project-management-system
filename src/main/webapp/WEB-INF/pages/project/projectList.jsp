@@ -16,8 +16,13 @@
                 
                 <form method="GET" action="<s:url value='/project/edit/edit.do'/>" class="miniActionForm" title="Editovat projekt ${project.name}">
                     <input type="hidden" name="pid" value="${project.id}"/>
+                    
                     <button type="submit"><span class="ui-icon ui-icon-pencil"></span></button>
                 </form>
         </li>
     </c:forEach>
 </ul>
+
+<script>
+    $("button").button();
+</script>

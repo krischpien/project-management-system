@@ -44,7 +44,7 @@
         <tr>
             <td class="th">Vedoucí:</td>
             <td>
-                <a href="<s:url value="https://sis.vsmie.cz/sis/user/student/p-StrankaUcitele.do?act=view&amp;uid=1444&amp;secure=c64355d1f13a5956778ce24f35965f40"/>">Ing. Franc Jiří</a>             
+                <a href="<s:url value="https://sis.vsmie.cz/sis/user/student/p-StrankaUcitele.do?act=view&amp;uid=1444"/>">Ing. Franc Jiří</a>             
             </td>
         </tr>
         <tr>
@@ -66,7 +66,7 @@
         <tr>
             <td class="th">Zadání v PDF:</td>
             <td>
-                <a href="https://sis.vsmie.cz/sis/servletss/FopGet?fop=zadanibak&pid=1332&amp;secure=bb01bd7f448cb74d971b30c10b7b9c11">stáhnout</a>
+                <a href="https://sis.vsmie.cz/sis/servletss/FopGet?fop=zadanibak&pid=1332">stáhnout</a>
             </td>
         </tr>
 

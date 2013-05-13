@@ -37,7 +37,6 @@ public class PmsMailServiceImpl implements PmsMailService{
     private Logger logger = LoggerFactory.getLogger(PmsMailServiceImpl.class);
     
 
-    @Async
     public void sendCreateUserNotice(User user) {
         if(isActive()){
             Map model = new HashMap();
@@ -47,11 +46,22 @@ public class PmsMailServiceImpl implements PmsMailService{
         }
     }
     
-    @Async
+    
     public void sendCreateProjectNotice(Project project){
         
     }
     
+    public void sendUnpaidAdvancesNotice(Project project, User user){
+        if(isActive()){
+            Map model = new HashMap();
+            model.put("project", project);
+            String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/unpaidNotice.vm", "UTF-8", model);
+            this.sendPmsMessage(user.getEmail(), "Informační zpráva ze systému Project Management System : Nezaplacená záloha", messageContent);
+        }
+    }
+    
+    
+    @Async
     private void sendPmsMessage(String to, String subject, String text){
         logger.debug("Mail service fired!");
             MimeMessage message = mailSender.createMimeMessage();
