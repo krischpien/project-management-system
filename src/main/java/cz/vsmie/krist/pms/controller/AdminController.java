@@ -1,15 +1,18 @@
 package cz.vsmie.krist.pms.controller;
 
+import cz.vsmie.krist.pms.service.LoggingService;
 import cz.vsmie.krist.pms.service.PmsActiveService;
 import cz.vsmie.krist.pms.service.PmsCronScheduler;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.UserService;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -22,6 +25,9 @@ public class AdminController {
     @Autowired
     @Qualifier("pmsMailService")
     PmsMailService pmsMailService;
+    
+    @Autowired
+    LoggingService loggingService;
     
     @Autowired
     @Qualifier("pmsCronSchedulerService")
@@ -41,11 +47,14 @@ public class AdminController {
     }
     
     @RequestMapping("/index")
-    public String showAdminConsole(Model model){
+    public String showAdminConsole(Model model, @RequestParam(value="logOffset",defaultValue="0") int offset, @RequestParam(value="logLimit",defaultValue="20") int limit){
         model.addAttribute("cronActive", pmsCronScheduler.isActive());
         model.addAttribute("mailActive", pmsMailService.isActive());
+        model.addAttribute("loggingEvents", loggingService.getAllLoggingEventsPaginated(offset, limit));
         return "adminIndex";
     }
+    
+    
     @RequestMapping("/service/{serviceName}/{turn}")
     public String modifyService(@PathVariable String serviceName, @PathVariable String turn){
         PmsActiveService service = null;

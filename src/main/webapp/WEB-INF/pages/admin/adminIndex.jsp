@@ -29,3 +29,11 @@
 
 
 </div>
+
+    <c:if test="${!empty loggingEvents}">
+        <ul>
+        <c:forEach items="${loggingEvents}" var="loggingEvent">
+            <li title="${loggingEvent.loggerName}">${loggingEvent.timestmp} : ${loggingEvent.formattedMessage}</li>
+        </c:forEach>
+        </ul>
+    </c:if>

@@ -72,7 +72,9 @@ public class PmsMailServiceImpl implements PmsMailService{
                 messageHelper.setFrom("pmscz.noreply@gmail.com");
                 message.setSubject(subject, "UTF-8");
                 messageHelper.setText(text,true); //true: content type = 'text/html'
-                mailSender.send(message);
+                logger.info("Pokus o odesílání mailu na adresu " + to);
+//                mailSender.send(message);
+                logger.debug("Odesílání vypnuto! ZMĚNIT!");
             } catch (MessagingException ex) {
                 logger.error("Chyba v mailu: " + ex.getMessage());
             }

@@ -9,7 +9,7 @@
   </appender>
   
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-    <file>d:/pms-cz.log</file>
+    <file>log/_pms.log</file>
     <encoder>
       <pattern>%d{HH:mm:ss} %level %r [%thread] %logger{10} [%file:%line] %msg%n</pattern>
     </encoder>
@@ -21,8 +21,18 @@
         <pattern>%d{HH:mm:ss}%thread%r%-5level%logger{36}%msg</pattern>
       </layout>
     </encoder>
-    <file>d:/log.html</file>
+    <file>log/_pms.html</file>
   </appender>
+  
+  <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+      <driverClass>com.mysql.jdbc.Driver</driverClass>
+      <url>jdbc:mysql://localhost:3306/pms?characterEncoding=UTF-8</url>
+      <user>pms_user</user>
+      <password>pms_pass</password>
+    </connectionSource>
+  </appender>
+
   
 
 <!--  <logger name="cz.vsmie.krist.pms.controllers" level="DEBUG" additivity="false">
@@ -33,8 +43,8 @@
       <appender-ref ref="STDOUT"/>
   </logger>-->
   
-  <logger name="cz.vsmie.krist.pms" level="debug" additivity="false">
-      <appender-ref ref="STDOUT"/>
+  <logger name="cz.vsmie.krist.pms" level="debug" additivity="true">
+      <appender-ref ref="DB"/>
   </logger>
 
   <root level="INFO">

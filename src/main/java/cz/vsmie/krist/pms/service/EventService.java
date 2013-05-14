@@ -15,7 +15,7 @@ public interface EventService {
     
     public void deleteEvent(Event event);
     public void saveEvent(Event event);
-    public void craeteEvent(String authorName, Project project, String description, String link, int type);
+    public void createEvent(String authorName, Project project, String description, String link, int type);
     public Collection<Event> getEventsForUser(String username);
     public Map getEventsCountForUser(String username);
     public void removeAllEventsFromUser(String username);

@@ -32,3 +32,6 @@
     background-image: url('jquery-ui/redmond/images/ui-icons_d8e7f3_256x240.png'); 
 }
 
+div.ui-tooltip {
+    max-width: 400px;
+}

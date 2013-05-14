@@ -25,8 +25,10 @@
     <context:annotation-config />
     <!--Registrace balíčků repository (@Repository)-->
     <context:component-scan base-package="cz.vsmie.krist.pms.dao"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.logging.dao"/>
     <!--Registrace balíčků služeb (@Service) -->
     <context:component-scan base-package="cz.vsmie.krist.pms.service"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.logging.service"/>
     <!--Registrace balíčků - komponent (@Component)-->
     <context:component-scan base-package="cz.vsmie.krist.pms.component"/>
     
@@ -50,7 +52,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="schemaUpdate" value="true"/>
-        <property name="packagesToScan" value="cz.vsmie.krist.pms.dto"/>
+        <property name="packagesToScan" value="cz.vsmie.krist.pms"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>

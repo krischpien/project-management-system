@@ -79,7 +79,7 @@ public class ProjectServiceImpl implements ProjectService{
     public void updateProject(Project project, User updater) {
         projectDao.update(project);
         String link = "/project/details/"+project.getId()+"-"+project.getName();
-        eventService.craeteEvent(updater.getName(), project, "Změna v projektu " + project.getName() + " ("+ updater.getName() +")", link, Event.PROJECT_UPDATE);
+        eventService.createEvent(updater.getName(), project, "Změna v projektu " + project.getName() + " ("+ updater.getName() +")", link, Event.PROJECT_UPDATE);
 
     }
     
@@ -103,7 +103,7 @@ public class ProjectServiceImpl implements ProjectService{
         comment.setProject(project);
         commentDao.save(comment);
         String link = "/project/details/"+project.getId()+"-projekt";
-        eventService.craeteEvent(authorName, project, "Nový komentář k projektu " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
+        eventService.createEvent(authorName, project, "Nový komentář k projektu " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
     }
 
     public boolean checkUserPermissionToProject(String username, Project project) {

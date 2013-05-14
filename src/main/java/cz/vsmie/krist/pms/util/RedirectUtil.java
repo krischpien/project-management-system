@@ -28,18 +28,18 @@ public class RedirectUtil {
      * @return redirectUrl relativní url adresa
      */
     public static String resolveRedirect(Authentication authentication){
-        logger.debug("start");
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         String redirectUrl="";
         if(authorities.contains("ROLE_ADMIN")){
-            logger.debug("admin role");
+            logger.debug("Přihlašení administrátora.");
             redirectUrl = ADMIN_URL;
         }
         else if(authorities.contains("ROLE_CUSTOMER") || authorities.contains("ROLE_PROVIDER")){
-            logger.debug("customer role");
+            logger.debug("Přihlašení zákazníka/dodavatele.");
             redirectUrl = CUSTOMER_URL;
         }
         else{
+            logger.debug("Přihlašení uživatele bez oprávnění.");
             redirectUrl = NOT_AUTHORIZED_URL;
         }
         return redirectUrl;

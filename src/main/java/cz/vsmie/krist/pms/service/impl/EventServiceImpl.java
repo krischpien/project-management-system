@@ -37,16 +37,22 @@ public class EventServiceImpl implements EventService{
         eventDao.save(event);
     }
 
-    public void craeteEvent(String authorName, Project project, String description, String link, int type) {
+    public void createEvent(String authorName, Project project, String description, String link, int type) {
         logger.debug("Vytvarim novou udalost");
         Event event = new Event();
         event.setDateEvent(new Date());
         event.setType(type);
         Collection<User> participants = project.getAuthorizedUsers();
+        User admin = userDao.getByName("admin");
         for(User user : participants){
             user.getEvents().add(event);
             event.getListeners().add(user);
         }
+        //pridat administratora k odberu udalosti
+        admin.getEvents().add(event);
+        event.getListeners().add(admin);
+        // -------------------------------------
+        
         event.setDescription(description);
         event.setLink(link);
         this.saveEvent(event);
