@@ -6,6 +6,7 @@
 <h1>Index</h1>
 
     <fmt:formatDate value="${sessionScope.lastLogin}" pattern="dd. MM. yyyy" var="formatedLastDate"/>
+    <fmt:formatDate value="${sessionScope.lastLogin}" pattern="HH:mm" var="formatedLastTime"/>
     <p>Přihlášený uživatel <b>${username}</b> </p>
     <p>Uživatelské role:</p>
     <p>
@@ -13,11 +14,12 @@
             <em>${authority}${loop.last? '':','}</em>
         </c:forEach>
     </p>
-    <p>Poslední přihlášení proběhlo: <b>${formatedLastDate}</b>, z IP adresy <b>${sessionScope.lastIp}</b></p>
+    <p>Poslední přihlášení proběhlo: <b title="${formatedLastTime}">${formatedLastDate}</b>, z IP adresy <b>${sessionScope.lastIp}</b></p>
+
 
     <div id="eventsArea">
-        
-    <h2>Události:</h2>
+<h2>Události:</h2>
+    
     <c:if test="${empty events}">
         <p>Žádné nové události</p>
     </c:if>
@@ -35,11 +37,11 @@
         <fmt:formatDate value="${event.dateEvent}" pattern="dd. MM. yyyy (HH:mm)" var="formatedEventDate"/>
         <td>${formatedEventDate}</td>
         <td><a href="<s:url value="${event.link}"/>" title="Přejít k události"/>${event.description}</a></td>
-        <td><a href="<s:url value="ajax/readEvent"/>" class="read" id="${event.id}" title="Odstranit oznámení">odstranit</a></td>
+        <td class="action"><a href="<s:url value="ajax/readEvent"/>" class="read" id="${event.id}" title="Označit jako přečtené">přečteno</a></td>
         </tr>
     </c:forEach>
     </table>
-        <a id="readAllEvents" href="<s:url value="/ajax/readAllEvents"/>" title="Odstranit všechna oznámení">odstranit vše</a>
+        <a id="readAllEvents" href="<s:url value="/ajax/readAllEvents"/>" title="Označit všechna oznámení jako přečtená">přečteno vše</a>
     </div>
     </c:if>
     
@@ -71,7 +73,7 @@
             success: function(response){
                 tableContent.remove();
                 thisAnchor.remove();
-                $("#eventsArea").html("<p>Žádné nové události</p>")
+                $("#eventsArea").html("<h2>Události:</h2><p>Žádné nové události</p>")
             },
             error: function(e){
                 alert("Ajax chyba: " + e.message)

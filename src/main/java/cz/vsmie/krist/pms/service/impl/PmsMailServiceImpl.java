@@ -63,7 +63,7 @@ public class PmsMailServiceImpl implements PmsMailService{
     
     @Async
     private void sendPmsMessage(String to, String subject, String text){
-        logger.debug("Mail service fired!");
+        logger.debug("Zahajeni odesilani zpravy.");
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message); // pridat true pro multipart
 
@@ -72,17 +72,17 @@ public class PmsMailServiceImpl implements PmsMailService{
                 messageHelper.setFrom("pmscz.noreply@gmail.com");
                 message.setSubject(subject, "UTF-8");
                 messageHelper.setText(text,true); //true: content type = 'text/html'
-                logger.info("Pokus o odesílání mailu na adresu " + to);
+                logger.info("Pokus o odeslani mailu na " + to);
 //                mailSender.send(message);
-                logger.debug("Odesílání vypnuto! ZMĚNIT!");
+                logger.debug("Odesilani vypnuto! ZMENIT!");
             } catch (MessagingException ex) {
-                logger.error("Chyba v mailu: " + ex.getMessage());
+                logger.error("Chyba pri pokusu o odeslani mailu na adresu " + to +". Chyba: " + ex.getMessage());
             }
             catch (MailException ex){
-                logger.error("Chyba při odesílání mailu na adresu " + to +". Chyba: " + ex.getMessage());
+                logger.error("Chyba pri pokusu o odeslani mailu na adresu " + to +". Chyba: " + ex.getMessage());
             }
 
-            logger.debug("Odesílám na: " + to);
+            logger.debug("Zprava odeslana na: " + to);
     }
     
     public boolean isActive() {

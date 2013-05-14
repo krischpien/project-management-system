@@ -18,17 +18,25 @@ public class LoggingServiceImpl implements LoggingService{
     LoggingEventDao loggingEventDao;
     
     
+    @Override
     public LoggingEvent getLoggingEventById(Long eid) {
         return loggingEventDao.getLoggingEventById(eid);
     }
 
+    @Override
     public Collection<LoggingEvent> getAllLoggingEvents() {
         return loggingEventDao.getAllLoggingEvents();
     }
+    @Override
     public Collection<LoggingEvent> getAllLoggingEventsPaginated(int offset, int limit){
         return loggingEventDao.getAllLoggingEventsPaginated(offset, limit);
     }
+    @Override
+    public Number getLoggingEventCount(){
+        return loggingEventDao.getLoggingEventCount();
+    }
 
+    @Override
     public void deleteLoggingEvent(Long eid) {
         loggingEventDao.deleteLoggingEvent(eid);
     }

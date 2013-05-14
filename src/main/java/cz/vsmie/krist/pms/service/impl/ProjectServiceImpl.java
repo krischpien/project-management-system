@@ -45,14 +45,17 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     
+    @Override
     public Project getProjectById(Long id) {
         return projectDao.getById(id);
     }
 
+    @Override
     public Collection<Project> getAllProjects() {
         return projectDao.getAll();
     }
     
+    @Override
     public Collection<Project> getProjectsOfUser(String username) {
         User user = userDao.getByName(username);
         Collection<Project> userProjects = new HashSet<Project>();
@@ -65,10 +68,12 @@ public class ProjectServiceImpl implements ProjectService{
         return userProjects;
     }
     
+    @Override
     public Collection<Project> getProjectsWithUnpaidAdvances(){
         return projectDao.getProjectWithUnpaidAdvances();
     }
 
+    @Override
     public void saveProject(Project project) {
         logger.debug("Ukládání projektu " + project.getName());
         project.setDateCreate(new Date());
@@ -76,6 +81,7 @@ public class ProjectServiceImpl implements ProjectService{
         projectDao.save(project);
     }
 
+    @Override
     public void updateProject(Project project, User updater) {
         projectDao.update(project);
         String link = "/project/details/"+project.getId()+"-"+project.getName();
@@ -83,10 +89,12 @@ public class ProjectServiceImpl implements ProjectService{
 
     }
     
+    @Override
     public void deleteProject(Project project) {
         projectDao.delete(project);
     }
     
+    @Override
     public void deleteProjectById(Long pid){
         Project project = projectDao.getById(pid);
         for(User user : project.getAuthorizedUsers()){
@@ -95,6 +103,7 @@ public class ProjectServiceImpl implements ProjectService{
         projectDao.delete(project);
     }
     
+    @Override
     public void saveComment(Comment comment, Long projectId, String authorName){
         Project project = projectDao.getById(projectId);
         User author = userDao.getByName(authorName);
@@ -106,12 +115,13 @@ public class ProjectServiceImpl implements ProjectService{
         eventService.createEvent(authorName, project, "Nový komentář k projektu " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
     }
 
+    @Override
     public boolean checkUserPermissionToProject(String username, Project project) {
-        logger.debug("Zjistuji opravneni na projekt");
+        //logger.debug("Zjistuji opravneni na projekt " + project.getName());
         User user = userDao.getByName(username);
 //        Project project = projectDao.getById(projectId);
-        boolean authorized = project.getAuthorizedUsers().contains(user);
-        logger.debug("Uzivatel " + user.getName() + " opravnen k projektu " + project.getName() + ": " + authorized);
+        boolean authorized = project.getAuthorizedUsers().contains(user) && !username.equals("admin");
+        //logger.debug("Uzivatel " + user.getName() + " opravnen k projektu " + project.getName() + ": " + authorized);
         return authorized;
     }
     

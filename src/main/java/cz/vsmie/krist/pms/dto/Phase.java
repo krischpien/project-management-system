@@ -13,12 +13,14 @@ import javax.persistence.Id;
 public class Phase implements Serializable {
     
     public static final Long PHASE_NEW = 1L;
-    public static final Long PHASE_APPROVED = 2L;
+    public static final Long PHASE_PLACED = 2L;
     public static final Long PHASE_APPRAISED = 3L;
-    public static final Long PHASE_REALISATION = 4L;
-    public static final Long PHASE_TESTING = 5L;
-    public static final Long PHASE_DEPLOYED = 6L;
-    public static final Long PHASE_COMPLAINT = 7L;
+    public static final Long PHASE_APPROVED = 4L;
+    public static final Long PHASE_REALISATION = 5L;
+    public static final Long PHASE_TESTING = 6L;
+    public static final Long PHASE_TESTED = 7L;
+    public static final Long PHASE_DEPLOYED = 8L;
+    public static final Long PHASE_COMPLAINT = 9L;
     
     @Id
     private Long id;

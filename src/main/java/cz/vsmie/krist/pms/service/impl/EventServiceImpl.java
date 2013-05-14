@@ -30,15 +30,18 @@ public class EventServiceImpl implements EventService{
     
     Logger logger = LoggerFactory.getLogger(EventServiceImpl.class);
     
+    @Override
     public void deleteEvent(Event event) {
         eventDao.delete(event);
     }
+    @Override
     public void saveEvent(Event event){
         eventDao.save(event);
     }
 
+    @Override
     public void createEvent(String authorName, Project project, String description, String link, int type) {
-        logger.debug("Vytvarim novou udalost");
+        logger.debug("Vytvareni nove udalosti k projektu " + project.getName());
         Event event = new Event();
         event.setDateEvent(new Date());
         event.setType(type);
@@ -59,6 +62,7 @@ public class EventServiceImpl implements EventService{
         logger.debug("Nova udalost ulozena");
     }
     
+    @Override
      public Collection<Event> getEventsForUser(String username) {
         User user = userDao.getByName(username);
         Collection<Event> events = user.getEvents();
@@ -68,6 +72,7 @@ public class EventServiceImpl implements EventService{
         return events;
     }
      
+    @Override
     public void removeEventFromUser(String username, Long eventId){
         logger.debug("User: " +username);
         User user = userDao.getByName(username);

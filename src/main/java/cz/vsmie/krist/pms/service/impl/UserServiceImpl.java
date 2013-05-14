@@ -42,18 +42,20 @@ public class UserServiceImpl implements UserService{
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     
    
+    @Override
     public Collection<User> getAllUsers(){
         return userDao.getAll();
     }
     
+    @Override
     public void saveUser(User user) throws UserNameNotAvailable, UserEmailNotAvailable{
-        logger.info("Lookin' for " + user.getName());
+        logger.debug("Hledam uzivatele " + user.getName());
         if(userDao.getByName(user.getName())!= null){
-            logger.info("Uživatel " + user.getName() + "je již v databázi");
+            logger.info("Uzivatel " + user.getName() + "je jiz v databázi");
             throw new UserNameNotAvailable(user.getName());
         }
         if(userDao.getByEmail(user.getEmail()) != null){
-            logger.info("Emailova adresa " + user.getEmail() + "je již v databázi");
+            logger.info("Emailova adresa " + user.getEmail() + "je jiz v databázi");
             throw new UserEmailNotAvailable(user.getEmail());
         }
         else{
@@ -63,18 +65,22 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    @Override
     public User getUserById(Long id) {
         return userDao.getById(id);
     }
 
+    @Override
     public User getUserByName(String name) {
         return userDao.getByName(name);
     }
     
+    @Override
     public User getUserByEmail(String email){
         return userDao.getByEmail(email);
     }
 
+    @Override
     public Collection<UserRole> getAllRoles(boolean assignable) {
         if(assignable){
             return roleDao.getAssignableRoles();
@@ -82,14 +88,17 @@ public class UserServiceImpl implements UserService{
         return roleDao.getMainRoles();
     }
 
+    @Override
     public UserRole getRoleById(Long id) {
         return roleDao.getById(id);
     }
     
+    @Override
     public void deleteUser(User user){
         logger.debug("metoda deleteUser(User user) neimplementována");
     }
 
+    @Override
     public void deleteUserById(Long uid) {
         User user = userDao.getById(uid);
         for(Event event : user.getEvents()){
@@ -104,6 +113,7 @@ public class UserServiceImpl implements UserService{
         userDao.delete(user);
     }
 
+    @Override
     public void updateUser(User updatedUser, boolean encodePassword) throws UserException {
         User userByName = userDao.getByName(updatedUser.getName());
         User userByEmail = userDao.getByEmail(updatedUser.getEmail());
@@ -119,6 +129,7 @@ public class UserServiceImpl implements UserService{
         userDao.update(updatedUser);
     }
     
+    @Override
     public void updateLastLogin(String username, String hostIp){
         User loggedUser = userDao.getByName(username);
         loggedUser.setLastIp(hostIp);

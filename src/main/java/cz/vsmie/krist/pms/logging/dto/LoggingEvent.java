@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +20,8 @@ import javax.persistence.Table;
 @Table(name = "logging_event", catalog = "pms")
 public class LoggingEvent implements java.io.Serializable {
     
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "event_id", unique = true, nullable = false)
     private Long eventId;
     @Column(name = "timestmp", nullable = false)

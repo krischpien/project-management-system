@@ -56,9 +56,9 @@
         
     </div>
         <div id="infoZone">
-            <a class="notice" title="${commentCount} nových komentářů.">${commentCount}</a>
-            <a class="notice" title="${projectCount} událostí projektů.">${projectCount}</a>
-            <a class="notice" title="${requirementCount} událostí požadavků.">${requirementCount}</a>
+            <a class="notice comNotice" title="${commentCount} komentářů.">${commentCount}</a>
+            <a class="notice prjNotice" title="${projectCount} událostí projektů.">${projectCount}</a>
+            <a class="notice reqNotice" title="${requirementCount} událostí požadavků.">${requirementCount}</a>
         </div>
         <br class="clear"/>
 </div>

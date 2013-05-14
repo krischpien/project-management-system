@@ -98,19 +98,6 @@ h3{
     text-decoration: none;
 }
 
-#header #infoZone{
-    /*float: right;*/
-    position: absolute;
-    top:65px;
-    right:10px;
-}
-
-#infoZone a.notice{
-    display: inline-block;
-    padding:10px 15px;
-    border-radius: 5px 5px 0 0;
-    background-color: #2e6e9e;
-}
 
 #content{
     padding: 20px;
@@ -365,7 +352,9 @@ table#events{
     border-collapse: collapse;
     border:2px solid #2e6e9e;
 }
-
+table#events a:hover{
+    color:#fff;
+}
 table#events tr{
    
 }
@@ -387,7 +376,10 @@ table#events thead tr{
 }
 table#events td{
     padding:3px;
-    
+}
+table#events td.action{
+    text-align: right;
+    padding-right: 5px;
 }
 table#events tr.row:hover td{
     background-color: #6ea7d2;
@@ -422,4 +414,68 @@ th#column2{
 
 #projectDetails ul li{
     display: inline;
+}
+
+/* LOGGER EVENTS */
+#loggingEvents{
+    width:800px;
+}
+table#logTable{
+    width:100%;
+    
+}
+#logTable td, #logTable th{
+    padding:2px;
+}
+#logTable thead, #logTable thead tr:hover{
+    background-color: #2e6e9e;
+    color:#fff;
+}
+
+#logTable tr:hover{
+    background-color: #d0e5f5;
+}
+#logTable th.level{
+    width:80px;
+}
+
+/* UPOZORNOVACI OBLAST */
+#header #infoZone{
+    /*float: right;*/
+    position: absolute;
+    top:67px;
+    right:10px;
+}
+
+#infoZone a.notice{
+    display: inline-block;
+    color:#fff;
+    /*padding:10px 15px;*/
+    text-decoration: none;
+    border-radius: 5px 5px 0 0;
+    background-color: #2e6e9e;
+    line-height: 42px;
+    text-indent: 22px;
+    width: 32px;
+    height: 32px;
+    background:url('../img/notify_area.png') no-repeat;
+}
+
+#infoZone a.notice.prjNotice{
+    background-position: 0 0;
+}
+#infoZone a.notice.prjNotice:hover{
+    background-position: 0 -32px;
+}
+#infoZone a.notice.reqNotice{
+    background-position: -64px 0;
+}
+#infoZone a.notice.reqNotice:hover{
+    background-position: -64px -32px;
+}
+#infoZone a.notice.comNotice{
+    background-position: -32px 0;
+}
+#infoZone a.notice.comNotice:hover{
+    background-position: -32px -32px;
 }

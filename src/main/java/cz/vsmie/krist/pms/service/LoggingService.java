@@ -12,5 +12,5 @@ public interface LoggingService {
     public Collection<LoggingEvent> getAllLoggingEvents();
     public Collection<LoggingEvent> getAllLoggingEventsPaginated(int offset, int limit);
     public void deleteLoggingEvent(Long eid);
-    
+    public Number getLoggingEventCount();
 }

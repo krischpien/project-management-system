@@ -31,15 +31,15 @@ public class RedirectUtil {
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         String redirectUrl="";
         if(authorities.contains("ROLE_ADMIN")){
-            logger.debug("Přihlašení administrátora.");
+            logger.debug("Uzivatel s pravy administratora.");
             redirectUrl = ADMIN_URL;
         }
         else if(authorities.contains("ROLE_CUSTOMER") || authorities.contains("ROLE_PROVIDER")){
-            logger.debug("Přihlašení zákazníka/dodavatele.");
+            logger.debug("Uzivatel s pravy zakaznika/dodavatele.");
             redirectUrl = CUSTOMER_URL;
         }
         else{
-            logger.debug("Přihlašení uživatele bez oprávnění.");
+            logger.debug("Uzivatel nema patricna opravneni k prohlizeni.");
             redirectUrl = NOT_AUTHORIZED_URL;
         }
         return redirectUrl;

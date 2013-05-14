@@ -2,6 +2,7 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.ProjectDao;
 import cz.vsmie.krist.pms.dto.Project;
+import cz.vsmie.krist.pms.dto.User;
 import java.util.Collection;
 import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
@@ -26,16 +27,19 @@ public class ProjectDaoImpl implements ProjectDao{
     
     Logger logger = LoggerFactory.getLogger(ProjectDaoImpl.class);
 
+    @Override
     public Project getById(Long id) {
         Criteria criteria = getCurrentSession().createCriteria(Project.class).add(Restrictions.idEq(id));
 //                .setFetchMode("comments", FetchMode.JOIN);
         return (Project) criteria.uniqueResult();
     }
 
+    @Override
     public Collection<Project> getAll() {
         return (Collection<Project>) getCurrentSession().createCriteria(Project.class).list();
     }
     
+    @Override
     public Collection<Project> getProjectWithUnpaidAdvances(){
         logger.debug("Vyhledávání projektů s nezaplacenými zálohami.");
         Criteria criteria = getCurrentSession().createCriteria(Project.class);
@@ -49,14 +53,17 @@ public class ProjectDaoImpl implements ProjectDao{
     }
 
 
+    @Override
     public void save(Project project) {
         getCurrentSession().save(project);
     }
 
+    @Override
     public void update(Project project) {
         getCurrentSession().update(project);
     }
 
+    @Override
     public void delete(Project project) {
         getCurrentSession().delete(project);
     }

@@ -27,13 +27,37 @@
     <a href="<s:url value="/admin/service/cron/on"/>">zapnout</a> | <a href="<s:url value="/admin/service/cron/off"/>">vypnout</a>
 </div>
 
-
 </div>
 
-    <c:if test="${!empty loggingEvents}">
-        <ul>
-        <c:forEach items="${loggingEvents}" var="loggingEvent">
-            <li title="${loggingEvent.loggerName}">${loggingEvent.timestmp} : ${loggingEvent.formattedMessage}</li>
+<div id="loggingEvents">
+    <h2>Události systému</h2>
+<p>Strana: 
+        <c:forEach begin="0" end="${pageCount}" var="i">
+            <c:set value="${i * 50}" var="offset"/>
+            
+            <a href="/pms/admin/index?logOffset=${offset}&logLimit=50">${i + 1}</a>
         </c:forEach>
-        </ul>
+</p>
+    <c:if test="${!empty loggingEvents}">
+        
+        <table id="logTable">
+            <thead>
+                <tr>
+                    <th class="level">LEVEL</th>
+                    <th class="logger">Logger</th>
+                    <th class="message">Zpráva</th>
+                </tr>
+            </thead>
+        <c:forEach items="${loggingEvents}" var="loggingEvent">
+            <tr>
+                <td>${loggingEvent.levelString}</td>
+                <td>${loggingEvent.loggerName}</td>
+                <td>${loggingEvent.formattedMessage}</td>
+            </tr>
+                
+        </c:forEach>
+        </table>
     </c:if>
+</div>
+
+ 

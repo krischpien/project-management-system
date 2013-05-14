@@ -27,40 +27,44 @@ public class UserDaoImpl implements UserDao{
     
     private final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
     
+    @Override
     public User getById(Long id) {
         Session session = this.getCurrentSession();
         Criteria criteria = session.createCriteria(User.class);
         return (User) criteria.add(Restrictions.idEq(id)).setFetchMode("roles", FetchMode.JOIN).uniqueResult();
     }
     
+    @Override
     public User getByName(String name) {
         Criteria criteria = getCurrentSession().createCriteria(User.class);
         return (User) criteria.add(Restrictions.eq("name", name)).uniqueResult();
     }
     
+    @Override
     public User getByEmail(String email){
         Criteria criteria = this.getCurrentSession().createCriteria(User.class);
         return (User) criteria.add(Restrictions.eq("email", email)).uniqueResult();
     }
     
+    @Override
     public Collection<User> getAll() {
         Collection<User> users = (Collection<User>) this.getCurrentSession().createCriteria(User.class).list();
-        for(User u : users){
-            logger.info("Getting user: " + u.getName());
-        }
         return users;
     }
 
+    @Override
     public void save(User user){
         Session session = getCurrentSession();
         session.save(user);
     }
     
+    @Override
     public void update(User user){
         this.getCurrentSession().clear();
         this.getCurrentSession().update(user);
     }
     
+    @Override
     public void delete(User user){
         this.getCurrentSession().delete(user);
     }

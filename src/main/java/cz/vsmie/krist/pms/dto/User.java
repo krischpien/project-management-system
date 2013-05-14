@@ -44,10 +44,10 @@ public class User implements Serializable {
     @Column(name="user_name")
     @Size(min=3, max=50, message="Uživatelské jméno musí být v rozsahu 3-50 alfanumerických znaků") //spring validace
     private String name;
-//    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Chybná emailová adresa. Vzor: jmeno@email.cz")
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Chybná emailová adresa. Vzor: jmeno@email.cz")
     private String email;
     @Column(columnDefinition="BINARY(80)") // SHA-256 hash => 32B hash + 8B salt
-//    @Size(min=5, max=80, message="Uživatelské heslo musí být v rozsahu 5-80 alfanumerických znaků") //spring validace
+    @Size(min=5, max=80, message="Uživatelské heslo musí být v rozsahu 5-80 alfanumerických znaků") //spring validace
     private String password;
     @Column(name="last_login")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

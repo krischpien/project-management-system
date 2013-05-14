@@ -2,19 +2,21 @@ package cz.vsmie.krist.pms.controller;
 
 import cz.vsmie.krist.pms.dto.Comment;
 import cz.vsmie.krist.pms.dto.Project;
+import cz.vsmie.krist.pms.exception.NotFoundException;
 import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.ProjectService;
 import cz.vsmie.krist.pms.service.UserService;
+import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -93,21 +95,26 @@ public class ProjectEditController {
     public String showProjectDetails(@ModelAttribute Comment comment, Model model, 
     @PathVariable Long pid, Principal principal, HttpServletRequest request){
         Project project = projectService.getProjectById(pid);
-        model.addAttribute(project);
+        if(project == null){
+            throw new NotFoundException();
+        }
         if(!projectService.checkUserPermissionToProject(principal.getName(), project) && !request.isUserInRole("ROLE_ADMIN")){
             return "unauthorizedUser";
         }
+        
+        model.addAttribute(project);
         return "projectDetails";
     }
     
     @RequestMapping(value="/edit/addComment.do", method= RequestMethod.POST)
-    public String saveComment(@ModelAttribute Comment comment, @RequestParam("projectId") Long projectId, BindingResult result, HttpServletRequest request){
-        logger.info("Pridavam novy komentar");
+    public String saveComment(@ModelAttribute @Valid Comment comment, BindingResult result, @RequestParam("projectId") Long projectId,  HttpServletRequest request, Model model, Principal principal){
+        logger.info("Uzivatel " + principal.getName() + " pridava novy komentar");
         if(result.hasErrors()){
             logger.info("Komentar s chybama!");
+            model.addAttribute("project", projectService.getProjectById(projectId));
             return "projectDetails";
         }
-        projectService.saveComment(comment, projectId, request.getUserPrincipal().getName());
+        projectService.saveComment(comment, projectId, principal.getName());
         return "redirect:/project/details/"+projectId+"-project";
     }
     
