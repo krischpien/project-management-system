@@ -11,7 +11,7 @@
     <li><span class="inline-icon ui-icon ui-icon-person red"></span> <a title="Administrátorský účet (needitovatelný)">admin</a></li>
     <c:forEach items="${userList}" var="user" begin="1">
         <li><span class="inline-icon ui-icon ui-icon-person"></span>
-            <a href="${userDetailsUrl}/${user.name}">
+            <a href="${userDetailsUrl}/${user.name}" title="Detaily uživatele ${user.name}">
                 ${user.name}
             </a>
                 <form action="<s:url value="/admin/user/edit/deleteUser.do"/>" method="POST" class="miniActionForm" title="Odstranit uživatele ${user.name}">
@@ -26,6 +26,8 @@
         </li>
     </c:forEach>
 </ul>
+
+<a class="actionButton" href="<s:url value="/admin/user/edit/newUser.do"/>">Vytvoř uživatele</a>
 
 <script>
     $("button").button();

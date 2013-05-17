@@ -117,14 +117,14 @@ ul.simpleList li{
     border-radius: 5px;
 }
 ul.simpleList li:hover{
-    background-color: #6ea7d2;
+    background-color: #dfeffc;
 }
 ul.simpleList li a{
     display: inline-block;
     
 }
 ul.simpleList li a:hover{
-    color:#fff !important;
+    color: #0972a5 !important;
 }
 
 #services{
@@ -320,11 +320,12 @@ form#userForm{
 }
 
 a.actionButton{
+    margin-top: 10px;
     display: inline-block;
     width:150px;
     padding:0 10px;
-    line-height: 100px;
-    height: 100px;
+    line-height: 30px;
+    height: 30px;
     border-radius: 10px;
     text-align: center;
     text-decoration: none;
@@ -334,6 +335,7 @@ a.actionButton{
 a.actionButton:hover{
     background: url('../img/bg_blue_1x100.png');
     color:#fff !important;
+    font-weight: bold;
 }
 
 span.on{
@@ -454,8 +456,8 @@ table#logTable{
     text-decoration: none;
     border-radius: 5px 5px 0 0;
     background-color: #2e6e9e;
-    line-height: 42px;
-    text-indent: 22px;
+    line-height: 47px;
+    text-indent: 13px;
     width: 32px;
     height: 32px;
     background:url('../img/notify_area.png') no-repeat;
@@ -478,4 +480,10 @@ table#logTable{
 }
 #infoZone a.notice.comNotice:hover{
     background-position: -32px -32px;
+}
+.errorMessage{
+    color:#d52205;
+}
+.okMessage{
+    color:#00cc66;
 }

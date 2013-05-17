@@ -59,9 +59,9 @@
 <h2>Komentáře:</h2>
 <sf:form commandName="comment" method="POST" action="${addCommentUrl}" id="comment">
     <input type="hidden" name="projectId" value="${project.id}"/>
-    <label for="commentContent">Předmět: </label><sf:input path="subject"/><sf:errors path="content"/><br/>
+    <label for="commentContent">Předmět: </label><sf:input path="subject"/><sf:errors path="subject" cssClass="errorMessage"/><br/>
     <sf:textarea id="commentContent" path="content" cols="80" rows="4"/><br/>
-    <sf:errors path="content"/><br/>
+    <sf:errors path="content" cssClass="errorMessage"/><br/>
     <input type="submit" value="komentovat"/><br class="clear"/>
 </sf:form>
 
@@ -72,7 +72,7 @@
         <div class="comment">
         <fmt:formatDate value="${comment.dateCreate}" pattern="dd. MM. yyyy" var="formatedDate"/>
 
-        <h3>${comment.author.name}</h3>
+        <h3><b>${comment.subject}</b> (${comment.author.name})</h3>
         <p>${comment.content}</p>
         <h4 class="bottomLine">datum: ${formatedDate}</h4>
         </div>

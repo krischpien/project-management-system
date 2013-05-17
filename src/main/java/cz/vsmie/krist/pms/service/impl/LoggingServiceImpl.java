@@ -40,5 +40,9 @@ public class LoggingServiceImpl implements LoggingService{
     public void deleteLoggingEvent(Long eid) {
         loggingEventDao.deleteLoggingEvent(eid);
     }
+    @Override
+    public void deleteAllLoggingEvents(){
+        loggingEventDao.deleteAllLoggingEvents();
+    }
 
 }

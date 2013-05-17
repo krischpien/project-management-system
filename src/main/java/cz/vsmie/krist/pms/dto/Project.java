@@ -30,6 +30,7 @@ import org.hibernate.annotations.LazyCollectionOption;
  */
 
 @Entity
+@org.hibernate.annotations.Entity(dynamicUpdate=true)
 public class Project implements Serializable {
     
     @Id @GeneratedValue

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    
+    <definition name="projectForm.base" extends="projectIndex">
+        <put-attribute name="content" value="/WEB-INF/pages/project/flow/base.jsp"/>
+        <put-attribute name="activePage" value="projects"/>
+        <put-attribute name="title" value="Projekt"/>
+    </definition>
+    
+    <definition name="projectFormFlow" extends="projectForm.base">
+        <put-attribute name="create" value="/WEB-INF/pages/project/flow/1-create.jsp" cascade="true"/>
+        <put-attribute name="place" value="/WEB-INF/pages/project/flow/2-place.jsp" cascade="true"/>
+        <put-attribute name="appraise" value="/WEB-INF/pages/project/flow/3-appraise.jsp" cascade="true"/>
+        <put-attribute name="approve" value="/WEB-INF/pages/project/flow/4-approve.jsp" cascade="true"/>
+        <put-attribute name="realise" value="/WEB-INF/pages/project/flow/5-realise.jsp" cascade="true"/>
+        <put-attribute name="test" value="/WEB-INF/pages/project/flow/6-approve.jsp" cascade="true"/>
+        <put-attribute name="tested" value="/WEB-INF/pages/project/flow/7-tested.jsp" cascade="true"/>
+        <put-attribute name="deploy" value="/WEB-INF/pages/project/flow/8-deploy.jsp" cascade="true"/>
+    </definition>
+    
+</tiles-definitions>

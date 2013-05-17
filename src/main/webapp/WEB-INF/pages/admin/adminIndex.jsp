@@ -24,7 +24,7 @@
         <c:otherwise><span class="off">vypnuto</span></c:otherwise>
     </c:choose> 
         </h3>
-    <a href="<s:url value="/admin/service/cron/on"/>">zapnout</a> | <a href="<s:url value="/admin/service/cron/off"/>">vypnout</a>
+    <a href="<s:url value="/admin/service/audit/on"/>">zapnout</a> | <a href="<s:url value="/admin/service/audit/off"/>">vypnout</a>
 </div>
 
 </div>
@@ -60,4 +60,6 @@
     </c:if>
 </div>
 
- 
+    <form method="post" action="<s:url value="/admin/clearLog.do"/>">
+        <input type="submit" value="Vyčistit log"/>
+    </form>

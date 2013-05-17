@@ -25,7 +25,7 @@ public class UserEditController {
     @Autowired
     UserService userService;
     
-    @RequestMapping("/")
+//    @RequestMapping("/")
     public String showUserIndex(){
         return "userIndex";
     }
@@ -95,7 +95,7 @@ public class UserEditController {
             return "userDetails";
     }
     
-    @RequestMapping("/list")
+    @RequestMapping({"/","/list"})
     public String showUserList(Model model){
         model.addAttribute("userList", userService.getAllUsers());
         return "userList";

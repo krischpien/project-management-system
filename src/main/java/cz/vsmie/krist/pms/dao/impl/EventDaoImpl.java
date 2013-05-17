@@ -22,22 +22,27 @@ public class EventDaoImpl implements EventDao{
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public Event getById(Long id) {
         return (Event) getCurrentSession().get(Event.class, id);
     }
 
+    @Override
     public Collection<Event> getAll() {
         return (Collection<Event>) getCurrentSession().createCriteria(Event.class).list();
     }
 
+    @Override
     public void save(Event event) {
         getCurrentSession().save(event);
     }
 
+    @Override
     public void update(Event event) {
         getCurrentSession().update(event);
     }
 
+    @Override
     public void delete(Event event) {
         getCurrentSession().delete(event);
     }

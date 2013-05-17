@@ -18,22 +18,27 @@ public class PhaseDaoImpl implements PhaseDao{
     @Autowired
     SessionFactory sessionFactory;
 
+    @Override
     public Phase getById(Long id) {
         return (Phase) getCurrentSession().get(Phase.class, id);
     }
 
+    @Override
     public Collection<Phase> getAll() {
         return (Collection<Phase>) getCurrentSession().createCriteria(Phase.class).list();
     }
 
+    @Override
     public void save(Phase phase) {
         getCurrentSession().save(phase);
     }
 
+    @Override
     public void update(Phase phase) {
         getCurrentSession().update(phase);
     }
 
+    @Override
     public void delete(Phase phase) {
         getCurrentSession().delete(phase);
     }

@@ -2,7 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <h1>Projekty &raquo; Výpis projektů</h1>
-
+<s:url value="/project/edit/newProject.do" var="newProjectUrl"/>
+<c:if test="${empty projectList}">
+    <p>Žádné projekty.</p>
+</c:if>
 
 <ul class="simpleList">
     <c:forEach items="${projectList}" var="project">
@@ -22,6 +25,8 @@
         </li>
     </c:forEach>
 </ul>
+
+<a class="actionButton" href="${newProjectUrl}">Nový projekt</a>
 
 <script>
     $("button").button();

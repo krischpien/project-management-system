@@ -18,22 +18,27 @@ public class CommentDaoImpl implements CommentDao{
     @Autowired
     SessionFactory sessionFactory;
 
+    @Override
     public Comment getById(Long id) {
         return (Comment) getCurrentSession().get(Comment.class, id);
     }
 
+    @Override
     public Collection<Comment> getAll() {
         return (Collection<Comment>) getCurrentSession().createCriteria(Comment.class).list();
     }
 
+    @Override
     public void save(Comment comment) {
         getCurrentSession().save(comment);
     }
 
+    @Override
     public void update(Comment comment) {
         getCurrentSession().update(comment);
     }
 
+    @Override
     public void delete(Comment comment) {
         getCurrentSession().delete(comment);
     }

@@ -12,6 +12,8 @@ import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.RequirementService;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,12 +35,16 @@ public class RequirementServiceImpl implements RequirementService {
     @Autowired
     EventService eventService;
     
+    Logger logger = LoggerFactory.getLogger(RequirementServiceImpl.class);
     
     
+    
+    @Override
     public Requirement getRequirementById(Long id) {
         return requirementDao.getById(id);
     }
 
+    @Override
     public void saveRequirement(Requirement requirement, Long projectId, String authorName) {
         requirement.setDateCreate(new Date());
         requirement.setPhase(phaseDao.getById(Phase.PHASE_NEW));
@@ -46,6 +52,7 @@ public class RequirementServiceImpl implements RequirementService {
         requirement.setProject(project);
         requirementDao.save(requirement);
         String link = "/project/"+project.getId()+"-project/requirement/details/"+requirement.getId();
+        logger.info("Byl vytvoren novy pozadavek k projektu " + project.getName());
         eventService.createEvent(authorName, project, "Byl vytvořen nový požadavek k projektu " + project.getName() + ", uživatelem "+authorName, link, Event.NEW_REQUIREMENT);
     }
     

@@ -51,11 +51,11 @@ public class UserServiceImpl implements UserService{
     public void saveUser(User user) throws UserNameNotAvailable, UserEmailNotAvailable{
         logger.debug("Hledam uzivatele " + user.getName());
         if(userDao.getByName(user.getName())!= null){
-            logger.info("Uzivatel " + user.getName() + "je jiz v databázi");
+            logger.info("Chyba pri ukladani uzivatele: Uzivatel " + user.getName() + "je jiz v databázi");
             throw new UserNameNotAvailable(user.getName());
         }
         if(userDao.getByEmail(user.getEmail()) != null){
-            logger.info("Emailova adresa " + user.getEmail() + "je jiz v databázi");
+            logger.info("Chyba pri ukladani uzivatele: Emailova adresa " + user.getEmail() + "je jiz v databázi");
             throw new UserEmailNotAvailable(user.getEmail());
         }
         else{
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService{
     
     @Override
     public void deleteUser(User user){
-        logger.debug("metoda deleteUser(User user) neimplementována");
+        userDao.delete(user);
     }
 
     @Override
@@ -111,6 +111,7 @@ public class UserServiceImpl implements UserService{
             project.getAuthorizedUsers().remove(user);
         }
         userDao.delete(user);
+        logger.info("Odstranen uzivatel " +user.getName());
     }
 
     @Override

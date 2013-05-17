@@ -24,7 +24,7 @@
         <label for="email">Email: </label><sf:input path="email" onchange="checkUserEmail()"/><span class="info" id="emailInfo"><sf:errors path="email"/></span><br/>
         <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="info" class="passwordInfo"><sf:errors path="password"/></span><br/>
         <!--<label for="passwordAgain">Heslo znovu: </label><input id="passwordAgain" name="passwordAgain" type="password"/><span class="passwordAgainInfo"></span><br/>-->
-        <label for="roles"><h2>Role: </h2></label><br/>
+        <label for="roles"><h3>Role: </h3></label><br/>
         <div id="assignableRoles">
         <sf:checkboxes path="roles" items="${assignableRoles}" itemValue="id" itemLabel="description"/>
         </div>

@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.service.impl;
 
 import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.User;
-import cz.vsmie.krist.pms.service.PmsCronScheduler;
+import cz.vsmie.krist.pms.service.PmsAdvancesAudit;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.ProjectService;
 import cz.vsmie.krist.pms.service.UserService;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
  * @author Jan Krist
  */
 
-@Service("pmsCronSchedulerService")
-public class PmsCronSchedulerImpl implements PmsCronScheduler{
+@Service("pmsAdvancesAudit")
+public class PmsAdvancesAuditImpl implements PmsAdvancesAudit{
 
     @Autowired
     ProjectService projectService;
@@ -30,25 +30,25 @@ public class PmsCronSchedulerImpl implements PmsCronScheduler{
     
     private boolean active = true;
     
-    Logger logger = LoggerFactory.getLogger(PmsCronSchedulerImpl.class);
+    Logger logger = LoggerFactory.getLogger(PmsAdvancesAuditImpl.class);
     
-//    @Scheduled(cron="0 * * * * *")
+    @Scheduled(cron="0 * * * * *")
     public void checkUnpaidAdvances() {
         if(isActive()){
-            logger.info("Probíhá naplánovaná úloha");
+            logger.info("Probiha naplanovana kontrola nesplacenych zaloh.");
             Collection<Project> unpaidProjects = projectService.getProjectsWithUnpaidAdvances();
             for(Project project : unpaidProjects){
                 Collection<User> participants = project.getAuthorizedUsers();
                 for(User user: participants){
                     if(user.getRoles().contains(userService.getRoleById(5L))){ //ROLE_MANAGER
 //                        mailService.sendUnpaidAdvancesNotice(project, user);
-                        logger.debug("Posílám upozornění na: " + user.getEmail());
+                        logger.info("Odeslano upozorneni na: " + user.getEmail());
                     }
                 }
             }
         }
         else{
-            logger.debug("Plánovač není aktivní");
+            logger.info("Planovana kontrola nesplacenych zaloh není aktivní");
         }
 
     }

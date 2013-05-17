@@ -49,6 +49,14 @@ public class LoggingEventDaoImpl implements LoggingEventDao{
         getCurrentSession().delete(getLoggingEventById(eid));
     }
     
+    @Override
+    public void deleteAllLoggingEvents(){
+        for(LoggingEvent event : getAllLoggingEvents()){
+            
+            getCurrentSession().delete(event);
+        }
+    }
+    
     private Session getCurrentSession(){
         return sessionFactory.getCurrentSession();
     }

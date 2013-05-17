@@ -14,5 +14,5 @@ public interface LoggingEventDao {
     public Collection<LoggingEvent> getAllLoggingEventsPaginated(int offset, int limit);
     public Number getLoggingEventCount();
     public void deleteLoggingEvent(Long eid);
-
+    public void deleteAllLoggingEvents();
 }

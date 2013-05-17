@@ -6,12 +6,10 @@ import cz.vsmie.krist.pms.exception.NotFoundException;
 import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.ProjectService;
 import cz.vsmie.krist.pms.service.UserService;
-import java.io.IOException;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +50,7 @@ public class ProjectEditController {
         binder.registerCustomEditor(Date.class, editor);
     }
     
-    @RequestMapping({"", "/"})
+//    @RequestMapping({"", "/"})
     public String showProjectIndex(){
         return "projectIndex";
     }
@@ -60,14 +58,18 @@ public class ProjectEditController {
     @RequestMapping("/edit/newProject.do")
     public String showProjectForm(@ModelAttribute Project project,Model model){
         populateUsers(model);
-        return "projectForm";
+        return "projectForm"; //projectForm //projectFormFlow
     }
     
     @RequestMapping("/edit/edit.do")
     public String editProject(Model model, @RequestParam("pid") Long pid){
         populateUsers(model);
-        model.addAttribute("project", projectService.getProjectById(pid));
-        return "projectForm";
+        Project project = projectService.getProjectById(pid);
+        if(project == null){
+            throw new NotFoundException();
+        }
+        model.addAttribute("project", project);
+        return "projectForm"; //projectForm //projectFormFlow
     }
     
     @RequestMapping(value="/edit/edit.do", method= RequestMethod.POST)
@@ -118,7 +120,7 @@ public class ProjectEditController {
         return "redirect:/project/details/"+projectId+"-project";
     }
     
-    @RequestMapping("/list")
+    @RequestMapping({"", "/", "/list"})
     public String showProjectList(Model model, HttpServletRequest request){
         if(request.isUserInRole("ROLE_ADMIN")){
             model.addAttribute("projectList", projectService.getAllProjects());

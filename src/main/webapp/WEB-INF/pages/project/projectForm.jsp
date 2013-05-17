@@ -16,7 +16,7 @@
     
     <label for="dateDeadline">Termín:</label><sf:input path="dateDeadline" id="date" readonly="true"/><br/>
     <label for="note">Poznámka:</label><sf:textarea path="note"/><br/>
-    <h2>Oprávnění k projektu:</h2>
+    <h3>Oprávnění k projektu:</h3>
     <div id="authorizedUsers">
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <sf:select path="authorizedUsers" items="${allUsers}" itemValue="id" itemLabel="name" />
@@ -30,7 +30,7 @@
     <c:set value="${project.phase.name}" var="projectPhase"/>
     
     <sec:authorize ifAnyGranted="ROLE_ADMIN">
-        <input type="submit" name="formAction" value="Aktualizovat"/>
+        <input type="submit" name="formAction" value="Uložit"/>
     </sec:authorize>
         
     <sec:authorize access="hasRole('ROLE_OWNER')">
@@ -72,7 +72,6 @@
     </sec:authorize>
         
 </sf:form>
-    
 <script>
 $(function() {
 $( "#date" ).datepicker({

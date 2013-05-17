@@ -45,11 +45,7 @@
       <appender-ref ref="DB"/>
   </logger>
   
-  <logger name="" level="INFO" additivity="true">
-      <appender-ref ref="DB"/>
-  </logger>
-
-  <root level="INFO">
+    <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
   

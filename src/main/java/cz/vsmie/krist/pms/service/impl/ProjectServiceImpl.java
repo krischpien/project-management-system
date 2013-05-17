@@ -79,6 +79,7 @@ public class ProjectServiceImpl implements ProjectService{
         project.setDateCreate(new Date());
         project.setPhase(phaseDao.getById(Phase.PHASE_NEW));
         projectDao.save(project);
+        logger.info("Ulozen novy projekt: " + project.getName());
     }
 
     @Override
@@ -101,6 +102,7 @@ public class ProjectServiceImpl implements ProjectService{
             user.getProjects().remove(project);
         }
         projectDao.delete(project);
+        logger.info("Byl odstranen projekt " + project.getName());
     }
     
     @Override
@@ -112,16 +114,17 @@ public class ProjectServiceImpl implements ProjectService{
         comment.setProject(project);
         commentDao.save(comment);
         String link = "/project/details/"+project.getId()+"-projekt";
+        logger.info("Ulozen novy komentar k projektu " + project.getName());
         eventService.createEvent(authorName, project, "Nový komentář k projektu " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
     }
 
     @Override
     public boolean checkUserPermissionToProject(String username, Project project) {
-        //logger.debug("Zjistuji opravneni na projekt " + project.getName());
+        logger.debug("Zjistuji opravneni na projekt " + project.getName());
         User user = userDao.getByName(username);
 //        Project project = projectDao.getById(projectId);
         boolean authorized = project.getAuthorizedUsers().contains(user) && !username.equals("admin");
-        //logger.debug("Uzivatel " + user.getName() + " opravnen k projektu " + project.getName() + ": " + authorized);
+        logger.debug("Uzivatel " + user.getName() + " opravnen k projektu " + project.getName() + ": " + authorized);
         return authorized;
     }
     
