@@ -16,6 +16,11 @@
         <put-attribute name="title" value="Detaily projektu"/>
         <put-attribute name="content" value="/WEB-INF/pages/project/projectDetails.jsp"/>
     </definition>
+    
+    <definition name="projectHistory" extends="projectIndex">
+        <put-attribute name="title" value="Detaily projektu"/>
+        <put-attribute name="content" value="/WEB-INF/pages/project/projectHistory.jsp"/>
+    </definition>
         
     <definition name="projectForm" extends="projectIndex">
         <put-attribute name="title" value="Projekt"/>

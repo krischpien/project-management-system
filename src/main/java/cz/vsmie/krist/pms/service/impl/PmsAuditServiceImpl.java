@@ -2,7 +2,8 @@ package cz.vsmie.krist.pms.service.impl;
 
 import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.User;
-import cz.vsmie.krist.pms.service.PmsAdvancesAudit;
+import cz.vsmie.krist.pms.service.AbstractActiveService;
+import cz.vsmie.krist.pms.service.PmsAuditService;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.ProjectService;
 import cz.vsmie.krist.pms.service.UserService;
@@ -18,8 +19,8 @@ import org.springframework.stereotype.Service;
  * @author Jan Krist
  */
 
-@Service("pmsAdvancesAudit")
-public class PmsAdvancesAuditImpl implements PmsAdvancesAudit{
+@Service("auditService")
+public class PmsAuditServiceImpl extends AbstractActiveService implements PmsAuditService{
 
     @Autowired
     ProjectService projectService;
@@ -28,38 +29,33 @@ public class PmsAdvancesAuditImpl implements PmsAdvancesAudit{
     @Autowired
     PmsMailService mailService;
     
-    private boolean active = true;
+
     
-    Logger logger = LoggerFactory.getLogger(PmsAdvancesAuditImpl.class);
+    Logger logger = LoggerFactory.getLogger(PmsAuditServiceImpl.class);
     
-    @Scheduled(cron="0 * * * * *")
+    @Scheduled(cron="0 */60 * * * *")
+    @Override
     public void checkUnpaidAdvances() {
         if(isActive()){
-            logger.info("Probiha naplanovana kontrola nesplacenych zaloh.");
+            logger.info("Running audit of unpaid advances.");
             Collection<Project> unpaidProjects = projectService.getProjectsWithUnpaidAdvances();
             for(Project project : unpaidProjects){
                 Collection<User> participants = project.getAuthorizedUsers();
                 for(User user: participants){
                     if(user.getRoles().contains(userService.getRoleById(5L))){ //ROLE_MANAGER
 //                        mailService.sendUnpaidAdvancesNotice(project, user);
-                        logger.info("Odeslano upozorneni na: " + user.getEmail());
+                        logger.info("Notification has been sent to: " + user.getEmail());
                     }
                 }
             }
         }
         else{
-            logger.info("Planovana kontrola nesplacenych zaloh není aktivní");
+            logger.info("Unpaid advances audit is not active");
         }
 
     }
 
-    public boolean isActive() {
-        return this.active;
-    }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
 
 }

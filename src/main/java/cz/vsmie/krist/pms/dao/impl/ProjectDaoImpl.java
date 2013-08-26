@@ -2,10 +2,8 @@ package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.ProjectDao;
 import cz.vsmie.krist.pms.dto.Project;
-import cz.vsmie.krist.pms.dto.User;
 import java.util.Collection;
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -41,14 +39,14 @@ public class ProjectDaoImpl implements ProjectDao{
     
     @Override
     public Collection<Project> getProjectWithUnpaidAdvances(){
-        logger.debug("Vyhledávání projektů s nezaplacenými zálohami.");
+        logger.debug("Searching for projects with unpaid advances.");
         Criteria criteria = getCurrentSession().createCriteria(Project.class);
         criteria.add(Restrictions.eq("advancesPaid", false));
         
         criteria.add(Restrictions.ge("phase.id", 1L)).list();
         Collection<Project> unpaidProjects = (Collection<Project>) criteria.list();
                 
-        logger.debug("Nalezeno " + unpaidProjects.size() + " projektů s nezaplacenými zálohami.");
+        logger.debug("Found " + unpaidProjects.size() + " projects with unpaid advances.");
         return unpaidProjects;
     }
 

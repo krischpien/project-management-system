@@ -20,9 +20,9 @@
         <br class="clear"/>
         <sf:hidden path="id"/>
         
-        <label for="name">Jméno:</label><sf:input path="name" onchange="checkUserName()" /><span class="info" id="nameInfo"><sf:errors path="name"/></span><br/>
-        <label for="email">Email: </label><sf:input path="email" onchange="checkUserEmail()"/><span class="info" id="emailInfo"><sf:errors path="email"/></span><br/>
-        <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="info" class="passwordInfo"><sf:errors path="password"/></span><br/>
+        <label for="name">Jméno:</label><sf:input path="name" onchange="checkUserName()" /><span class="info" id="nameInfo"><sf:errors path="name" cssClass="errorMessage"/></span><br/>
+        <label for="email">Email: </label><sf:input path="email" onchange="checkUserEmail()"/><span class="info" id="emailInfo"><sf:errors path="email" cssClass="errorMessage"/></span><br/>
+        <label for="password">Heslo: </label><sf:password path="password" required="required"/><span class="info" class="passwordInfo"><sf:errors path="password" cssClass="errorMessage"/></span><br/>
         <!--<label for="passwordAgain">Heslo znovu: </label><input id="passwordAgain" name="passwordAgain" type="password"/><span class="passwordAgainInfo"></span><br/>-->
         <label for="roles"><h3>Role: </h3></label><br/>
         <div id="assignableRoles">

@@ -3,32 +3,33 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<h1>Index</h1>
+<h1><fmt:message key="index.header"/></h1>
+
 
     <fmt:formatDate value="${sessionScope.lastLogin}" pattern="dd. MM. yyyy" var="formatedLastDate"/>
     <fmt:formatDate value="${sessionScope.lastLogin}" pattern="HH:mm" var="formatedLastTime"/>
-    <p>Přihlášený uživatel <b>${username}</b> </p>
-    <p>Uživatelské role:</p>
+    <p><fmt:message key="index.loggedUser"/>: <b>${username}</b> </p>
+    <p><fmt:message key="index.userRoles"/>:</p>
     <p>
         <c:forEach items="${authorities}" var="authority" varStatus="loop">
             <em>${authority}${loop.last? '':','}</em>
         </c:forEach>
     </p>
-    <p>Poslední přihlášení proběhlo: <b title="${formatedLastTime}">${formatedLastDate}</b>, z IP adresy <b>${sessionScope.lastIp}</b></p>
+    <p><fmt:message key="index.lastLoginDate"/>: <b title="${formatedLastTime}">${formatedLastDate}</b>, <fmt:message key="index.lastLoginIp"/> <b>${sessionScope.lastIp}</b></p>
 
 
     <div id="eventsArea">
-<h2>Události:</h2>
+<h2><fmt:message key="index.events"/>:</h2>
     
     <c:if test="${empty events}">
-        <p>Žádné nové události</p>
+        <p><fmt:message key="index.events.null"/></p>
     </c:if>
     <c:if test="${!empty events}">
     <table id="events">
         <thead>
             <tr>
-                <th>Datum</th>
-                <th>Zpráva</th>
+                <th><fmt:message key="index.events.date"/></th>
+                <th><fmt:message key="index.events.message"/></th>
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -36,12 +37,12 @@
         <tr class="row">
         <fmt:formatDate value="${event.dateEvent}" pattern="dd. MM. yyyy (HH:mm)" var="formatedEventDate"/>
         <td>${formatedEventDate}</td>
-        <td><a href="<s:url value="${event.link}"/>" title="Přejít k události"/>${event.description}</a></td>
-        <td class="action"><a href="<s:url value="ajax/readEvent"/>" class="read" id="${event.id}" title="Označit jako přečtené">přečteno</a></td>
+        <td><a href="<s:url value="${event.link}"/>"/>${event.description}</a></td>
+        <td class="action"><a href="<s:url value="ajax/readEvent"/>" class="read" id="${event.id}"><fmt:message key="index.events.action.read"/></a></td>
         </tr>
     </c:forEach>
     </table>
-        <a id="readAllEvents" href="<s:url value="/ajax/readAllEvents"/>" title="Označit všechna oznámení jako přečtená">přečteno vše</a>
+        <a id="readAllEvents" href="<s:url value="/ajax/readAllEvents"/>"><fmt:message key="index.events.action.readAll"/></a>
     </div>
     </c:if>
     
@@ -58,7 +59,7 @@
                 parentRow.remove();
             },
             error: function(e){
-                alert("Ajax chyba: " + e.message)
+                alert("Ajax error: " + e.message)
             }
         });
         })
@@ -73,10 +74,10 @@
             success: function(response){
                 tableContent.remove();
                 thisAnchor.remove();
-                $("#eventsArea").html("<h2>Události:</h2><p>Žádné nové události</p>")
+                $("#eventsArea").html("<h2><fmt:message key="index.events"/>:</h2><fmt:message key="index.events.null"/>")
             },
             error: function(e){
-                alert("Ajax chyba: " + e.message)
+                alert("Ajax error: " + e.message)
             }
         });
         })

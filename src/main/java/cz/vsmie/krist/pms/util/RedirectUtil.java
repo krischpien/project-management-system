@@ -22,7 +22,7 @@ public class RedirectUtil {
      * na základě kterých se rozhodne o relativní url, na kterou
      * má přihlášeného uživatele přesměrovat.
      * <p>Například v případě, že uživatel bude v roli <code>'ROLE_CUSTOMER'</code>, 
-     * vrátí metoda hodnotu <code>'/customer'</code></p>
+     * vrátí metoda hodnotu <code>'/'</code></p>
      * 
      * @param request
      * @return redirectUrl relativní url adresa
@@ -31,15 +31,15 @@ public class RedirectUtil {
         Set<String> authorities = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         String redirectUrl="";
         if(authorities.contains("ROLE_ADMIN")){
-            logger.debug("Uzivatel s pravy administratora.");
+            logger.debug("User is admin.");
             redirectUrl = ADMIN_URL;
         }
         else if(authorities.contains("ROLE_CUSTOMER") || authorities.contains("ROLE_PROVIDER")){
-            logger.debug("Uzivatel s pravy zakaznika/dodavatele.");
+            logger.debug("User in role customer/provider.");
             redirectUrl = CUSTOMER_URL;
         }
         else{
-            logger.debug("Uzivatel nema patricna opravneni k prohlizeni.");
+            logger.debug("User is not authorized.");
             redirectUrl = NOT_AUTHORIZED_URL;
         }
         return redirectUrl;

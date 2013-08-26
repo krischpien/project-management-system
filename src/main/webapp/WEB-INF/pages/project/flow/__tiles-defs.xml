@@ -17,9 +17,10 @@
         <put-attribute name="appraise" value="/WEB-INF/pages/project/flow/3-appraise.jsp" cascade="true"/>
         <put-attribute name="approve" value="/WEB-INF/pages/project/flow/4-approve.jsp" cascade="true"/>
         <put-attribute name="realise" value="/WEB-INF/pages/project/flow/5-realise.jsp" cascade="true"/>
-        <put-attribute name="test" value="/WEB-INF/pages/project/flow/6-approve.jsp" cascade="true"/>
-        <put-attribute name="tested" value="/WEB-INF/pages/project/flow/7-tested.jsp" cascade="true"/>
-        <put-attribute name="deploy" value="/WEB-INF/pages/project/flow/8-deploy.jsp" cascade="true"/>
+        <put-attribute name="tested" value="/WEB-INF/pages/project/flow/6-tested.jsp" cascade="true"/>
+        <put-attribute name="deploy" value="/WEB-INF/pages/project/flow/7-deploy.jsp" cascade="true"/>
+        <put-attribute name="complaint" value="/WEB-INF/pages/project/flow/8-complaint.jsp" cascade="true"/>
+        <put-attribute name="complained" value="/WEB-INF/pages/project/flow/9-complained.jsp" cascade="true"/>
     </definition>
     
 </tiles-definitions>

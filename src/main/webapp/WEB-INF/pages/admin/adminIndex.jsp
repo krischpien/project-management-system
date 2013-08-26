@@ -1,37 +1,37 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<h1>Administrace systému</h1>
+<h1><fmt:message key="system.header"/></h1>
 <div id="services">
-<h2>Nastavení služeb:</h2>
+<h2><fmt:message key="system.services"/></h2>
 <div class="service">
-    <h3>Notifikace mailem:
+    <h3><fmt:message key="system.service.mail"/>:
     <c:choose>
-        <c:when test="${mailActive}"><span class="on">zapnuto</span></c:when>
-        <c:otherwise><span class="off">vypnuto</span></c:otherwise>
+        <c:when test="${mailActive}"><span class="on"><fmt:message key="system.service.state.enabled"/></span></c:when>
+        <c:otherwise><span class="off"><fmt:message key="system.service.state.disabled"/></span></c:otherwise>
     </c:choose> </h3>
-    <a href="<s:url value="/admin/service/mail/on"/>">zapnout</a> | <a href="<s:url value="/admin/service/mail/off"/>">vypnout</a>
+    <a href="<s:url value="/admin/service/mail/on"/>"><fmt:message key="system.service.action.on"/></a> | <a href="<s:url value="/admin/service/mail/off"/>"><fmt:message key="system.service.action.off"/></a>
 </div>
 
 
 <div class="service">
-<h3>Upozorňování na nesplacené zálohy:
+<h3><fmt:message key="system.service.audit"/>:
     <c:choose>
-        <c:when test="${cronActive}"><span class="on">zapnuto</span></c:when>
-        <c:otherwise><span class="off">vypnuto</span></c:otherwise>
+        <c:when test="${cronActive}"><span class="on"><fmt:message key="system.service.state.enabled"/></span></c:when>
+        <c:otherwise><span class="off"><fmt:message key="system.service.state.disabled"/></span></c:otherwise>
     </c:choose> 
         </h3>
-    <a href="<s:url value="/admin/service/audit/on"/>">zapnout</a> | <a href="<s:url value="/admin/service/audit/off"/>">vypnout</a>
+    <a href="<s:url value="/admin/service/audit/on"/>"><fmt:message key="system.service.action.on"/></a> | <a href="<s:url value="/admin/service/audit/off"/>"><fmt:message key="system.service.action.off"/></a>
 </div>
 
 </div>
 
 <div id="loggingEvents">
-    <h2>Události systému</h2>
-<p>Strana: 
+    <h2><fmt:message key="system.events"/></h2>
+<p><fmt:message key="system.events.paginator"/>:
         <c:forEach begin="0" end="${pageCount}" var="i">
             <c:set value="${i * 50}" var="offset"/>
             
@@ -45,7 +45,7 @@
                 <tr>
                     <th class="level">LEVEL</th>
                     <th class="logger">Logger</th>
-                    <th class="message">Zpráva</th>
+                    <th class="message">Message</th>
                 </tr>
             </thead>
         <c:forEach items="${loggingEvents}" var="loggingEvent">
@@ -61,5 +61,5 @@
 </div>
 
     <form method="post" action="<s:url value="/admin/clearLog.do"/>">
-        <input type="submit" value="Vyčistit log"/>
+        <input type="submit" value="<fmt:message key="system.events.clear"/>"/>
     </form>

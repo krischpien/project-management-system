@@ -8,7 +8,6 @@ import cz.vsmie.krist.pms.dto.Event;
 import cz.vsmie.krist.pms.dto.Phase;
 import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.Requirement;
-import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.RequirementService;
 import java.util.Date;
@@ -52,8 +51,8 @@ public class RequirementServiceImpl implements RequirementService {
         requirement.setProject(project);
         requirementDao.save(requirement);
         String link = "/project/"+project.getId()+"-project/requirement/details/"+requirement.getId();
-        logger.info("Byl vytvoren novy pozadavek k projektu " + project.getName());
-        eventService.createEvent(authorName, project, "Byl vytvořen nový požadavek k projektu " + project.getName() + ", uživatelem "+authorName, link, Event.NEW_REQUIREMENT);
+        logger.info("New requirement has been created on project " + project.getName());
+        eventService.createEvent(authorName, project, "New requirement has been created on project " + project.getName() + ", by user "+authorName, link, Event.NEW_REQUIREMENT);
     }
     
     

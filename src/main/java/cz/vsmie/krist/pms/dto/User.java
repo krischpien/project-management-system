@@ -1,13 +1,11 @@
 package cz.vsmie.krist.pms.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,12 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.ForeignKey;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -42,12 +34,12 @@ public class User implements Serializable {
     private Long id;
     
     @Column(name="user_name")
-    @Size(min=3, max=50, message="Uživatelské jméno musí být v rozsahu 3-50 alfanumerických znaků") //spring validace
+//    @Size(min=3, max=50, message="{user.name.size}") //spring validace
     private String name;
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="Chybná emailová adresa. Vzor: jmeno@email.cz")
+//    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message="{user.email.pattern}")
     private String email;
     @Column(columnDefinition="BINARY(80)") // SHA-256 hash => 32B hash + 8B salt
-    @Size(min=5, max=80, message="Uživatelské heslo musí být v rozsahu 5-80 alfanumerických znaků") //spring validace
+//    @Size(min=5, max=80, message="{user.password.size}") //spring validace
     private String password;
     @Column(name="last_login")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

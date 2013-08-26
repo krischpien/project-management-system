@@ -41,17 +41,18 @@ public class EventServiceImpl implements EventService{
 
     @Override
     public void createEvent(String authorName, Project project, String description, String link, int type) {
-        logger.debug("Vytvareni nove udalosti k projektu " + project.getName());
+        logger.debug("Creating new event on project " + project.getName());
         Event event = new Event();
         event.setDateEvent(new Date());
         event.setType(type);
         Collection<User> participants = project.getAuthorizedUsers();
-        User admin = userDao.getByName("admin");
+
         for(User user : participants){
             user.getEvents().add(event);
             event.getListeners().add(user);
         }
-        //pridat administratora k odberu udalosti
+        //add admin as a listener to event
+        User admin = userDao.getByName("admin");
         admin.getEvents().add(event);
         event.getListeners().add(admin);
         // -------------------------------------
@@ -59,7 +60,7 @@ public class EventServiceImpl implements EventService{
         event.setDescription(description);
         event.setLink(link);
         this.saveEvent(event);
-        logger.debug("Nova udalost ulozena");
+        logger.debug("New event saved");
     }
     
     @Override
@@ -81,6 +82,7 @@ public class EventServiceImpl implements EventService{
         user.getEvents().remove(event);
     }
 
+    @Override
     public void removeAllEventsFromUser(String username) {
         
         User user = userDao.getByName(username);

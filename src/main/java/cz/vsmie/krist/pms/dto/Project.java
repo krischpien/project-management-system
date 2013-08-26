@@ -79,6 +79,10 @@ public class Project implements Serializable {
     @ForeignKey(name="fk_project_phase")
     @Fetch(FetchMode.JOIN)
     private Phase phase;
+    
+    @OneToMany(mappedBy = "project")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<ProjectHistory> projectHistory = new HashSet<ProjectHistory>();
 
     public Long getId() {
         return id;
@@ -207,6 +211,8 @@ public class Project implements Serializable {
         this.advancesPaid = advancesPaid;
     }
     
+    
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null || obj.getClass() != this.getClass()) {
@@ -230,6 +236,14 @@ public class Project implements Serializable {
     @Override
     public String toString(){
         return "Projekt#"+id+": "+name;
+    }
+
+    public Set<ProjectHistory> getProjectHistory() {
+        return projectHistory;
+    }
+
+    public void setProjectHistory(Set<ProjectHistory> projectHistory) {
+        this.projectHistory = projectHistory;
     }
 
     

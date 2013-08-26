@@ -2,22 +2,27 @@ package cz.vsmie.krist.pms.controller;
 
 import cz.vsmie.krist.pms.dto.Comment;
 import cz.vsmie.krist.pms.dto.Project;
+import cz.vsmie.krist.pms.dto.ProjectHistory;
 import cz.vsmie.krist.pms.exception.NotFoundException;
 import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.ProjectService;
 import cz.vsmie.krist.pms.service.UserService;
+import cz.vsmie.krist.pms.util.ProjectFormUtil;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,6 +45,14 @@ public class ProjectEditController {
     UserService userService;
     @Autowired
     EventService eventService;
+    @Autowired
+    ProjectFormUtil projectFormUtil;
+    @Autowired
+    @Qualifier("commentValidator")
+    Validator commentValidator;
+    @Autowired
+    @Qualifier("projectValidator")
+    Validator projectValidator;
     
     Logger logger = LoggerFactory.getLogger(ProjectEditController.class);
     
@@ -62,26 +75,43 @@ public class ProjectEditController {
     }
     
     @RequestMapping("/edit/edit.do")
-    public String editProject(Model model, @RequestParam("pid") Long pid){
+    public String editProject(Model model, @RequestParam("pid") Long pid, @ModelAttribute("newComment") Comment comment){
         populateUsers(model);
+        model.addAttribute("allPhases", projectService.getAllPhases());
         Project project = projectService.getProjectById(pid);
         if(project == null){
             throw new NotFoundException();
         }
         model.addAttribute("project", project);
-        return "projectForm"; //projectForm //projectFormFlow
+        return "projectFormFlow"; //projectForm //projectFormFlow
     }
     
     @RequestMapping(value="/edit/edit.do", method= RequestMethod.POST)
-    public String updateProject(@ModelAttribute Project project, Model model, Principal principal){
-        projectService.updateProject(project, userService.getUserByName(principal.getName()));
-        return "redirect:/project/details/"+project.getId()+"-"+project.getName();
+    public String updateProject(@ModelAttribute Project project, BindingResult result, Model model, Principal principal, @RequestParam(value="formAction") String formAction){
+        projectValidator.validate(project, result);
+        if(result.hasErrors()){
+            logger.debug("Project with errors!");
+            populatePhases(model);
+            populateUsers(model);
+            model.addAttribute("newComment", new Comment());
+
+            return "projectFormFlow";
+        }
+        projectFormUtil.resolveProjectFormAction(project, userService.getUserByName(principal.getName()), formAction);
+//        projectService.updateProject(project, true, userService.getUserByName(principal.getName()));
+        return "redirect:/project/edit/edit.do?pid="+project.getId();
     }
     
     @RequestMapping(value="/edit/newProject.do",method= RequestMethod.POST)
-    public String saveProject(@ModelAttribute Project project,Model model){
+    public String saveProject(@ModelAttribute Project project, BindingResult result, Model model){
+        if(result.hasErrors()){
+            logger.debug("Project with errors!");
+            populateAll(model);
+
+            return "projectFormFlow";
+        }
         projectService.saveProject(project);
-        return "redirect:/project/details/"+project.getId()+"-"+project.getName();
+        return "redirect:/project/edit/edit.do?pid="+project.getId();
     }
     
     
@@ -105,19 +135,31 @@ public class ProjectEditController {
         }
         
         model.addAttribute(project);
-        return "projectDetails";
+        return "projectFormFlow";
+    }
+    
+    @RequestMapping("details/{pid}/history")
+    public String showProjectHistory(Model model, @PathVariable Long pid){
+        Project project = projectService.getProjectById(pid);
+        Collection<ProjectHistory> history = project.getProjectHistory();
+        model.addAttribute("projectHistory", history);
+        return "projectHistory";
+        
     }
     
     @RequestMapping(value="/edit/addComment.do", method= RequestMethod.POST)
-    public String saveComment(@ModelAttribute @Valid Comment comment, BindingResult result, @RequestParam("projectId") Long projectId,  HttpServletRequest request, Model model, Principal principal){
-        logger.info("Uzivatel " + principal.getName() + " pridava novy komentar");
+    public String saveComment(@ModelAttribute("newComment") Comment comment, BindingResult result, @RequestParam("projectId") Long projectId,  HttpServletRequest request, Model model, Principal principal){
+        logger.info("User " + principal.getName() + " is submitting new comment");
+        commentValidator.validate(comment, result);
         if(result.hasErrors()){
-            logger.info("Komentar s chybama!");
+            logger.debug("Comment with errors!");
+            populatePhases(model);
+            populateUsers(model);
             model.addAttribute("project", projectService.getProjectById(projectId));
-            return "projectDetails";
+            return "projectFormFlow";
         }
         projectService.saveComment(comment, projectId, principal.getName());
-        return "redirect:/project/details/"+projectId+"-project";
+        return "redirect:/project/edit/edit.do?pid="+projectId;
     }
     
     @RequestMapping({"", "/", "/list"})
@@ -135,6 +177,20 @@ public class ProjectEditController {
     
     private void populateUsers(Model model){
         model.addAttribute("allUsers", userService.getAllUsers());
+    }
+    
+    private void populatePhases(Model model){
+        model.addAttribute("allPhases", projectService.getAllPhases());
+    }
+    
+    private void populateComment(Model model){
+        model.addAttribute("newComment", new Comment());
+    }
+    
+    private void populateAll(Model model){
+        populatePhases(model);
+        populateUsers(model);
+        populateComment(model);
     }
 
 }

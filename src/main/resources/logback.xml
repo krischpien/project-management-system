@@ -41,7 +41,7 @@
       <appender-ref ref="STDOUT"/>
   </logger>-->
   
-  <logger name="cz.vsmie.krist.pms" level="INFO" additivity="true">
+  <logger name="cz.vsmie.krist.pms" level="DEBUG" additivity="true">
       <appender-ref ref="DB"/>
   </logger>
   

@@ -1,6 +1,5 @@
 package cz.vsmie.krist.pms.controller;
 
-import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.Requirement;
 import cz.vsmie.krist.pms.service.ProjectService;
 import cz.vsmie.krist.pms.service.RequirementService;

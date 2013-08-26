@@ -27,10 +27,10 @@
     <context:component-scan base-package="cz.vsmie.krist.pms.dao"/>
     <context:component-scan base-package="cz.vsmie.krist.pms.logging.dao"/>
     <!--Registrace balíčků služeb (@Service) -->
-    <context:component-scan base-package="cz.vsmie.krist.pms.service"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.service.impl"/>
     <context:component-scan base-package="cz.vsmie.krist.pms.logging.service"/>
     <!--Registrace balíčků - komponent (@Component)-->
-    <context:component-scan base-package="cz.vsmie.krist.pms.component"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.util"/>
     
 
     

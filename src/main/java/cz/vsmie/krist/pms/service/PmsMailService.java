@@ -7,7 +7,7 @@ import cz.vsmie.krist.pms.dto.User;
  *
  * @author Jan Krist
  */
-public interface PmsMailService extends PmsActiveService{
+public interface PmsMailService{
     
     public void sendCreateUserNotice(User user);
     public void sendUnpaidAdvancesNotice(Project project, User user);

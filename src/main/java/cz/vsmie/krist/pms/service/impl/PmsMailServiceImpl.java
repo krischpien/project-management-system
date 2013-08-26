@@ -2,7 +2,7 @@ package cz.vsmie.krist.pms.service.impl;
 
 import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.User;
-import cz.vsmie.krist.pms.service.PmsActiveService;
+import cz.vsmie.krist.pms.service.AbstractActiveService;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,19 +24,18 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
  * @author Jan Krist
  */
 
-@Service("pmsMailService")
-public class PmsMailServiceImpl implements PmsMailService{
+@Service("mailService")
+public class PmsMailServiceImpl extends AbstractActiveService implements PmsMailService{
     
     @Autowired
     private JavaMailSender mailSender;
     @Autowired
     private VelocityEngine velocityEngine;
     
-    private boolean active = true;
-    
     private Logger logger = LoggerFactory.getLogger(PmsMailServiceImpl.class);
     
 
+    @Override
     public void sendCreateUserNotice(User user) {
         if(isActive()){
             Map model = new HashMap();
@@ -51,6 +50,7 @@ public class PmsMailServiceImpl implements PmsMailService{
         
     }
     
+    @Override
     public void sendUnpaidAdvancesNotice(Project project, User user){
         if(isActive()){
             Map model = new HashMap();
@@ -63,7 +63,7 @@ public class PmsMailServiceImpl implements PmsMailService{
     
     @Async
     private void sendPmsMessage(String to, String subject, String text){
-        logger.debug("Zahajeni odesilani zpravy.");
+        logger.debug("Sending message.");
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message); // pridat true pro multipart
 
@@ -72,25 +72,19 @@ public class PmsMailServiceImpl implements PmsMailService{
                 messageHelper.setFrom("pmscz.noreply@gmail.com");
                 message.setSubject(subject, "UTF-8");
                 messageHelper.setText(text,true); //true: content type = 'text/html'
-                logger.info("Pokus o odeslani mailu na " + to);
+                logger.info("Sending mail to " + to);
 //                mailSender.send(message);
-                logger.debug("Odesilani vypnuto! ZMENIT!");
+                logger.debug("Mail OFF, CHANGE!");
             } catch (MessagingException ex) {
-                logger.error("Chyba pri pokusu o odeslani mailu na adresu " + to +". Chyba: " + ex.getMessage());
+                logger.error("Sending mail to " + to +" failed. Error: " + ex.getMessage());
             }
             catch (MailException ex){
-                logger.error("Chyba pri pokusu o odeslani mailu na adresu " + to +". Chyba: " + ex.getMessage());
+                logger.error("Sending mail to " + to +" failed. Error: " + ex.getMessage());
             }
 
-            logger.debug("Zprava odeslana na: " + to);
+            logger.debug("Mail has been sent to: " + to);
     }
     
-    public boolean isActive() {
-        return this.active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    
 
 }

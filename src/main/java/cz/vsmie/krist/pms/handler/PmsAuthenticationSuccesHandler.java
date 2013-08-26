@@ -28,12 +28,12 @@ public class PmsAuthenticationSuccesHandler extends SimpleUrlAuthenticationSucce
     
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        log.debug("Spusten autentifikacni handler");
+        log.debug("Running authentication handler");
         User user = userService.getUserByName(authentication.getName());
         request.getSession().setAttribute("lastLogin", user.getLastLogin() == null? new Date() :user.getLastLogin());
         request.getSession().setAttribute("lastIp", user.getLastIp() == null? request.getRemoteAddr() : user.getLastIp());
         userService.updateLastLogin(authentication.getName(), request.getRemoteAddr());
-        log.info("Prihlasen uzivatel '"+ user.getName() +"', z ip adresy " + request.getRemoteAddr() +".");
+        log.info("User '"+ user.getName() +"' login, from ip address " + request.getRemoteAddr() +".");
         setDefaultTargetUrl(RedirectUtil.resolveRedirect(authentication));
         super.onAuthenticationSuccess(request, response, authentication);
     }

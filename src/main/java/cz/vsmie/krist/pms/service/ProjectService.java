@@ -1,8 +1,8 @@
 package cz.vsmie.krist.pms.service;
 
 import cz.vsmie.krist.pms.dto.Comment;
+import cz.vsmie.krist.pms.dto.Phase;
 import cz.vsmie.krist.pms.dto.Project;
-import cz.vsmie.krist.pms.dto.Requirement;
 import cz.vsmie.krist.pms.dto.User;
 import java.util.Collection;
 
@@ -39,10 +39,11 @@ public interface ProjectService {
     public void saveProject(Project project);
     
     /**
-     * Aktualizuje projekt v databázi.
-     * @param project
+     * Update project in database.
+     * @param project project to save
+     * @param next true - project goes to next phase, false - project returns to previous phase
      */
-    public void updateProject(Project project, User updater);
+    public void updateProject(Project project, boolean next, User updater);
     
     /**
      * Odstraní pprojekt z databáze.
@@ -57,6 +58,7 @@ public interface ProjectService {
      */
     public void deleteProjectById(Long pid);
     
+        
     /**
      * Uloží nový komentář do databáze.
      * @param comment nový komentář k uložení
@@ -64,6 +66,9 @@ public interface ProjectService {
      * @param authorName jméno autora komentáře
      */
     public void saveComment(Comment comment, Long projectId, String authorName);
+    
+    public Collection<Phase> getAllPhases();
+    public Phase getPhaseById(Long phaseId);
     
     public Collection<Project> getProjectsWithUnpaidAdvances();
         

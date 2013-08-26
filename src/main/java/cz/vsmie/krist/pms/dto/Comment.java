@@ -9,9 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import org.hibernate.annotations.ForeignKey;
 
 /**
  *
@@ -24,12 +21,12 @@ public class Comment implements Serializable {
     
     @Id @GeneratedValue
     private Long id;
-    @NotNull
-    @Size(min=1, message="Vyplňte předmět komentáře!")
+//    @NotNull
+//    @Size(min=1, message="{comment.subject.empty}")
     private String subject;
     @Column(columnDefinition="TEXT")
-    @NotNull
-    @Size(min=1, message="Nemáte vyplněný obsah komentáře!")
+//    @NotNull
+//    @Size(min=1, message="{comment.content.empty}")
     private String content;
     
     @Column(name="date_created") 

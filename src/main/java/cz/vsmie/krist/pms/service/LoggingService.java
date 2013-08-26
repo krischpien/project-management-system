@@ -10,43 +10,43 @@ import java.util.Collection;
 public interface LoggingService {
     
     /**
-     * Vyhledá událost systému dle jejího id
+     * Look up logging event by event id
      * @param eid
-     * @return udalost
+     * @return logging event
      */
     public LoggingEvent getLoggingEventById(Long eid);
     
     
     /**
-     * Vyhledá veškeré události systému v databázi.
+     * Look up all logging events in database.
      * @return události
      */
     public Collection<LoggingEvent> getAllLoggingEvents();
     
     /**
-     * Stránkování událostí systému.
-     * @param offset začátek
-     * @param limit počet událostí na stránku
-     * @return stránka událostí systému
+     * Pagination of all logging events.
+     * @param offset start
+     * @param limit number of events on one page
+     * @return one page of logging events
      */
     public Collection<LoggingEvent> getAllLoggingEventsPaginated(int offset, int limit);
     
     
     /**
-     * Odstraní událost systému z databáze.
-     * @param eid id události
+     * Remove logging event from database.
+     * @param eid logging event id
      */
     public void deleteLoggingEvent(Long eid);
     
     /**
-     * Odstraní veškeré události systému z databáze.
+     * Remove all logging events from database.
      */
     public void deleteAllLoggingEvents();
     
     
     /**
-     * Získá počet událostí v systému.
-     * @return počet systémových událostí
+     * Get count of all logging events from database.
+     * @return count of all logging events
      */
     public Number getLoggingEventCount();
 }

@@ -3,12 +3,14 @@ package cz.vsmie.krist.pms.service.impl;
 import cz.vsmie.krist.pms.dao.CommentDao;
 import cz.vsmie.krist.pms.dao.PhaseDao;
 import cz.vsmie.krist.pms.dao.ProjectDao;
+import cz.vsmie.krist.pms.dao.ProjectHistoryDao;
 import cz.vsmie.krist.pms.dao.RequirementDao;
 import cz.vsmie.krist.pms.dao.UserDao;
 import cz.vsmie.krist.pms.dto.Comment;
 import cz.vsmie.krist.pms.dto.Event;
 import cz.vsmie.krist.pms.dto.Phase;
 import cz.vsmie.krist.pms.dto.Project;
+import cz.vsmie.krist.pms.dto.ProjectHistory;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.EventService;
 import cz.vsmie.krist.pms.service.ProjectService;
@@ -29,6 +31,8 @@ public class ProjectServiceImpl implements ProjectService{
     
     @Autowired
     ProjectDao projectDao;
+    @Autowired
+    ProjectHistoryDao projectHistoryDao;
     @Autowired
     UserDao userDao;
     @Autowired
@@ -75,19 +79,38 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public void saveProject(Project project) {
-        logger.debug("Ukládání projektu " + project.getName());
+        logger.debug("Saving project " + project.getName());
         project.setDateCreate(new Date());
         project.setPhase(phaseDao.getById(Phase.PHASE_NEW));
+        
+        // create first point of history
+        ProjectHistory history = new ProjectHistory();
+        history.setDateChange(new Date());
+        history.setNote("Vytvořeno");
+        history.setProject(project);
+        logger.debug("Creating history of project " + project.getName());
+        projectHistoryDao.save(history);
+        
+        project.getProjectHistory().add(history);
         projectDao.save(project);
-        logger.info("Ulozen novy projekt: " + project.getName());
+        logger.info("Saved new project: " + project.getName());
     }
 
     @Override
-    public void updateProject(Project project, User updater) {
-        projectDao.update(project);
-        String link = "/project/details/"+project.getId()+"-"+project.getName();
-        eventService.createEvent(updater.getName(), project, "Změna v projektu " + project.getName() + " ("+ updater.getName() +")", link, Event.PROJECT_UPDATE);
+    public void updateProject(Project project, boolean next, User updater) {
+        // create history point
+        ProjectHistory history = new ProjectHistory();
+        history.setDateChange(new Date());
+        history.setNote("Změna");
+        history.setProject(project);
+        logger.debug("Updating history of project " + project.getName());
+        projectHistoryDao.save(history);
+        
+        project.getProjectHistory().add(history);
 
+        projectDao.update(project);
+        String link = "/project/edit/edit.do?pid="+project.getId();
+        eventService.createEvent(updater.getName(), project, "Change in project " + project.getName() + " ("+ updater.getName() +")", link, Event.PROJECT_UPDATE);
     }
     
     @Override
@@ -102,7 +125,7 @@ public class ProjectServiceImpl implements ProjectService{
             user.getProjects().remove(project);
         }
         projectDao.delete(project);
-        logger.info("Byl odstranen projekt " + project.getName());
+        logger.info("Removed project " + project.getName());
     }
     
     @Override
@@ -113,19 +136,31 @@ public class ProjectServiceImpl implements ProjectService{
         comment.setAuthor(author);
         comment.setProject(project);
         commentDao.save(comment);
-        String link = "/project/details/"+project.getId()+"-projekt";
-        logger.info("Ulozen novy komentar k projektu " + project.getName());
-        eventService.createEvent(authorName, project, "Nový komentář k projektu " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
+        String link = "/project/edit/edit.do?pid="+project.getId();
+        logger.info("Saved new comment " + project.getName());
+        eventService.createEvent(authorName, project, "New comment on " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
     }
+    
+    
 
     @Override
     public boolean checkUserPermissionToProject(String username, Project project) {
-        logger.debug("Zjistuji opravneni na projekt " + project.getName());
+        logger.debug("Checking permissions on " + project.getName());
         User user = userDao.getByName(username);
 //        Project project = projectDao.getById(projectId);
         boolean authorized = project.getAuthorizedUsers().contains(user) && !username.equals("admin");
-        logger.debug("Uzivatel " + user.getName() + " opravnen k projektu " + project.getName() + ": " + authorized);
+        logger.debug("User " + user.getName() + " is authorized to acces " + project.getName() + ": " + authorized);
         return authorized;
+    }
+
+    @Override
+    public Collection<Phase> getAllPhases() {
+        return phaseDao.getAll();
+    }
+
+    @Override
+    public Phase getPhaseById(Long phaseId) {
+        return phaseDao.getById(phaseId);
     }
     
     

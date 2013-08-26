@@ -3,6 +3,7 @@ package cz.vsmie.krist.pms.controller;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.exception.UserException;
 import cz.vsmie.krist.pms.service.UserService;
+import cz.vsmie.krist.pms.validator.UserValidator;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,8 +63,10 @@ public class UserEditController {
     }
     
     @RequestMapping(value="/edit/newUser.do", method= RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult results, Model model){
+    public String saveUser(@ModelAttribute("user") /*@Valid*/ User user, BindingResult results, Model model){
         this.populateRoles(model);
+        UserValidator uv = new UserValidator();
+        uv.validate(user, results);
             if(results.hasErrors()){
                 return "userForm";
             }
