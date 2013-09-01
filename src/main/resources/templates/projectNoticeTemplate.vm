@@ -1,4 +1,3 @@
-﻿## aa
 <!DOCTYPE html>
 <html lang="cs" dir="ltr">
 <head>
@@ -9,13 +8,7 @@
 <h1>Zpráva ze systému PMS</h1>
 <h2>Dobrý den.</h2>
 <div>
-   <p>Byl Vám vytvořen uživatelský účet <b>${user.name}</b></p>
-   <p>Byly Vám přiděleny následující role:</p>
-<ul>
-#foreach( $role in $user.roles )
-    <li>$role.description</li>
-#end
-</ul>
+   <p>Byl vytvořen nový projekt <b>${project.name}</b>, ke kterému máte oprávnění.</p>
 </div>
 <p>Tento email je automaticky generován, neodpovídejte na něj.</p>
 </body>

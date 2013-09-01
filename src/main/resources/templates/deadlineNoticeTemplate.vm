@@ -8,7 +8,7 @@
 <h3>Dobrý den.</h3>
 <div>
    <p>Dobrý den, <b>${user.name}</b></p>
-   <p>Rádi bych Vás tímto upozornili, že stále nemáte zaplacenou zálohu za projekt <a href="http://localhost:8080/pms/project/details/${project.id}-${project.name}">${project.name}</a></p>
+   <p>Rádi bych Vás tímto upozornili na procházející termín plnění projektu <a href="http://localhost:8080/pms/project/details/${project.id}-${project.name}">${project.name}</a></p>
 <ul>
 
 </ul>

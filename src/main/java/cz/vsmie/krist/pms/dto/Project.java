@@ -82,6 +82,7 @@ public class Project implements Serializable {
     
     @OneToMany(mappedBy = "project", orphanRemoval=true)
     @LazyCollection(LazyCollectionOption.FALSE)
+    @OrderBy("dateChange")
     private Set<ProjectHistory> projectHistory = new HashSet<ProjectHistory>();
 
     public Long getId() {

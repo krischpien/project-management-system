@@ -41,9 +41,10 @@ public interface ProjectService {
     /**
      * Update project in database.
      * @param project project to save
-     * @param next true - project goes to next phase, false - project returns to previous phase
+     * @param note - note to project update
+     * 
      */
-    public void updateProject(Project project, boolean next, User updater);
+    public void updateProject(Project project, User updater, String note);
     
     /**
      * Remove project from database

@@ -20,7 +20,7 @@
             username-parameter="username"
             password-parameter="password"
         />
-        <logout 
+        <logout
             logout-url="/logout"
             logout-success-url="/loginout?logout"
         />

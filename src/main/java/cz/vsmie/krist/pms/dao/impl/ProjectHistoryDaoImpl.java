@@ -3,9 +3,9 @@ package cz.vsmie.krist.pms.dao.impl;
 import cz.vsmie.krist.pms.dao.ProjectHistoryDao;
 import cz.vsmie.krist.pms.dto.ProjectHistory;
 import java.util.Collection;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +22,7 @@ public class ProjectHistoryDaoImpl implements ProjectHistoryDao {
 
     @Override
     public Collection<ProjectHistory> getAll() {
-        return (Collection<ProjectHistory>) getCurrentSession().createCriteria(ProjectHistory.class).list();
+        return (Collection<ProjectHistory>) getCurrentSession().createCriteria(ProjectHistory.class).addOrder(Order.asc("dateChange")).list();
     }
 
     @Override

@@ -16,10 +16,18 @@ public interface PmsMailService{
     public void sendCreateUserNotice(User user);
     
     /**
-     * Send mail notice about project deadline
+     * Send mail notice about project deadline to project managers
      * @param project
      * @param user 
      */
     public void sendDeadlineNotice(Project project, User user);
+    
+    
+    /**
+     * Send information mail about new project to permitted users
+     * @param project
+
+     */
+    public void sendCreateProjectNotice(Project project);
 
 }

@@ -13,7 +13,9 @@ import cz.vsmie.krist.pms.dto.Project;
 import cz.vsmie.krist.pms.dto.ProjectHistory;
 import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.EventService;
+import cz.vsmie.krist.pms.service.PmsMailService;
 import cz.vsmie.krist.pms.service.ProjectService;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -41,7 +43,8 @@ public class ProjectServiceImpl implements ProjectService{
     RequirementDao requirementDao;
     @Autowired
     PhaseDao phaseDao;
-    
+    @Autowired
+    PmsMailService mailService;
     @Autowired
     EventService eventService;
     
@@ -86,23 +89,23 @@ public class ProjectServiceImpl implements ProjectService{
         
         // create first point of history
         ProjectHistory history = new ProjectHistory();
-        history.setDateChange(new Date());
+        history.setDateChange(new Timestamp(new Date().getTime()));
         history.setNote("Vytvořeno");
         history.setProject(project);
         logger.debug("Creating history of project " + project.getName());
         projectHistoryDao.save(history);
-        
+        mailService.sendCreateProjectNotice(project);
         project.getProjectHistory().add(history);
         projectDao.save(project);
         logger.info("Saved new project: " + project.getName());
     }
 
     @Override
-    public void updateProject(Project project, boolean next, User updater) {
+    public void updateProject(Project project, User updater, String note) {
         // create history point
         ProjectHistory history = new ProjectHistory();
-        history.setDateChange(new Date());
-        history.setNote("Změna");
+        history.setDateChange(new Timestamp(new Date().getTime()));
+        history.setNote(note);
         history.setProject(project);
         logger.debug("Updating history of project " + project.getName());
         projectHistoryDao.save(history);
@@ -111,7 +114,7 @@ public class ProjectServiceImpl implements ProjectService{
 
         projectDao.update(project);
         String link = "/project/edit/edit.do?pid="+project.getId();
-        eventService.createEvent(updater.getName(), project, "Change in project " + project.getName() + " ("+ updater.getName() +")", link, Event.PROJECT_UPDATE);
+        eventService.createEvent(updater.getName(), project, "Změna v projektu " + project.getName() + " ("+ updater.getName() +")", link, Event.PROJECT_UPDATE);
     }
     
     @Override
@@ -139,7 +142,7 @@ public class ProjectServiceImpl implements ProjectService{
         commentDao.save(comment);
         String link = "/project/edit/edit.do?pid="+project.getId();
         logger.info("Saved new comment " + project.getName());
-        eventService.createEvent(authorName, project, "New comment on " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
+        eventService.createEvent(authorName, project, "Nový komentář v projektu " + project.getName() + " ("+ authorName +")", link, Event.NEW_COMMENT);
     }
     
     

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="cs" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<title>Zpráva</title>
+</head>
+<body>
+<h1>Zpráva ze systému PMS</h1>
+<h2>Dobrý den.</h2>
+<div>
+   <p>Byl Vám vytvořen uživatelský účet <b>${user.name}</b></p>
+   <p>Byly Vám přiděleny následující role:</p>
+<ul>
+#foreach( $role in $user.roles )
+    <li>$role.description</li>
+#end
+</ul>
+</div>
+<p>Tento email je automaticky generován, neodpovídejte na něj.</p>
+</body>
+</html>

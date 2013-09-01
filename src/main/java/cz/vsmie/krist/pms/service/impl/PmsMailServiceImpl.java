@@ -5,7 +5,6 @@ import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.AbstractActiveService;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -40,37 +39,44 @@ public class PmsMailServiceImpl extends AbstractActiveService implements PmsMail
 
     
     
-    
-    
-
-    
-    
     @Override
+    @Async
     public void sendCreateUserNotice(User user) {
         if(isActive()){
-            logger.debug("msg: " + messageSource.getMessage("mail.deadline.title", null,"not found", new Locale("cs", "CZ")));
+            logger.debug("Sending create user notice to " + user.getEmail());
             Map model = new HashMap();
             model.put("user", user);
-            String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/mailTemplate.vm", "UTF-8", model);
+            String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/userNoticeTemplate.vm", "UTF-8", model);
             this.sendPmsMessage(user.getEmail(), "Informační zpráva ze systému Project Management System", messageContent);
         }
     }
     
-    
+    @Override
+    @Async
     public void sendCreateProjectNotice(Project project){
-        
+        if(isActive()){
+        Map model = new HashMap();
+        model.put("project", project);
+        for(User user : project.getAuthorizedUsers()){
+            logger.debug("Sending notice about new project to " + user.getEmail());
+            String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/projectNoticeTemplate.vm", "UTF-8", model);
+            this.sendPmsMessage(user.getEmail(), "Upozornění o vytvořeném projektu", messageContent);
+            }
+        }
     }
     
     @Override
+    @Async
     public void sendDeadlineNotice(Project project, User user){
         if(isActive()){
             Map model = new HashMap();
             model.put("project", project);
             String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/deadlineNotice.vm", "UTF-8", model);
-            
             this.sendPmsMessage(user.getEmail(), "Upozornění o prošlém termínu projektu", messageContent);
         }
     }
+    
+    
     
     
     @Async
@@ -85,8 +91,8 @@ public class PmsMailServiceImpl extends AbstractActiveService implements PmsMail
                 message.setSubject(subject, "UTF-8");
                 messageHelper.setText(text,true); //true: content type = 'text/html'
                 logger.info("Sending mail to " + to);
-//                mailSender.send(message);
-                logger.debug("Mail OFF, CHANGE!");
+                mailSender.send(message);
+                //logger.debug("Mail OFF, CHANGE!");
             } catch (MessagingException ex) {
                 logger.error("Sending mail to " + to +" failed. Error: " + ex.getMessage());
             }
@@ -94,7 +100,7 @@ public class PmsMailServiceImpl extends AbstractActiveService implements PmsMail
                 logger.error("Sending mail to " + to +" failed. Error: " + ex.getMessage());
             }
 
-            logger.debug("Mail has been sent to: " + to);
+            logger.debug("Sending mail to: " + to +" done");
     }
     
     

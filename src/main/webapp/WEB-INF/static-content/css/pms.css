@@ -588,3 +588,10 @@ table#bachelorTable td{
     padding:5px;
     
 }
+.name{
+    font-size: 14px;
+}
+input.name{
+    font-size: 18px;
+    width: 300px !important;
+}

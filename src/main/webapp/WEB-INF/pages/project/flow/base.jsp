@@ -26,7 +26,8 @@
                     ${phase.description} 
                     <c:if test="${phase.id == _projectPhase}">
                         <c:forEach items="${project.projectHistory}" var="history" varStatus="loop">
-                            <b>${loop.last? history.dateChange :""}</b>
+                            <fmt:formatDate value="${history.dateChange}" pattern="yyyy. dd. MM." var="dateChangeFormatted"/>
+                            <b>${loop.last? dateChangeFormatted :""}</b>
                         </c:forEach>
                     </c:if>
                     </li>
@@ -35,10 +36,11 @@
     </div>
 
     <div id="projectBlock" class="phase ${_projectPhase==8? "complaint":""} ${_projectPhase==7?"deployed":""}">
+        <a href="<s:url value='/project/details/${project.id}/history'/>">Historie projektu</a><br/>
         <sf:hidden path="id"/>
         <sf:hidden path="dateCreate"/>
         <input type="hidden" name="phase" value="${project.phase.id}"/>
-        <label for="name">Název:</label><sf:input path="name" id="name" readonly="true" class="readonly"/><br/>
+        <label for="name" class="name">Název:</label><sf:input path="name" id="name" readonly="true" class="readonly" cssClass="name"/><br/>
 
         <h3>Oprávnění na projekt</h3>    
         <sec:authorize access="hasRole('ROLE_ADMIN')">
