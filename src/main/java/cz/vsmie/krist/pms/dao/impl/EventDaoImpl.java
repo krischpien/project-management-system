@@ -1,14 +1,10 @@
 package cz.vsmie.krist.pms.dao.impl;
 
 import cz.vsmie.krist.pms.dao.EventDao;
-import cz.vsmie.krist.pms.dao.UserDao;
 import cz.vsmie.krist.pms.dto.Event;
-import cz.vsmie.krist.pms.dto.User;
 import java.util.Collection;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

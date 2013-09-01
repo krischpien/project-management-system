@@ -583,3 +583,8 @@ table#logTable{
 .okMessage{
     color:#00cc66;
 }
+
+table#bachelorTable td{
+    padding:5px;
+    
+}

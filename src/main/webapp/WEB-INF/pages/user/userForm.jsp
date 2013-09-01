@@ -14,7 +14,6 @@
         <div id="custom-select">
         <sf:select path="roles" required="required" multiple="false">
             <sf:options items="${mainRoles}" itemValue="id" itemLabel="description"/>
-            <!--<option value="2">Zákazník</option><option value="3">Dodavatel</option>-->
         </sf:select>
         </div>
         <br class="clear"/>

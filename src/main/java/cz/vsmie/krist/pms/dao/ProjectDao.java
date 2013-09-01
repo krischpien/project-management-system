@@ -10,6 +10,10 @@ import java.util.Collection;
 
 public interface ProjectDao extends GenericDao<Project> {
     
-    public Collection<Project> getProjectWithUnpaidAdvances();
+    /**
+     * Search for project, which has dateDeadline attribute past current date
+     * @return project
+     */
+    public Collection<Project> getProjectWithDeadline();
 
 }

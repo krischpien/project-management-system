@@ -49,6 +49,7 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     
+        
     @Override
     public Project getProjectById(Long id) {
         return projectDao.getById(id);
@@ -73,8 +74,8 @@ public class ProjectServiceImpl implements ProjectService{
     }
     
     @Override
-    public Collection<Project> getProjectsWithUnpaidAdvances(){
-        return projectDao.getProjectWithUnpaidAdvances();
+        public Collection<Project> getProjectsWithDeadline(){
+        return projectDao.getProjectWithDeadline();
     }
 
     @Override

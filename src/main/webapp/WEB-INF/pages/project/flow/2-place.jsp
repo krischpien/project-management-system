@@ -5,7 +5,7 @@
 <!--form-->
 <label for="dateCreate">Vytvořeno:</label><sf:input path="dateCreate" id="dateCreate" readonly="true" class="readonly"/><br/> <!--readOnly-->
 <div class="fillingPart">
-    <label for="dateDeadline">Termín:</label><sf:input path="dateDeadline" id="dateDeadline"/><br/>
+    <label for="dateDeadline">Termín:</label><sf:input path="dateDeadline" id="dateDeadline" readonly="true"/><br/>
     <label for="projectContent">Obsah:</label><br/>
     <sf:textarea path="content" id="projectContent" cssClass="projectContent" /><br/>
     <label for="note">Poznámka:</label><sf:textarea path="note"/><br/>
@@ -28,7 +28,8 @@
 <script>
 $(function() {
 $( "#dateDeadline" ).datepicker({
-    dateFormat: "mm-dd-yy"
+    dateFormat: "mm-dd-yy",
+    minDate:2
     });
 });
 </script>

@@ -80,7 +80,7 @@ public class Project implements Serializable {
     @Fetch(FetchMode.JOIN)
     private Phase phase;
     
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", orphanRemoval=true)
     @LazyCollection(LazyCollectionOption.FALSE)
     private Set<ProjectHistory> projectHistory = new HashSet<ProjectHistory>();
 

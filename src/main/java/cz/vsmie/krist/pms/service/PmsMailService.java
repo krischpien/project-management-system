@@ -9,7 +9,17 @@ import cz.vsmie.krist.pms.dto.User;
  */
 public interface PmsMailService{
     
+    /**
+     * Send mail to new (created) user
+     * @param user 
+     */
     public void sendCreateUserNotice(User user);
-    public void sendUnpaidAdvancesNotice(Project project, User user);
+    
+    /**
+     * Send mail notice about project deadline
+     * @param project
+     * @param user 
+     */
+    public void sendDeadlineNotice(Project project, User user);
 
 }

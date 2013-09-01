@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <h1>Bakalářská práce</h1>
-    <table>
+<table id="bachelorTable">
         <col style="width: 30%"/>
         <tr>
             <td class="th">Název:</td>
@@ -19,12 +19,12 @@
             <td class="th">Rámcová osnova:</td>
             <td>
                 <ol>
-                    <li>Úvod</li>
-                    <li>Analýza požadavků</li>
-                    <li>Návrh aplikace</li>
-                    <li>Popis implementace</li>
-                    <li>Testování</li>
-                    <li>Závěr</li>
+                    <li>1) Úvod</li>
+                    <li>2) Analýza požadavků</li>
+                    <li>3) Návrh aplikace</li>
+                    <li>4) Popis implementace</li>
+                    <li>5) Testování</li>
+                    <li>6) Závěr</li>
                 </ol>
             </td>
         </tr>

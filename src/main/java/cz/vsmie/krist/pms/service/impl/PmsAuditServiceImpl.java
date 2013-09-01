@@ -35,10 +35,10 @@ public class PmsAuditServiceImpl extends AbstractActiveService implements PmsAud
     
     @Scheduled(cron="0 */60 * * * *")
     @Override
-    public void checkUnpaidAdvances() {
+    public void checkProjectsDeadline() {
         if(isActive()){
             logger.info("Running audit of unpaid advances.");
-            Collection<Project> unpaidProjects = projectService.getProjectsWithUnpaidAdvances();
+            Collection<Project> unpaidProjects = projectService.getProjectsWithDeadline();
             for(Project project : unpaidProjects){
                 Collection<User> participants = project.getAuthorizedUsers();
                 for(User user: participants){

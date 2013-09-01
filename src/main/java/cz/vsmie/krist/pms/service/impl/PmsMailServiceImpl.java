@@ -5,6 +5,7 @@ import cz.vsmie.krist.pms.dto.User;
 import cz.vsmie.krist.pms.service.AbstractActiveService;
 import cz.vsmie.krist.pms.service.PmsMailService;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -12,6 +13,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -31,13 +33,22 @@ public class PmsMailServiceImpl extends AbstractActiveService implements PmsMail
     private JavaMailSender mailSender;
     @Autowired
     private VelocityEngine velocityEngine;
+    @Autowired
+    MessageSource messageSource;
     
     private Logger logger = LoggerFactory.getLogger(PmsMailServiceImpl.class);
+
+    
+    
+    
     
 
+    
+    
     @Override
     public void sendCreateUserNotice(User user) {
         if(isActive()){
+            logger.debug("msg: " + messageSource.getMessage("mail.deadline.title", null,"not found", new Locale("cs", "CZ")));
             Map model = new HashMap();
             model.put("user", user);
             String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/mailTemplate.vm", "UTF-8", model);
@@ -51,12 +62,13 @@ public class PmsMailServiceImpl extends AbstractActiveService implements PmsMail
     }
     
     @Override
-    public void sendUnpaidAdvancesNotice(Project project, User user){
+    public void sendDeadlineNotice(Project project, User user){
         if(isActive()){
             Map model = new HashMap();
             model.put("project", project);
-            String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/unpaidNotice.vm", "UTF-8", model);
-            this.sendPmsMessage(user.getEmail(), "Informační zpráva ze systému Project Management System : Nezaplacená záloha", messageContent);
+            String messageContent = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/deadlineNotice.vm", "UTF-8", model);
+            
+            this.sendPmsMessage(user.getEmail(), "Upozornění o prošlém termínu projektu", messageContent);
         }
     }
     

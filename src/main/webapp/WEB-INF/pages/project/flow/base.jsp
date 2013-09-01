@@ -98,8 +98,7 @@
            </c:when>
 
         </c:choose> 
-
-    
+<sf:errors path="*" cssClass="errorMessage" />
     </div>
     
 </sf:form>
@@ -132,3 +131,6 @@
     <c:if test="${empty project.comments}"><h3><fmt:message key="project.comment.null"/>.</h3></c:if>
     </div>
 </div>
+    
+    
+  

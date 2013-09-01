@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <http pattern="/loginout" security="none"/>
+    <http pattern="/resources/**" security="none"/>
+    
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN') and hasIpAddress('127.0.0.1')"/>
+        <intercept-url pattern="/customer" access="hasRole('ROLE_CUSTOMER')"/>
+        <intercept-url pattern="/**" access="isAuthenticated()"/>
+        <form-login 
+            login-page="/loginout"
+            login-processing-url="/loginCheck"
+            authentication-failure-url="/loginout?logerr" authentication-success-handler-ref="pmsAuthenticationSuccessHandler"
+            username-parameter="username"
+            password-parameter="password"
+        />
+        <logout 
+            logout-url="/logout"
+            logout-success-url="/loginout?logout"
+        />
+    </http>
+    <beans:bean id="pmsAuthenticationSuccessHandler" class="cz.vsmie.krist.pms.handler.PmsAuthenticationSuccesHandler"/>
+                    
+    <authentication-manager>
+        <authentication-provider user-service-ref="jdbcUserService">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+    
+    <beans:bean id="passwordEncoder"
+        class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+    </beans:bean>
+    
+    
+    
+    <jdbc-user-service id="jdbcUserService"
+        data-source-ref="dataSource"
+        users-by-username-query="SELECT user_name, password, true FROM user_details WHERE user_name=?"
+        authorities-by-username-query="select user_name, role_name from user_details ud
+                                       inner join user_in_role uir on ud.id=uir.user_id 
+                                       inner join user_role ur on uir.role_id=ur.id
+                                       WHERE user_name=?"
+    />
+                    
+                     
+
+</beans:beans>

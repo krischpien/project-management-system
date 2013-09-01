@@ -5,5 +5,8 @@ package cz.vsmie.krist.pms.service;
  */
 public interface PmsAuditService{
 
-    public void checkUnpaidAdvances();
+    /**
+     * Check if project date of deadline (cron action)
+     */
+    public void checkProjectsDeadline();
 }

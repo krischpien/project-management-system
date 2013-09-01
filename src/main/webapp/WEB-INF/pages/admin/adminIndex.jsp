@@ -35,7 +35,7 @@
         <c:forEach begin="0" end="${pageCount}" var="i">
             <c:set value="${i * 50}" var="offset"/>
             
-            <a href="/pms/admin/index?logOffset=${offset}&logLimit=50">${i + 1}</a>
+            <a href="/pms/admin/index?logOffset=${offset}&amp;logLimit=50">${i + 1}</a>
         </c:forEach>
 </p>
     <c:if test="${!empty loggingEvents}">

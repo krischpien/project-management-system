@@ -6,7 +6,8 @@
 <title>Zpráva</title>
 </head>
 <body>
-<h3>Dobrý den.</h3>
+<h1>Zpráva ze systému PMS</h1>
+<h2>Dobrý den.</h2>
 <div>
    <p>Byl Vám vytvořen uživatelský účet <b>${user.name}</b></p>
    <p>Byly Vám přiděleny následující role:</p>
@@ -16,6 +17,6 @@
 #end
 </ul>
 </div>
+<p>Tento email je automaticky generován, neodpovídejte na něj.</p>
 </body>
-
 </html>

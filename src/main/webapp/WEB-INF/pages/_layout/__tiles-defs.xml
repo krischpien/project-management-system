@@ -3,16 +3,9 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
-<!--
-layout dir:
-/WEB-INF/pages/layout/*.jsp
-page dir:
-/WEB-INF/pages/*.jsp
--->
-
 <tiles-definitions>
 
-    <!--zakladni layout-->    
+    <!--basic layout-->    
     <definition name="pms.base" template="/WEB-INF/pages/_layout/_default.jsp">
         <put-attribute name="title" value=""/>
         <put-attribute name="author" value="Jan Krist"/>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:task="http://www.springframework.org/schema/task"
+
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+
+">
+    
+    <context:property-placeholder location="classpath:/application.properties"/>
+    
+    <context:annotation-config />
+    <!--Registrace balíčků repository (@Repository)-->
+    <context:component-scan base-package="cz.vsmie.krist.pms.dao"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.logging.dao"/>
+    <!--Registrace balíčků služeb (@Service) -->
+    <context:component-scan base-package="cz.vsmie.krist.pms.service.impl"/>
+    <context:component-scan base-package="cz.vsmie.krist.pms.logging.service"/>
+    <!--Registrace balíčků - komponent (@Component)-->
+    <context:component-scan base-package="cz.vsmie.krist.pms.util"/>
+    
+
+    
+    
+            
+    <!--@Async, @Scheduled-->
+    <task:annotation-driven executor="pmsExecutor" scheduler="pmsScheduler"/>
+    <task:executor id="pmsExecutor" pool-size="5"/>
+    <task:scheduler id="pmsScheduler" pool-size="10"/>
+
+    
+    <!-- alternativni DataSource: org.springframework.jdbc.datasource.DriverManagerDataSource-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+              p:driverClassName="${jdbc.driverClassName}"
+              p:url="${jdbc.url}"
+              p:username="${jdbc.username}"
+              p:password="${jdbc.password}"/>
+    
+    
+    <!--<jee:jndi-lookup id="dataSource" jndi-name="jdbc/pmsDataSource"/>-->              
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="schemaUpdate" value="true"/>
+        <property name="packagesToScan" value="cz.vsmie.krist.pms"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2dll.auto">${hibernate.hbm2dll.auto}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.connection.pool_size">1</prop>
+                <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="${mailSender.host}" />
+	<property name="port" value="${mailSender.port}" />
+        <property name="defaultEncoding" value="${mailSender.defaultEncoding}"/> 
+	<property name="username" value="${mailSender.username}" />
+	<property name="password" value="${mailSender.password}" />
+ 	<property name="javaMailProperties">
+	   <props>
+       	      <prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+       	      <prop key="mail.smtp.starttls.enable">${mail.smtp.starttls.enable}</prop>
+              <prop key="mail.mime.charset">${mail.mime.charset}</prop>
+       	   </props>
+	</property>
+    </bean>
+        
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="velocityProperties">
+         <value>
+          resource.loader=class
+          class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+         </value>
+      </property>
+   </bean>
+
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+             <!--vsechny metody, zacinajici 'get' jsou read-only--> 
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="save*" propagation="REQUIRES_NEW" />
+            <tx:method name="update*"/>
+            <!--ostatní metody mají defaultní nastavení--> 
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+ 
+    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+     
+    <aop:config>
+        <aop:pointcut id="serviceOperations" expression="execution(* cz.vsmie.krist.pms.service.impl.*ServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperations"/>
+    </aop:config>
+    
+    <!-- implementace PlatformTransactionManager -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+        p:sessionFactory-ref="sessionFactory"
+        />
+
+</beans>
